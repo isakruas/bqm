@@ -1,0 +1,2 @@
+# bqm
+Esta plataforma foi desenvolvida por Isak Paulo de Andrade Ruas, sob orientação do Prof. Dr. Josué Antunes de Macêdo.  Esta plataforma origina-se do projeto "Desenvolvimento de um sistema hipermídia para elaboração de avaliações de matemática", desenvolvido com bolsa do Programa Institucional de Bolsas de Iniciação em Desenvolvimento Tecnológico e Inovação (PIBITI) do Conselho Nacional de Desenvolvimento Científico e Tecnológico (CNPq).
