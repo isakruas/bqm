@@ -1,0 +1,120 @@
+{% extends 'templates/base.html' %}
+
+{% block is_not_authenticated %}
+ <meta http-equiv="refresh" content="0; URL='../usuario/sair/'"/>
+{% endblock is_not_authenticated %}
+
+{% block is_authenticated_alfa %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/alfa/'"/>
+{% endblock is_authenticated_alfa %}
+
+{% block is_authenticated_gama %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/gama/'"/>
+{% endblock is_authenticated_gama %}
+
+{% block is_authenticated_delta %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/delta/'"/>
+{% endblock is_authenticated_delta %}
+
+{% block is_authenticated_epsilon %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/epsilon/'"/>
+{% endblock is_authenticated_epsilon %}
+
+
+
+{% block main_beta %}
+ 
+<script type="text/javascript">
+
+  function set(el, va){
+    document.getElementById(el).value = va;
+    if (el == "id_password2") {
+      if (document.getElementById(el).value !== document.getElementById("id_password1").value) {
+        document.getElementById("password2").style.border = "0.05cm solid red";
+        document.getElementById("password1").style.border = "0.05cm solid red";
+      } else {
+        document.getElementById("password2").style.border = "0.05cm solid #0b2639";
+        document.getElementById("password1").style.border = "0.05cm solid #0b2639";
+      }
+    }
+  }
+ 
+</script>
+<script type="text/javascript">
+  document.getElementById('info').innerHTML = '<h2 style="white-space: nowrap">DASHBOARD > REDE > CADASTRAR > USUÁRIO > GAMA</h2>';
+</script>
+<div class="main-one-columns">
+  <div class="main-one-columns-one">
+ 
+  <p class="a b"  style="margin-bottom: 0cm;">Email</p>
+  <input class="a b" type="email" id="email" onchange="set('id_email', this.value);"  class="a">
+  <br>
+  <p class="a b" style="margin-bottom: 0cm;">Nome</p>
+  <input class="a b" type="text"  id="nome" onchange="set('id_nome', this.value);"   >
+  <br>
+  <p class="a b" style="margin-bottom: 0cm;">Sobrenome</p>
+  <input class="a b" type="text"  id="sobrenome" onchange="set('id_sobrenome', this.value);"   >
+  <br>
+  <p class="a b" style="margin-bottom: 0cm;">Escolaridade</p>
+  <select class="a b" id="escolaridade" onfocus="this.selectedIndex=0; set('id_escolaridade','');" onchange="set('id_escolaridade', this.options[this.selectedIndex].value);">
+    <option value="" selected>- - - - - - - - -</option>
+    <option value="Fundamental - Incompleto">Fundamental - Incompleto</option>
+    <option value="Fundamental - Completo">Fundamental - Completo</option>
+    <option value="Médio - Incompleto">Médio - Incompleto</option>
+    <option value="Médio - Completo">Médio - Completo</option>
+    <option value="Superior - Incompleto">Superior - Incompleto</option>
+    <option value="Superior - Completo">Superior - Completo</option>
+    <option value="Pós-graduação (Lato senso) - Incompleto">Pós-graduação (Lato senso) - Incompleto</option>
+    <option value="Pós-graduação (Lato senso) - Completo">Pós-graduação (Lato senso) - Completo</option>
+    <option value="Pós-graduação (Strictosensu, nível mestrado) - Incompleto">Pós-graduação (Strictosensu, nível mestrado) - Incompleto</option>
+    <option value="Pós-graduação (Strictosensu, nível mestrado) - Completo">Pós-graduação (Strictosensu, nível mestrado) - Completo</option>
+    <option value="Pós-graduação (Strictosensu, nível doutor) - Incompleto">Pós-graduação (Strictosensu, nível doutor) - Incompleto</option>
+    <option value="Pós-graduação (Strictosensu, nível doutor) - Completo">Pós-graduação (Strictosensu, nível doutor) - Completo</option>
+  </select>
+  <br>
+  <p class="a b" style="margin-bottom: 0cm;">Senha</p>
+  <input class="a b" type="password" id="password1" onchange="set('id_password1', this.value);"   >
+  <br>
+  <p class="a b" style="margin-bottom: 0cm;">Repita a senha</p>
+  <input class="a b" type="password" id="password2" onchange="set('id_password2', this.value);"   >
+  <br>
+      <form method="post" >
+        {% csrf_token %}
+        <ul style=" visibility: hidden;display: none;">
+          {{ form.as_ul }}  
+        </ul>
+        <button class="a b" type="submit">Cadastrar usuário Beta</button>
+      </form>
+  </div>
+</div>
+ 
+<script type="text/javascript">
+  var errorlist = document.getElementsByClassName("errorlist");
+  if (errorlist[0]) {
+    document.getElementById("email").style.border = "0.05cm solid red";
+  }
+
+  set("id_nivel_de_acesso", "gama");
+</script>
+{% endblock main_beta %}
+
+
+{% block nav_beta %}
+<div class="nav-three-row">
+
+  <div class="nav-three-row-one">
+
+  </div>
+
+  <div class="nav-three-row-two">
+    <svg onclick = "System.Redirect('../../../ir_para/')"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3.222 18.917c5.666-5.905-.629-10.828-5.011-7.706l1.789 1.789h-6v-6l1.832 1.832c7.846-6.07 16.212 4.479 7.39 10.085z" />
+    </svg>
+  </div>
+
+  <div class="nav-three-row-three">
+
+  </div>
+
+</div>
+{% endblock nav_beta %}

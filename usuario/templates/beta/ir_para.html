@@ -1,0 +1,127 @@
+{% extends 'templates/base.html' %}
+
+{% block is_not_authenticated %}
+ <meta http-equiv="refresh" content="0; URL='../usuario/sair/'"/>
+{% endblock is_not_authenticated %}
+
+{% block is_authenticated_alfa %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/alfa/'"/>
+{% endblock is_authenticated_alfa %}
+
+{% block is_authenticated_gama %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/gama/'"/>
+{% endblock is_authenticated_gama %}
+
+{% block is_authenticated_delta %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/delta/'"/>
+{% endblock is_authenticated_delta %}
+
+{% block is_authenticated_epsilon %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/epsilon/'"/>
+{% endblock is_authenticated_epsilon %}
+ 
+ 
+{% block nav_beta %}
+<div class="nav-three-row">
+
+  <div class="nav-three-row-one">
+
+  </div>
+
+  <div class="nav-three-row-two">
+    <svg onclick = "System.Redirect('../')"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3.222 18.917c5.666-5.905-.629-10.828-5.011-7.706l1.789 1.789h-6v-6l1.832 1.832c7.846-6.07 16.212 4.479 7.39 10.085z" />
+    </svg>
+  </div>
+
+  <div class="nav-three-row-three">
+
+  </div>
+
+</div>
+{% endblock nav_beta %}
+
+
+
+{% block main_beta %}
+
+<script type="text/javascript">
+  document.getElementById('info').innerHTML = '<h2 style="white-space: nowrap">DASHBOARD > REDE</h2>';
+</script>
+
+<div class="main-one-columns">
+    <div class="main-one-columns-one">
+        <div class="main-auto-row-auto">
+          <div class="profile-footer-ul">
+            <div class="main-three-columns profile-footer-li">
+              <div class="main-three-columns-one" style="height: 1cm">
+                <p style="position: relative ; width: auto; top: 30%; text-align: center; font-weight: bold;">Usuário (nível)</p>
+              </div>
+              <div class="main-three-columns-two" style="min-width: 1cm; border-left: 0.05cm solid #002907;">
+                <p style="position: relative ; width: auto; top: 30%; text-align: center; font-weight: bold;">
+                Listar
+                </p>
+              </div>
+              <div class="main-three-columns-three" style="min-width: 1cm; border-left: 0.05cm solid #002907;">
+                <p style="position: relative ; width: auto; top: 30%; text-align: center; font-weight: bold;">
+                 Adicionar
+               </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <div class="main-auto-row-auto">
+          <div class="profile-footer-ul">
+              <div class="main-three-columns profile-footer-li">
+                  <div class="main-three-columns-one" style="height: 1cm">
+                      <p style="position: relative ;  top: 30%; text-align: center;  ">
+                          Gama
+                      </p>
+                  </div>
+                  <div class="main-three-columns-two" onclick="System.Redirect('../listar/usuario/gama/')" style="border-left: 0.05cm solid #002907; min-width: 1cm;">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                          <path fill="currentColor" d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z"/>
+                      </svg>
+                  </div>
+                  <div class="main-three-columns-three" style="min-width: 1cm; border-left: 0.05cm solid #002907;" onclick="System.Redirect('../cadastrar/usuario/gama/')">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                          <path fill="currentColor"  d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-32 252c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92H92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"/>
+                      </svg>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+
+      <div class="main-auto-row-auto">
+          <div class="profile-footer-ul">
+              <div class="main-three-columns profile-footer-li">
+                  <div class="main-three-columns-one" style="height: 1cm">
+                      <p style="position: relative ;  top: 30%; text-align: center;  ">
+                          Delta
+                      </p>
+                  </div>
+                  <div class="main-three-columns-two" onclick="System.Redirect('../listar/usuario/delta/')" style="border-left: 0.05cm solid #002907; min-width: 1cm;">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                          <path fill="currentColor" d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z"/>
+                      </svg>
+                  </div>
+                  <div class="main-three-columns-three" style="min-width: 1cm; border-left: 0.05cm solid #002907;" >
+   
+                  </div>
+              </div>
+          </div>
+      </div>
+  
+    </div>
+</div>
+
+{% endblock main_beta %}
+
+
+
+
+
+
+

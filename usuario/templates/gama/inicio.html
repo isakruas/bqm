@@ -1,0 +1,826 @@
+{% extends 'templates/base.html' %}
+{% block is_not_authenticated %}
+<meta http-equiv="refresh" content="0; URL='../usuario/sair/'"/>
+{% endblock is_not_authenticated %}
+{% block is_authenticated_alfa %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/alfa/'"/>
+{% endblock is_authenticated_alfa %}
+{% block is_authenticated_beta %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/beta/'"/>
+{% endblock is_authenticated_beta %}
+{% block is_authenticated_delta %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/delta/'"/>
+{% endblock is_authenticated_delta %}
+{% block is_authenticated_epsilon %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/epsilon/'"/>
+{% endblock is_authenticated_epsilon %}
+ 
+{% block nav_gama %}
+        <div class="nav-four-row">
+            <div class="nav-four-row-one">
+                <svg onclick = "System.Redirect('{% url 'usuario_gama_configuracao' %}')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path  fill="currentColor" d="M512.1 191l-8.2 14.3c-3 5.3-9.4 7.5-15.1 5.4-11.8-4.4-22.6-10.7-32.1-18.6-4.6-3.8-5.8-10.5-2.8-15.7l8.2-14.3c-6.9-8-12.3-17.3-15.9-27.4h-16.5c-6 0-11.2-4.3-12.2-10.3-2-12-2.1-24.6 0-37.1 1-6 6.2-10.4 12.2-10.4h16.5c3.6-10.1 9-19.4 15.9-27.4l-8.2-14.3c-3-5.2-1.9-11.9 2.8-15.7 9.5-7.9 20.4-14.2 32.1-18.6 5.7-2.1 12.1.1 15.1 5.4l8.2 14.3c10.5-1.9 21.2-1.9 31.7 0L552 6.3c3-5.3 9.4-7.5 15.1-5.4 11.8 4.4 22.6 10.7 32.1 18.6 4.6 3.8 5.8 10.5 2.8 15.7l-8.2 14.3c6.9 8 12.3 17.3 15.9 27.4h16.5c6 0 11.2 4.3 12.2 10.3 2 12 2.1 24.6 0 37.1-1 6-6.2 10.4-12.2 10.4h-16.5c-3.6 10.1-9 19.4-15.9 27.4l8.2 14.3c3 5.2 1.9 11.9-2.8 15.7-9.5 7.9-20.4 14.2-32.1 18.6-5.7 2.1-12.1-.1-15.1-5.4l-8.2-14.3c-10.4 1.9-21.2 1.9-31.7 0zm-10.5-58.8c38.5 29.6 82.4-14.3 52.8-52.8-38.5-29.7-82.4 14.3-52.8 52.8zM386.3 286.1l33.7 16.8c10.1 5.8 14.5 18.1 10.5 29.1-8.9 24.2-26.4 46.4-42.6 65.8-7.4 8.9-20.2 11.1-30.3 5.3l-29.1-16.8c-16 13.7-34.6 24.6-54.9 31.7v33.6c0 11.6-8.3 21.6-19.7 23.6-24.6 4.2-50.4 4.4-75.9 0-11.5-2-20-11.9-20-23.6V418c-20.3-7.2-38.9-18-54.9-31.7L74 403c-10 5.8-22.9 3.6-30.3-5.3-16.2-19.4-33.3-41.6-42.2-65.7-4-10.9.4-23.2 10.5-29.1l33.3-16.8c-3.9-20.9-3.9-42.4 0-63.4L12 205.8c-10.1-5.8-14.6-18.1-10.5-29 8.9-24.2 26-46.4 42.2-65.8 7.4-8.9 20.2-11.1 30.3-5.3l29.1 16.8c16-13.7 34.6-24.6 54.9-31.7V57.1c0-11.5 8.2-21.5 19.6-23.5 24.6-4.2 50.5-4.4 76-.1 11.5 2 20 11.9 20 23.6v33.6c20.3 7.2 38.9 18 54.9 31.7l29.1-16.8c10-5.8 22.9-3.6 30.3 5.3 16.2 19.4 33.2 41.6 42.1 65.8 4 10.9.1 23.2-10 29.1l-33.7 16.8c3.9 21 3.9 42.5 0 63.5zm-117.6 21.1c59.2-77-28.7-164.9-105.7-105.7-59.2 77 28.7 164.9 105.7 105.7zm243.4 182.7l-8.2 14.3c-3 5.3-9.4 7.5-15.1 5.4-11.8-4.4-22.6-10.7-32.1-18.6-4.6-3.8-5.8-10.5-2.8-15.7l8.2-14.3c-6.9-8-12.3-17.3-15.9-27.4h-16.5c-6 0-11.2-4.3-12.2-10.3-2-12-2.1-24.6 0-37.1 1-6 6.2-10.4 12.2-10.4h16.5c3.6-10.1 9-19.4 15.9-27.4l-8.2-14.3c-3-5.2-1.9-11.9 2.8-15.7 9.5-7.9 20.4-14.2 32.1-18.6 5.7-2.1 12.1.1 15.1 5.4l8.2 14.3c10.5-1.9 21.2-1.9 31.7 0l8.2-14.3c3-5.3 9.4-7.5 15.1-5.4 11.8 4.4 22.6 10.7 32.1 18.6 4.6 3.8 5.8 10.5 2.8 15.7l-8.2 14.3c6.9 8 12.3 17.3 15.9 27.4h16.5c6 0 11.2 4.3 12.2 10.3 2 12 2.1 24.6 0 37.1-1 6-6.2 10.4-12.2 10.4h-16.5c-3.6 10.1-9 19.4-15.9 27.4l8.2 14.3c3 5.2 1.9 11.9-2.8 15.7-9.5 7.9-20.4 14.2-32.1 18.6-5.7 2.1-12.1-.1-15.1-5.4l-8.2-14.3c-10.4 1.9-21.2 1.9-31.7 0zM501.6 431c38.5 29.6 82.4-14.3 52.8-52.8-38.5-29.6-82.4 14.3-52.8 52.8z"/></svg>
+            </div>
+            <div class="nav-four-row-two">
+  
+                <svg onclick = "System.Redirect('{% url 'usuario_gama_ir_para' %}')"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path  fill="currentColor"  d="M640 264v-16c0-8.84-7.16-16-16-16H344v-40h72c17.67 0 32-14.33 32-32V32c0-17.67-14.33-32-32-32H224c-17.67 0-32 14.33-32 32v128c0 17.67 14.33 32 32 32h72v40H16c-8.84 0-16 7.16-16 16v16c0 8.84 7.16 16 16 16h104v40H64c-17.67 0-32 14.33-32 32v128c0 17.67 14.33 32 32 32h160c17.67 0 32-14.33 32-32V352c0-17.67-14.33-32-32-32h-56v-40h304v40h-56c-17.67 0-32 14.33-32 32v128c0 17.67 14.33 32 32 32h160c17.67 0 32-14.33 32-32V352c0-17.67-14.33-32-32-32h-56v-40h104c8.84 0 16-7.16 16-16zM256 128V64h128v64H256zm-64 320H96v-64h96v64zm352 0h-96v-64h96v64z"/></svg>
+
+
+            </div>
+            <div class="nav-four-row-three">
+                <svg onclick = "System.Redirect('{% url 'usuario_gama_manual' %}')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M5.495 4c-1.375 0-1.375-2 0-2h16.505v-2h-17c-1.657 0-3 1.343-3 3v18c0 1.657 1.343 3 3 3h17v-20h-16.505z" />
+                </svg>
+            </div>
+            <div class="nav-four-row-four">
+                <svg  onclick = "System.Redirect('{% url 'usuario_sair' %}')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm7 14h-14v-4h14v4z" />
+                </svg>
+            </div>
+        </div>
+{% endblock nav_gama %}
+
+
+{% block main_gama %}
+<script type="text/javascript">
+
+
+
+  if (window.location.hostname == "localhost") {
+    var URL = "http://localhost:8000";
+  } else {
+    var URL = "https://bq.mat.br";
+  }
+
+
+  
+    System.Ajax.Get({
+        url: URL + "/usuario/filiacao/superior/inferior/{{ user.id }}/",
+        data:"",
+        success:function(fsi){
+            var rtn_fsi = JSON.parse(fsi);
+            var obj_fsi = rtn_fsi['fsi'][0]['ids'];
+            var qofuis1 = 0;
+            var qofuis2 = 0;
+            for (var i = 0; i < obj_fsi.length; i++) {
+
+                if (obj_fsi[i] !== "null") {
+                     
+                    System.Ajax.Get({
+                        url: URL + "/questao/listar/usuario/"+obj_fsi[i]+"/",
+                        data:"",
+                        success:function(data){
+
+                            var rtn = JSON.parse(data);
+                            var obj = rtn['questao'][0];
+
+                            var questao_objects_filter_usuario_id_status_1 = "";
+
+                            for (var i = 0; i < obj[1].length; i++) {
+
+                                if (obj[1][i] !== "null") {
+
+                                    questao_objects_filter_usuario_id_status_1 = questao_objects_filter_usuario_id_status_1 +  '<div class="profile-footer-ul"><div class="main-three-columns profile-footer-li"><div class="main-three-columns-one" style="height: 1cm"><p style="position: relative ; width: 5cm; top: 30%; text-align: left; left: 0.5cm; font-weight: bold;">QID: '+obj[1][i]+'</p></div><div class="main-three-columns-two" onclick="System.Redirect(' + "'editar/questao/"+obj[1][i]+"/')" + '" style="border-left: 0.05cm solid #002907; min-width: 1cm;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"/></svg></div><div class="main-three-columns-three" style="min-width: 1cm; border-left: 0.05cm solid #002907;" onclick="System.Redirect(' + "'excluir/questao/"+obj[1][i]+"/')" + '"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M3 6v18h18v-18h-18zm5 14c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712z" /></svg></div></div></div>';
+                                }
+                            }
+                            
+
+                            if (questao_objects_filter_usuario_id_status_1 !== "") {
+                                if (qofuis1==0) {
+                                    document.getElementById("questao_objects_filter_usuario_id_status_1").innerHT = "";
+                                    document.getElementById("questao_objects_filter_usuario_id_status_1").innerHTML = questao_objects_filter_usuario_id_status_1;
+                                    qofuis1=qofuis1+1;
+                                } else {
+                                    var tmp_status_1_1 = document.getElementById("questao_objects_filter_usuario_id_status_1").innerHTML;
+                                    var tmp_status_1_2 = tmp_status_1_1 + questao_objects_filter_usuario_id_status_1;
+                                    document.getElementById("questao_objects_filter_usuario_id_status_1").innerHTML = tmp_status_1_2;
+                                }
+                            }
+
+
+                       
+
+                            var questao_objects_filter_usuario_id_status_2 = "";
+
+                            for (var i = 0; i < obj[2].length; i++) {
+
+                                if (obj[2][i] !== "null") {
+
+                                    questao_objects_filter_usuario_id_status_2 = questao_objects_filter_usuario_id_status_2 +  '<div class="profile-footer-ul"><div class="main-one-columns profile-footer-li"><div class="main-one-columns-one" style="height: 1cm"><p style="position: relative ; width: 5cm; top: 30%; text-align: left; left: 0.5cm; font-weight: bold;">QID: '+obj[2][i]+'</p></div></div></div>';
+                                }
+                            }
+
+
+
+                            if (questao_objects_filter_usuario_id_status_2 !== "") {
+                                if (qofuis2==0) {
+                                    document.getElementById("questao_objects_filter_usuario_id_status_2").innerHTML = "";
+                                    document.getElementById("questao_objects_filter_usuario_id_status_2").innerHTML = questao_objects_filter_usuario_id_status_2;
+                                    qofuis2=qofuis2+1;
+                                } else {
+                                    var tmp_status_2_1 = document.getElementById("questao_objects_filter_usuario_id_status_2").innerHTML;
+                                    var tmp_status_2_2 = tmp_status_2_1 + questao_objects_filter_usuario_id_status_2;
+                                    document.getElementById("questao_objects_filter_usuario_id_status_2").innerHTML = tmp_status_2_2;
+                                }
+                            }
+                        }
+                    }); 
+                }
+            
+            }
+
+        }
+    });
+
+</script>
+
+<script type="text/javascript">
+  document.getElementById('info').innerHTML = '<h2 style="white-space: nowrap">DASHBOARD</h2>';
+</script>
+
+<div class="main-one-columns">
+    <div class="main-one-columns-one">
+        <div class="main-auto-row-auto">
+            <div class="profile-footer-ul">
+                <div style="height: 1cm; border: 0.05cm solid #002907; background: #f4f5f6">
+                    <p style="position: relative ; width: 15cm; top: 25%; text-align: center;left: 50%;margin-left: -7.5cm; font-weight: bold;">A revisar</p>
+                </div>
+            </div>
+        </div>
+
+        <!--- Incluir com JS -->
+        <div class="main-auto-row-auto" id="questao_objects_filter_usuario_id_status_1">
+
+
+            <div class="profile-footer-ul">
+                <div class="main-one-columns profile-footer-li">
+                    <div class="main-one-columns-one" style="height: 25vh;">
+                        <p style="position: relative; top: 45%; text-align:justify; width: 90%; left: 0.5cm; font-weight: bold;">
+                           Quando os usuarios de sua rede cadastrarem uma nova questao, elas aparecerão listadas aqui até o momento em que realizar a revisão da questao cadastrada.
+                            <br />
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+
+
+        </div>
+
+        <div class="main-auto-row-auto">
+            <div class="profile-footer-ul">
+                <div style="height: 1cm; border: 0.05cm solid #002907; background: #f4f5f6">
+                    <p style="position: relative ; width: 15cm; top: 25%; text-align: center;left: 50%;margin-left: -7.5cm; font-weight: bold;">Revisadas</p>
+                </div>
+            </div>
+        </div>
+        <!--- Incluir com JS -->
+        <div class="main-auto-row-auto" id="questao_objects_filter_usuario_id_status_2">
+
+            <div class="profile-footer-ul">
+                <div class="main-one-columns profile-footer-li">
+                    <div class="main-one-columns-one" style="height: 25vh;">
+                        <p style="position: relative; top: 45%; text-align:justify; width: 90%; left: 0.5cm; font-weight: bold;">
+                            As questões cadastradas e que já passaram pelo o processo de revisão, ou seja, já foram revisadas e disponibilizadas ao público, aparecerão listadas aqui.
+                            <br />
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+
+        </div>
+
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+
+document.addEventListener('readystatechange', event => {
+if (event.target.readyState === 'complete') {
+
+
+  //Verifica se o tutorial de inicio já rodou
+  if(!Tutorial.Get({name:"início_gama"})) {
+   
+    //document.getElementById('alert_início_gama_01').style.visibility = 'visible';
+    //Tutorial.Set({name:'início'});
+
+  }
+
+}});
+
+</script>
+
+
+
+
+
+
+{% endblock main_gama %}
+
+
+
+
+
+
+
+{% block alert_u %}
+
+<!--- DELTA ---->
+
+     <div class="alert" id="alert_início_delta_01">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+                    <br />
+                    Olá, :) ...<br /><br />
+                    Este é um pequeno tutorial para lhe explicar alguns detalhes sobre os ícones da interface desta plataforma, por padrão a cada 30 dias iremos lhe mostrá-lo novamente. 
+                    Estes tutoriais além de apresentarem características da interface podem lhe apresentar eventuais modificações efetuadas.<br /><br />
+                    Deseja prosseguir o tutorial?
+
+
+
+                </div>
+                <div class="alert-two-row-two">
+
+                    <!--div class="alert-one-columns">
+                        <div class="alert-one-columns-one" >
+                            <p>Ok</p>
+                        </div>
+                    </div-->
+
+                    <div class="alert-two-columns">
+                        <div class="alert-two-columns-one" onclick="document.getElementById('alert_início_delta_01').style.visibility = 'hidden'">
+                            <p>Não</p>
+                        </div>
+                      <div class="alert-two-columns-two" onclick="document.getElementById('alert_início_delta_01').style.visibility = 'hidden'; document.getElementById('alert_início_delta_02').style.visibility = 'visible'">
+                          <p>Sim</p>
+                      </div>
+                    </div>
+                    <p>Ok</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert" id="alert_início_delta_02">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+                    <center>
+                      
+                    
+                    <svg width="64px" xmlns="http://www.w3.org/2000/svg"viewBox="0 0 640 512"><path  fill="currentColor" d="M512.1 191l-8.2 14.3c-3 5.3-9.4 7.5-15.1 5.4-11.8-4.4-22.6-10.7-32.1-18.6-4.6-3.8-5.8-10.5-2.8-15.7l8.2-14.3c-6.9-8-12.3-17.3-15.9-27.4h-16.5c-6 0-11.2-4.3-12.2-10.3-2-12-2.1-24.6 0-37.1 1-6 6.2-10.4 12.2-10.4h16.5c3.6-10.1 9-19.4 15.9-27.4l-8.2-14.3c-3-5.2-1.9-11.9 2.8-15.7 9.5-7.9 20.4-14.2 32.1-18.6 5.7-2.1 12.1.1 15.1 5.4l8.2 14.3c10.5-1.9 21.2-1.9 31.7 0L552 6.3c3-5.3 9.4-7.5 15.1-5.4 11.8 4.4 22.6 10.7 32.1 18.6 4.6 3.8 5.8 10.5 2.8 15.7l-8.2 14.3c6.9 8 12.3 17.3 15.9 27.4h16.5c6 0 11.2 4.3 12.2 10.3 2 12 2.1 24.6 0 37.1-1 6-6.2 10.4-12.2 10.4h-16.5c-3.6 10.1-9 19.4-15.9 27.4l8.2 14.3c3 5.2 1.9 11.9-2.8 15.7-9.5 7.9-20.4 14.2-32.1 18.6-5.7 2.1-12.1-.1-15.1-5.4l-8.2-14.3c-10.4 1.9-21.2 1.9-31.7 0zm-10.5-58.8c38.5 29.6 82.4-14.3 52.8-52.8-38.5-29.7-82.4 14.3-52.8 52.8zM386.3 286.1l33.7 16.8c10.1 5.8 14.5 18.1 10.5 29.1-8.9 24.2-26.4 46.4-42.6 65.8-7.4 8.9-20.2 11.1-30.3 5.3l-29.1-16.8c-16 13.7-34.6 24.6-54.9 31.7v33.6c0 11.6-8.3 21.6-19.7 23.6-24.6 4.2-50.4 4.4-75.9 0-11.5-2-20-11.9-20-23.6V418c-20.3-7.2-38.9-18-54.9-31.7L74 403c-10 5.8-22.9 3.6-30.3-5.3-16.2-19.4-33.3-41.6-42.2-65.7-4-10.9.4-23.2 10.5-29.1l33.3-16.8c-3.9-20.9-3.9-42.4 0-63.4L12 205.8c-10.1-5.8-14.6-18.1-10.5-29 8.9-24.2 26-46.4 42.2-65.8 7.4-8.9 20.2-11.1 30.3-5.3l29.1 16.8c16-13.7 34.6-24.6 54.9-31.7V57.1c0-11.5 8.2-21.5 19.6-23.5 24.6-4.2 50.5-4.4 76-.1 11.5 2 20 11.9 20 23.6v33.6c20.3 7.2 38.9 18 54.9 31.7l29.1-16.8c10-5.8 22.9-3.6 30.3 5.3 16.2 19.4 33.2 41.6 42.1 65.8 4 10.9.1 23.2-10 29.1l-33.7 16.8c3.9 21 3.9 42.5 0 63.5zm-117.6 21.1c59.2-77-28.7-164.9-105.7-105.7-59.2 77 28.7 164.9 105.7 105.7zm243.4 182.7l-8.2 14.3c-3 5.3-9.4 7.5-15.1 5.4-11.8-4.4-22.6-10.7-32.1-18.6-4.6-3.8-5.8-10.5-2.8-15.7l8.2-14.3c-6.9-8-12.3-17.3-15.9-27.4h-16.5c-6 0-11.2-4.3-12.2-10.3-2-12-2.1-24.6 0-37.1 1-6 6.2-10.4 12.2-10.4h16.5c3.6-10.1 9-19.4 15.9-27.4l-8.2-14.3c-3-5.2-1.9-11.9 2.8-15.7 9.5-7.9 20.4-14.2 32.1-18.6 5.7-2.1 12.1.1 15.1 5.4l8.2 14.3c10.5-1.9 21.2-1.9 31.7 0l8.2-14.3c3-5.3 9.4-7.5 15.1-5.4 11.8 4.4 22.6 10.7 32.1 18.6 4.6 3.8 5.8 10.5 2.8 15.7l-8.2 14.3c6.9 8 12.3 17.3 15.9 27.4h16.5c6 0 11.2 4.3 12.2 10.3 2 12 2.1 24.6 0 37.1-1 6-6.2 10.4-12.2 10.4h-16.5c-3.6 10.1-9 19.4-15.9 27.4l8.2 14.3c3 5.2 1.9 11.9-2.8 15.7-9.5 7.9-20.4 14.2-32.1 18.6-5.7 2.1-12.1-.1-15.1-5.4l-8.2-14.3c-10.4 1.9-21.2 1.9-31.7 0zM501.6 431c38.5 29.6 82.4-14.3 52.8-52.8-38.5-29.6-82.4 14.3-52.8 52.8z"/></svg>
+
+                    </center>
+
+                    <br /><br />
+
+                    Este é o ícone de configurações, para quaisquer informações relativas a configurações de sua conta, como mudança de senha , você terá acesso ao clicar neste ícone.
+                </div>
+                <div class="alert-two-row-two">
+
+                    <div class="alert-one-columns">
+                        <div class="alert-one-columns-one" onclick="document.getElementById('alert_início_delta_02').style.visibility = 'hidden'; document.getElementById('alert_início_delta_03').style.visibility = 'visible'">
+                            <p>Prosseguir</p>
+                        </div>
+                    </div>
+ 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert" id="alert_início_delta_03">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+                    <center>
+                    
+                    <svg width="64px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path  fill="currentColor" d="M5.641 22.569l-5.641 1.431 1.397-5.674 4.244 4.243zm-2.829-5.657l4.243 4.243 16.945-16.913-4.242-4.242-16.946 16.912zm14.114-2.783l-1.414 1.414.708.708 1.414-1.414 1.414 1.414-2.122 2.122.707.707 2.122-2.122 1.417 1.385-2.829 2.829-4.232-4.233-1.415 1.413 5.648 5.648 5.656-5.657-5.643-5.643-1.431 1.429zm-9.887-4.261l-4.21-4.21 2.828-2.829 1.369 1.401-2.121 2.121.707.707 2.121-2.122 1.414 1.415-1.414 1.414.707.707 1.414-1.414 1.432-1.429-5.629-5.629-5.657 5.657 5.623 5.624 1.416-1.413z" /></svg>
+
+                    </center>
+
+                    <br /><br />
+
+                 Este é o ícone do criador de questões, ao clicar neste ícone você será direcionado a um painel que permitirá a você, em poucos cliques, cadastrar uma nova questao no Banco de Questões de Matemática (BQM).
+ 
+
+
+                </div>
+                <div class="alert-two-row-two">
+
+                    <div class="alert-one-columns">
+                        <div class="alert-one-columns-one" onclick="document.getElementById('alert_início_delta_03').style.visibility = 'hidden'; document.getElementById('alert_início_delta_04').style.visibility = 'visible'">
+                            <p>Prosseguir</p>
+                        </div>
+                    </div>
+ 
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="alert" id="alert_início_delta_04">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+                    <center>
+                    
+                    <svg width="64px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M5.495 4c-1.375 0-1.375-2 0-2h16.505v-2h-17c-1.657 0-3 1.343-3 3v18c0 1.657 1.343 3 3 3h17v-20h-16.505z" /></svg>
+
+                    </center>
+
+                    <br /><br />
+
+                    Este é o ícone do manual de utilização, ao clicar neste ícone você encontrará informações detalhadas de como usar as funcionalidades desta  plataforma.
+ 
+
+
+                </div>
+                <div class="alert-two-row-two">
+
+                    <div class="alert-one-columns">
+                        <div class="alert-one-columns-one" onclick="document.getElementById('alert_início_delta_04').style.visibility = 'hidden'; document.getElementById('alert_início_delta_05').style.visibility = 'visible'">
+                            <p>Prosseguir</p>
+                        </div>
+                    </div>
+ 
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="alert" id="alert_início_delta_05">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+                    <center>
+                    
+                    <svg width="64px" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm7 14h-14v-4h14v4z" /></svg>
+                    </center>
+
+                    <br /><br />
+
+                    Este é o ícone de logout, ou seja, ao clicar neste ícone iremos desconectá-lo da plataforma, para acessá-la novamente será necessário realizar o login com seu email e senha.
+ 
+
+
+                </div>
+                <div class="alert-two-row-two">
+
+                    <div class="alert-one-columns">
+                        <div class="alert-one-columns-one" onclick="document.getElementById('alert_início_delta_05').style.visibility = 'hidden'; document.getElementById('alert_início_delta_06').style.visibility = 'visible'">
+                            <p>Prosseguir</p>
+                        </div>
+                    </div>
+ 
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="alert" id="alert_início_delta_06">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+
+                   <br /><br />
+                  Parabéns, você chegou ao fim deste tutorial! Agora você já está um pouco mais familiarizado com este ambiente. Daqui a 30 dias lhe mostraremos este tutorial novamente.<br /><br />
+                  Deseja repetir este tutorial? 
+
+
+
+                </div>
+                <div class="alert-two-row-two">
+
+                    <!--div class="alert-one-columns">
+                        <div class="alert-one-columns-one" >
+                            <p>Ok</p>
+                        </div>
+                    </div-->
+
+                    <div class="alert-two-columns">
+                        <div class="alert-two-columns-one" onclick="document.getElementById('alert_início_delta_06').style.visibility = 'hidden';Tutorial.Set({name:'início_delta'});">
+                            <p>Não</p>
+                        </div>
+                      <div class="alert-two-columns-two" onclick="document.getElementById('alert_início_delta_06').style.visibility = 'hidden'; document.getElementById('alert_início_delta_02').style.visibility = 'visible'">
+                          <p>Sim</p>
+                      </div>
+                    </div>
+                    <p>Ok</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+<!--- GAMA ---->
+
+     <div class="alert" id="alert_início_gama_01">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+                    <br />
+                    Olá, :) ...<br /><br />
+                    Este é um pequeno tutorial para lhe explicar alguns detalhes sobre os ícones da interface desta plataforma, por padrão a cada 30 dias iremos lhe mostrá-lo novamente. 
+                    Estes tutoriais além de apresentarem características da interface podem lhe apresentar eventuais modificações efetuadas.<br /><br />
+                    Deseja prosseguir o tutorial?
+
+
+
+                </div>
+                <div class="alert-two-row-two">
+
+                    <!--div class="alert-one-columns">
+                        <div class="alert-one-columns-one" >
+                            <p>Ok</p>
+                        </div>
+                    </div-->
+
+                    <div class="alert-two-columns">
+                        <div class="alert-two-columns-one" onclick="document.getElementById('alert_início_gama_01').style.visibility = 'hidden'">
+                            <p>Não</p>
+                        </div>
+                      <div class="alert-two-columns-two" onclick="document.getElementById('alert_início_gama_01').style.visibility = 'hidden'; document.getElementById('alert_início_gama_02').style.visibility = 'visible'">
+                          <p>Sim</p>
+                      </div>
+                    </div>
+                    <p>Ok</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert" id="alert_início_gama_02">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+                    <center>
+                      
+                    
+                    <svg width="64px" xmlns="http://www.w3.org/2000/svg"viewBox="0 0 640 512"><path  fill="currentColor" d="M512.1 191l-8.2 14.3c-3 5.3-9.4 7.5-15.1 5.4-11.8-4.4-22.6-10.7-32.1-18.6-4.6-3.8-5.8-10.5-2.8-15.7l8.2-14.3c-6.9-8-12.3-17.3-15.9-27.4h-16.5c-6 0-11.2-4.3-12.2-10.3-2-12-2.1-24.6 0-37.1 1-6 6.2-10.4 12.2-10.4h16.5c3.6-10.1 9-19.4 15.9-27.4l-8.2-14.3c-3-5.2-1.9-11.9 2.8-15.7 9.5-7.9 20.4-14.2 32.1-18.6 5.7-2.1 12.1.1 15.1 5.4l8.2 14.3c10.5-1.9 21.2-1.9 31.7 0L552 6.3c3-5.3 9.4-7.5 15.1-5.4 11.8 4.4 22.6 10.7 32.1 18.6 4.6 3.8 5.8 10.5 2.8 15.7l-8.2 14.3c6.9 8 12.3 17.3 15.9 27.4h16.5c6 0 11.2 4.3 12.2 10.3 2 12 2.1 24.6 0 37.1-1 6-6.2 10.4-12.2 10.4h-16.5c-3.6 10.1-9 19.4-15.9 27.4l8.2 14.3c3 5.2 1.9 11.9-2.8 15.7-9.5 7.9-20.4 14.2-32.1 18.6-5.7 2.1-12.1-.1-15.1-5.4l-8.2-14.3c-10.4 1.9-21.2 1.9-31.7 0zm-10.5-58.8c38.5 29.6 82.4-14.3 52.8-52.8-38.5-29.7-82.4 14.3-52.8 52.8zM386.3 286.1l33.7 16.8c10.1 5.8 14.5 18.1 10.5 29.1-8.9 24.2-26.4 46.4-42.6 65.8-7.4 8.9-20.2 11.1-30.3 5.3l-29.1-16.8c-16 13.7-34.6 24.6-54.9 31.7v33.6c0 11.6-8.3 21.6-19.7 23.6-24.6 4.2-50.4 4.4-75.9 0-11.5-2-20-11.9-20-23.6V418c-20.3-7.2-38.9-18-54.9-31.7L74 403c-10 5.8-22.9 3.6-30.3-5.3-16.2-19.4-33.3-41.6-42.2-65.7-4-10.9.4-23.2 10.5-29.1l33.3-16.8c-3.9-20.9-3.9-42.4 0-63.4L12 205.8c-10.1-5.8-14.6-18.1-10.5-29 8.9-24.2 26-46.4 42.2-65.8 7.4-8.9 20.2-11.1 30.3-5.3l29.1 16.8c16-13.7 34.6-24.6 54.9-31.7V57.1c0-11.5 8.2-21.5 19.6-23.5 24.6-4.2 50.5-4.4 76-.1 11.5 2 20 11.9 20 23.6v33.6c20.3 7.2 38.9 18 54.9 31.7l29.1-16.8c10-5.8 22.9-3.6 30.3 5.3 16.2 19.4 33.2 41.6 42.1 65.8 4 10.9.1 23.2-10 29.1l-33.7 16.8c3.9 21 3.9 42.5 0 63.5zm-117.6 21.1c59.2-77-28.7-164.9-105.7-105.7-59.2 77 28.7 164.9 105.7 105.7zm243.4 182.7l-8.2 14.3c-3 5.3-9.4 7.5-15.1 5.4-11.8-4.4-22.6-10.7-32.1-18.6-4.6-3.8-5.8-10.5-2.8-15.7l8.2-14.3c-6.9-8-12.3-17.3-15.9-27.4h-16.5c-6 0-11.2-4.3-12.2-10.3-2-12-2.1-24.6 0-37.1 1-6 6.2-10.4 12.2-10.4h16.5c3.6-10.1 9-19.4 15.9-27.4l-8.2-14.3c-3-5.2-1.9-11.9 2.8-15.7 9.5-7.9 20.4-14.2 32.1-18.6 5.7-2.1 12.1.1 15.1 5.4l8.2 14.3c10.5-1.9 21.2-1.9 31.7 0l8.2-14.3c3-5.3 9.4-7.5 15.1-5.4 11.8 4.4 22.6 10.7 32.1 18.6 4.6 3.8 5.8 10.5 2.8 15.7l-8.2 14.3c6.9 8 12.3 17.3 15.9 27.4h16.5c6 0 11.2 4.3 12.2 10.3 2 12 2.1 24.6 0 37.1-1 6-6.2 10.4-12.2 10.4h-16.5c-3.6 10.1-9 19.4-15.9 27.4l8.2 14.3c3 5.2 1.9 11.9-2.8 15.7-9.5 7.9-20.4 14.2-32.1 18.6-5.7 2.1-12.1-.1-15.1-5.4l-8.2-14.3c-10.4 1.9-21.2 1.9-31.7 0zM501.6 431c38.5 29.6 82.4-14.3 52.8-52.8-38.5-29.6-82.4 14.3-52.8 52.8z"/></svg>
+
+                    </center>
+
+                    <br /><br />
+
+                    Este é o ícone de configurações, para quaisquer informações relativas a configurações de sua conta, como mudança de senha , você terá acesso ao clicar neste ícone.
+                </div>
+                <div class="alert-two-row-two">
+
+                    <div class="alert-one-columns">
+                        <div class="alert-one-columns-one" onclick="document.getElementById('alert_início_gama_02').style.visibility = 'hidden'; document.getElementById('alert_início_gama_03').style.visibility = 'visible'">
+                            <p>Prosseguir</p>
+                        </div>
+                    </div>
+ 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert" id="alert_início_gama_03">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+                    <center>
+                    
+                    <svg width="64px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
+                    <path fill="currentColor"  d="M336.5 160C322 70.7 287.8 8 248 8s-74 62.7-88.5 152h177zM152 256c0 22.2 1.2 43.5 3.3 64h185.3c2.1-20.5 3.3-41.8 3.3-64s-1.2-43.5-3.3-64H155.3c-2.1 20.5-3.3 41.8-3.3 64zm324.7-96c-28.6-67.9-86.5-120.4-158-141.6 24.4 33.8 41.2 84.7 50 141.6h108zM177.2 18.4C105.8 39.6 47.8 92.1 19.3 160h108c8.7-56.9 25.5-107.8 49.9-141.6zM487.4 192H372.7c2.1 21 3.3 42.5 3.3 64s-1.2 43-3.3 64h114.6c5.5-20.5 8.6-41.8 8.6-64s-3.1-43.5-8.5-64zM120 256c0-21.5 1.2-43 3.3-64H8.6C3.2 212.5 0 233.8 0 256s3.2 43.5 8.6 64h114.6c-2-21-3.2-42.5-3.2-64zm39.5 96c14.5 89.3 48.7 152 88.5 152s74-62.7 88.5-152h-177zm159.3 141.6c71.4-21.2 129.4-73.7 158-141.6h-108c-8.8 56.9-25.6 107.8-50 141.6zM19.3 352c28.6 67.9 86.5 120.4 158 141.6-24.4-33.8-41.2-84.7-50-141.6h-108z"/></svg>
+
+                    </center>
+
+                    <br /><br />
+
+                 Este é o ícone de rede, ao clicar sobre ele você terá acesso a rede de usuarios no qual é responsável.
+ 
+
+
+                </div>
+                <div class="alert-two-row-two">
+
+                    <div class="alert-one-columns">
+                        <div class="alert-one-columns-one" onclick="document.getElementById('alert_início_gama_03').style.visibility = 'hidden'; document.getElementById('alert_início_gama_04').style.visibility = 'visible'">
+                            <p>Prosseguir</p>
+                        </div>
+                    </div>
+ 
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="alert" id="alert_início_gama_04">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+                    <center>
+                    
+                    <svg width="64px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M5.495 4c-1.375 0-1.375-2 0-2h16.505v-2h-17c-1.657 0-3 1.343-3 3v18c0 1.657 1.343 3 3 3h17v-20h-16.505z" /></svg>
+
+                    </center>
+
+                    <br /><br />
+
+                    Este é o ícone do manual de utilização, ao clicar neste ícone você encontrará informações detalhadas de como usar as funcionalidades desta  plataforma.
+ 
+
+
+                </div>
+                <div class="alert-two-row-two">
+
+                    <div class="alert-one-columns">
+                        <div class="alert-one-columns-one" onclick="document.getElementById('alert_início_gama_04').style.visibility = 'hidden'; document.getElementById('alert_início_gama_05').style.visibility = 'visible'">
+                            <p>Prosseguir</p>
+                        </div>
+                    </div>
+ 
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="alert" id="alert_início_gama_05">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+                    <center>
+                    
+                    <svg width="64px" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm7 14h-14v-4h14v4z" /></svg>
+                    </center>
+
+                    <br /><br />
+
+                    Este é o ícone de logout, ou seja, ao clicar neste ícone iremos desconectá-lo da plataforma, para acessá-la novamente será necessário realizar o login com seu email e senha.
+ 
+
+
+                </div>
+                <div class="alert-two-row-two">
+
+                    <div class="alert-one-columns">
+                        <div class="alert-one-columns-one" onclick="document.getElementById('alert_início_gama_05').style.visibility = 'hidden'; document.getElementById('alert_início_gama_06').style.visibility = 'visible'">
+                            <p>Prosseguir</p>
+                        </div>
+                    </div>
+ 
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="alert" id="alert_início_gama_06">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+
+                   <br /><br />
+                  Parabéns, você chegou ao fim deste tutorial! Agora você já está um pouco mais familiarizado com este ambiente. Daqui a 30 dias lhe mostraremos este tutorial novamente.<br /><br />
+                  Deseja repetir este tutorial? 
+
+
+
+                </div>
+                <div class="alert-two-row-two">
+
+                    <!--div class="alert-one-columns">
+                        <div class="alert-one-columns-one" >
+                            <p>Ok</p>
+                        </div>
+                    </div-->
+
+                    <div class="alert-two-columns">
+                        <div class="alert-two-columns-one" onclick="document.getElementById('alert_início_gama_06').style.visibility = 'hidden';Tutorial.Set({name:'início_gama'});">
+                            <p>Não</p>
+                        </div>
+                      <div class="alert-two-columns-two" onclick="document.getElementById('alert_início_gama_06').style.visibility = 'hidden'; document.getElementById('alert_início_gama_02').style.visibility = 'visible'">
+                          <p>Sim</p>
+                      </div>
+                    </div>
+                    <p>Ok</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!--- BETA ---->
+
+     <div class="alert" id="alert_início_beta_01">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+                    <br />
+                    Olá, :) ...<br /><br />
+                    Este é um pequeno tutorial para lhe explicar alguns detalhes sobre os ícones da interface desta plataforma, por padrão a cada 30 dias iremos lhe mostrá-lo novamente. 
+                    Estes tutoriais além de apresentarem características da interface podem lhe apresentar eventuais modificações efetuadas.<br /><br />
+                    Deseja prosseguir o tutorial?
+
+
+
+                </div>
+                <div class="alert-two-row-two">
+
+                    <!--div class="alert-one-columns">
+                        <div class="alert-one-columns-one" >
+                            <p>Ok</p>
+                        </div>
+                    </div-->
+
+                    <div class="alert-two-columns">
+                        <div class="alert-two-columns-one" onclick="document.getElementById('alert_início_beta_01').style.visibility = 'hidden'">
+                            <p>Não</p>
+                        </div>
+                      <div class="alert-two-columns-two" onclick="document.getElementById('alert_início_beta_01').style.visibility = 'hidden'; document.getElementById('alert_início_beta_02').style.visibility = 'visible'">
+                          <p>Sim</p>
+                      </div>
+                    </div>
+                    <p>Ok</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert" id="alert_início_beta_02">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+                    <center>
+                      
+                    
+                    <svg width="64px" xmlns="http://www.w3.org/2000/svg"viewBox="0 0 640 512"><path  fill="currentColor" d="M512.1 191l-8.2 14.3c-3 5.3-9.4 7.5-15.1 5.4-11.8-4.4-22.6-10.7-32.1-18.6-4.6-3.8-5.8-10.5-2.8-15.7l8.2-14.3c-6.9-8-12.3-17.3-15.9-27.4h-16.5c-6 0-11.2-4.3-12.2-10.3-2-12-2.1-24.6 0-37.1 1-6 6.2-10.4 12.2-10.4h16.5c3.6-10.1 9-19.4 15.9-27.4l-8.2-14.3c-3-5.2-1.9-11.9 2.8-15.7 9.5-7.9 20.4-14.2 32.1-18.6 5.7-2.1 12.1.1 15.1 5.4l8.2 14.3c10.5-1.9 21.2-1.9 31.7 0L552 6.3c3-5.3 9.4-7.5 15.1-5.4 11.8 4.4 22.6 10.7 32.1 18.6 4.6 3.8 5.8 10.5 2.8 15.7l-8.2 14.3c6.9 8 12.3 17.3 15.9 27.4h16.5c6 0 11.2 4.3 12.2 10.3 2 12 2.1 24.6 0 37.1-1 6-6.2 10.4-12.2 10.4h-16.5c-3.6 10.1-9 19.4-15.9 27.4l8.2 14.3c3 5.2 1.9 11.9-2.8 15.7-9.5 7.9-20.4 14.2-32.1 18.6-5.7 2.1-12.1-.1-15.1-5.4l-8.2-14.3c-10.4 1.9-21.2 1.9-31.7 0zm-10.5-58.8c38.5 29.6 82.4-14.3 52.8-52.8-38.5-29.7-82.4 14.3-52.8 52.8zM386.3 286.1l33.7 16.8c10.1 5.8 14.5 18.1 10.5 29.1-8.9 24.2-26.4 46.4-42.6 65.8-7.4 8.9-20.2 11.1-30.3 5.3l-29.1-16.8c-16 13.7-34.6 24.6-54.9 31.7v33.6c0 11.6-8.3 21.6-19.7 23.6-24.6 4.2-50.4 4.4-75.9 0-11.5-2-20-11.9-20-23.6V418c-20.3-7.2-38.9-18-54.9-31.7L74 403c-10 5.8-22.9 3.6-30.3-5.3-16.2-19.4-33.3-41.6-42.2-65.7-4-10.9.4-23.2 10.5-29.1l33.3-16.8c-3.9-20.9-3.9-42.4 0-63.4L12 205.8c-10.1-5.8-14.6-18.1-10.5-29 8.9-24.2 26-46.4 42.2-65.8 7.4-8.9 20.2-11.1 30.3-5.3l29.1 16.8c16-13.7 34.6-24.6 54.9-31.7V57.1c0-11.5 8.2-21.5 19.6-23.5 24.6-4.2 50.5-4.4 76-.1 11.5 2 20 11.9 20 23.6v33.6c20.3 7.2 38.9 18 54.9 31.7l29.1-16.8c10-5.8 22.9-3.6 30.3 5.3 16.2 19.4 33.2 41.6 42.1 65.8 4 10.9.1 23.2-10 29.1l-33.7 16.8c3.9 21 3.9 42.5 0 63.5zm-117.6 21.1c59.2-77-28.7-164.9-105.7-105.7-59.2 77 28.7 164.9 105.7 105.7zm243.4 182.7l-8.2 14.3c-3 5.3-9.4 7.5-15.1 5.4-11.8-4.4-22.6-10.7-32.1-18.6-4.6-3.8-5.8-10.5-2.8-15.7l8.2-14.3c-6.9-8-12.3-17.3-15.9-27.4h-16.5c-6 0-11.2-4.3-12.2-10.3-2-12-2.1-24.6 0-37.1 1-6 6.2-10.4 12.2-10.4h16.5c3.6-10.1 9-19.4 15.9-27.4l-8.2-14.3c-3-5.2-1.9-11.9 2.8-15.7 9.5-7.9 20.4-14.2 32.1-18.6 5.7-2.1 12.1.1 15.1 5.4l8.2 14.3c10.5-1.9 21.2-1.9 31.7 0l8.2-14.3c3-5.3 9.4-7.5 15.1-5.4 11.8 4.4 22.6 10.7 32.1 18.6 4.6 3.8 5.8 10.5 2.8 15.7l-8.2 14.3c6.9 8 12.3 17.3 15.9 27.4h16.5c6 0 11.2 4.3 12.2 10.3 2 12 2.1 24.6 0 37.1-1 6-6.2 10.4-12.2 10.4h-16.5c-3.6 10.1-9 19.4-15.9 27.4l8.2 14.3c3 5.2 1.9 11.9-2.8 15.7-9.5 7.9-20.4 14.2-32.1 18.6-5.7 2.1-12.1-.1-15.1-5.4l-8.2-14.3c-10.4 1.9-21.2 1.9-31.7 0zM501.6 431c38.5 29.6 82.4-14.3 52.8-52.8-38.5-29.6-82.4 14.3-52.8 52.8z"/></svg>
+
+                    </center>
+
+                    <br /><br />
+
+                    Este é o ícone de configurações, para quaisquer informações relativas a configurações de sua conta, como mudança de senha , você terá acesso ao clicar neste ícone.
+                </div>
+                <div class="alert-two-row-two">
+
+                    <div class="alert-one-columns">
+                        <div class="alert-one-columns-one" onclick="document.getElementById('alert_início_beta_02').style.visibility = 'hidden'; document.getElementById('alert_início_beta_03').style.visibility = 'visible'">
+                            <p>Prosseguir</p>
+                        </div>
+                    </div>
+ 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert" id="alert_início_beta_03">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+                    <center>
+                    
+                    <svg width="64px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
+                    <path fill="currentColor"  d="M336.5 160C322 70.7 287.8 8 248 8s-74 62.7-88.5 152h177zM152 256c0 22.2 1.2 43.5 3.3 64h185.3c2.1-20.5 3.3-41.8 3.3-64s-1.2-43.5-3.3-64H155.3c-2.1 20.5-3.3 41.8-3.3 64zm324.7-96c-28.6-67.9-86.5-120.4-158-141.6 24.4 33.8 41.2 84.7 50 141.6h108zM177.2 18.4C105.8 39.6 47.8 92.1 19.3 160h108c8.7-56.9 25.5-107.8 49.9-141.6zM487.4 192H372.7c2.1 21 3.3 42.5 3.3 64s-1.2 43-3.3 64h114.6c5.5-20.5 8.6-41.8 8.6-64s-3.1-43.5-8.5-64zM120 256c0-21.5 1.2-43 3.3-64H8.6C3.2 212.5 0 233.8 0 256s3.2 43.5 8.6 64h114.6c-2-21-3.2-42.5-3.2-64zm39.5 96c14.5 89.3 48.7 152 88.5 152s74-62.7 88.5-152h-177zm159.3 141.6c71.4-21.2 129.4-73.7 158-141.6h-108c-8.8 56.9-25.6 107.8-50 141.6zM19.3 352c28.6 67.9 86.5 120.4 158 141.6-24.4-33.8-41.2-84.7-50-141.6h-108z"/></svg>
+
+                    </center>
+
+                    <br /><br />
+
+                 Este é o ícone de rede, ao clicar sobre ele você terá acesso a rede de usuarios no qual é responsável.
+ 
+
+
+                </div>
+                <div class="alert-two-row-two">
+
+                    <div class="alert-one-columns">
+                        <div class="alert-one-columns-one" onclick="document.getElementById('alert_início_beta_03').style.visibility = 'hidden'; document.getElementById('alert_início_beta_04').style.visibility = 'visible'">
+                            <p>Prosseguir</p>
+                        </div>
+                    </div>
+ 
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="alert" id="alert_início_beta_04">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+                    <center>
+                    
+                    <svg width="64px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M5.495 4c-1.375 0-1.375-2 0-2h16.505v-2h-17c-1.657 0-3 1.343-3 3v18c0 1.657 1.343 3 3 3h17v-20h-16.505z" /></svg>
+
+                    </center>
+
+                    <br /><br />
+
+                    Este é o ícone do manual de utilização, ao clicar neste ícone você encontrará informações detalhadas de como usar as funcionalidades desta  plataforma.
+ 
+
+
+                </div>
+                <div class="alert-two-row-two">
+
+                    <div class="alert-one-columns">
+                        <div class="alert-one-columns-one" onclick="document.getElementById('alert_início_beta_04').style.visibility = 'hidden'; document.getElementById('alert_início_beta_05').style.visibility = 'visible'">
+                            <p>Prosseguir</p>
+                        </div>
+                    </div>
+ 
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="alert" id="alert_início_beta_05">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+                    <center>
+                    
+                    <svg width="64px" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm7 14h-14v-4h14v4z" /></svg>
+                    </center>
+
+                    <br /><br />
+
+                    Este é o ícone de logout, ou seja, ao clicar neste ícone iremos desconectá-lo da plataforma, para acessá-la novamente será necessário realizar o login com seu email e senha.
+ 
+
+
+                </div>
+                <div class="alert-two-row-two">
+
+                    <div class="alert-one-columns">
+                        <div class="alert-one-columns-one" onclick="document.getElementById('alert_início_beta_05').style.visibility = 'hidden'; document.getElementById('alert_início_beta_06').style.visibility = 'visible'">
+                            <p>Prosseguir</p>
+                        </div>
+                    </div>
+ 
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="alert" id="alert_início_beta_06">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+
+                   <br /><br />
+                  Parabéns, você chegou ao fim deste tutorial! Agora você já está um pouco mais familiarizado com este ambiente. Daqui a 30 dias lhe mostraremos este tutorial novamente.<br /><br />
+                  Deseja repetir este tutorial? 
+
+
+
+                </div>
+                <div class="alert-two-row-two">
+
+                    <!--div class="alert-one-columns">
+                        <div class="alert-one-columns-one" >
+                            <p>Ok</p>
+                        </div>
+                    </div-->
+
+                    <div class="alert-two-columns">
+                        <div class="alert-two-columns-one" onclick="document.getElementById('alert_início_beta_06').style.visibility = 'hidden';Tutorial.Set({name:'início_beta'});">
+                            <p>Não</p>
+                        </div>
+                      <div class="alert-two-columns-two" onclick="document.getElementById('alert_início_beta_06').style.visibility = 'hidden'; document.getElementById('alert_início_beta_02').style.visibility = 'visible'">
+                          <p>Sim</p>
+                      </div>
+                    </div>
+                    <p>Ok</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock alert_u %}

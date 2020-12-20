@@ -1,0 +1,74 @@
+{
+  "name": "Banco de Questões de Matemática",
+  "short_name": "BQM",
+  "description": "BQM é uma plataforma gratuita que tem o objetivo de facilitar a elaboração de atividades avaliativas de matemática. É um banco com mais de 500 questões organizadas conforme eixo temático, objeto de conhecimento, ciclo de ensino e nível de dificuldade. Aproveite!",
+  "lang": "pt-BR",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#0b2639",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "media/icon48x48px.png",
+      "sizes": "48x48",
+      "type": "image/png",
+      "purpose":"any maskable"
+    },
+    {
+      "src": "media/icon72x72px.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose":"any maskable"
+    },
+    {
+      "src": "media/icon96x96px.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose":"any maskable"
+    },
+    {
+      "src": "media/icon128x128px.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose":"any maskable"
+    },
+    {
+      "src": "media/icon144x144px.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose":"any maskable"
+    },
+    {
+      "src": "media/icon152x152px.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose":"any maskable"
+    },
+    {
+      "src": "media/icon192x192px.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose":"any maskable"
+    },
+    {
+      "src": "media/icon256x256px.png",
+      "sizes": "256x256",
+      "type": "image/png",
+      "purpose":"any maskable"
+    },
+    {
+      "src": "media/icon384x384px.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose":"any maskable"
+    },
+    {
+      "src": "media/icon512x512px.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose":"any maskable"
+    }
+  ]
+}

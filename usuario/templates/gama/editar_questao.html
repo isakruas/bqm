@@ -1,0 +1,261 @@
+{% extends 'templates/base.html' %}
+{% block is_not_authenticated %}
+<meta http-equiv="refresh" content="0; URL='../usuario/sair/'"/>
+{% endblock is_not_authenticated %}
+{% block is_authenticated_alfa %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/alfa/'"/>
+{% endblock is_authenticated_alfa %}
+{% block is_authenticated_beta %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/beta/'"/>
+{% endblock is_authenticated_beta %}
+{% block is_authenticated_delta %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/delta/'"/>
+{% endblock is_authenticated_delta %}
+{% block is_authenticated_epsilon %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/epsilon/'"/>
+{% endblock is_authenticated_epsilon %}
+{% block nav_gama %}
+<div class="nav-three-row">
+
+  <div class="nav-three-row-one">
+
+  </div>
+
+  <div class="nav-three-row-two">
+    <svg onclick = "System.Redirect('../../../')"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3.222 18.917c5.666-5.905-.629-10.828-5.011-7.706l1.789 1.789h-6v-6l1.832 1.832c7.846-6.07 16.212 4.479 7.39 10.085z" />
+    </svg>
+  </div>
+
+  <div class="nav-three-row-three">
+
+  </div>
+
+</div>
+{% endblock nav_gama %}
+
+{% block main_gama %}
+ 
+<script type="text/javascript">
+  function set(el, va){
+    if (document.getElementById(el) != null) {
+      document.getElementById(el).value = va;
+    } 
+  }
+   
+</script>
+<script type="text/javascript">
+  document.getElementById('info').innerHTML = '<h2 style="white-space: nowrap">DASHBOARD > EDITAR > QUESTÃO</h2>';
+</script>
+<div class="main-one-columns">
+  <div class="main-one-columns-one">
+ 
+        <p class="a b"  style="margin-bottom: 0cm;">Etapa</p>
+        <select class="a b" id="etapa" name="etapa" onchange="set('id_etapa', this.value); ano(this.value); ">
+        </select>
+        <br>
+        <p class="a b"  style="margin-bottom: 0cm;">Ano</p>
+        <br>
+        <select class="a b" id="ano" name="ano" onchange="set('id_ano', this.value);unidade_tematica(this.value);">
+        </select>
+        <br>
+        <p class="a b"  style="margin-bottom: 0cm;">Unidade temática</p>
+        <br>
+        <select class="a b" id="unidade_tematica" name="unidade_tematica" onchange="set('id_unidade_tematica', this.value); objeto_de_conhecimento(this.value);">
+        </select>
+        <br>
+        <p class="a b"  style="margin-bottom: 0cm;">Objeto de conhecimento</p>
+        <br>
+        <select class="a b" id="objeto_de_conhecimento" name="objeto_de_conhecimento" onchange="set('id_objeto_de_conhecimento', this.value); nivel_de_dificuldade(this.value);">
+        </select>
+        <br>
+        <p class="a b"  style="margin-bottom: 0cm;">Nível de dificuldade</p>
+        <br>
+        <select class="a b" id="nivel_de_dificuldade" name="nivel_de_dificuldade" onchange="set('id_nivel_de_dificuldade', this.value); questao(this.value);">
+        </select>
+        <br>
+
+        <p class="a b"  style="margin-top: 0cm;  margin-bottom: 0cm;">URL da imagem, caso haja. Se não houver digitar null. Para realizar upload de uma imagem clique  <a href="../../../../upload/form/" target="blank">aqui</a></p>
+        <input class="a b" type="text" id="questao_img" onchange="set('id_imagem', this.value);">
+        <br>
+        <p class="a b" id="pergunta_input_p" style="margin-top: 0cm;  margin-bottom: 0cm;">Pergunta</p>
+        <textarea class="a b" id="pergunta_input" cols="60" rows="10" onkeyup="set('id_pergunta', this.value); Preview.Update()" style="resize: none; visibility: visible;margin-top:5px"></textarea>
+        <br>
+        <p class="a b" id="pergunta_buffer_p"  style="margin-top: 0cm;  margin-bottom: 0cm;">Preview pergunta</p>
+        <div class="a b"id="pergunta_buffer" style="visibility: visible;border:1px solid; padding: 3px;"></div>
+        <br>
+        <p class="a b" id="resposta_input_p"  style="margin-top: 0cm;  margin-bottom: 0cm;">Resposta</p>
+        <textarea class="a b" id="resposta_input" cols="60" rows="10" onkeyup="set('id_resposta', this.value); PreviewAnswer.Update()" style="resize: none; visibility: visible;margin-top:5px"></textarea>
+        <br>
+        <p class="a b" id="resposta_buffer_p"  style="margin-top: 0cm;  margin-bottom: 0cm;">Preview resposta</p>
+        <div class="a b" id="resposta_buffer" style="visibility: visible;border:1px solid; padding: 3px;"></div>
+        <br>
+
+
+        <div class="a" id="pergunta_preview" style="visibility:hidden;">
+        </div>
+        <div class="a" id="resposta_preview" style="visibility:hidden;">
+        </div>
+
+        <form method="post" >
+          {% csrf_token %}
+          <ul style=" visibility: hidden;display: none;"> 
+           
+          {{ form.as_ul }}  
+          </ul>
+          <button class="a b" type="submit">Marcar como revisada</button>
+        </form>
+  </div>
+</div>
+
+
+
+    <script type="text/javascript"> 
+
+      var Etapa, Ano, Unidade_temática, Objeto_de_conhecimento;
+
+
+      if (window.location.hostname == "localhost") {
+        var URL = "http://localhost:8000";
+      } else {
+        var URL = "https://bq.mat.br";
+      }
+
+
+      function etapa() {
+        System.Ajax.Get({
+          url: URL + "/questao/listar/etapas/",
+          data: "",
+          success: function(data) {
+            var etapa_obj = JSON.parse(data);
+            var etapa_html = "";
+            for (var i = 0; i < etapa_obj['etapa'][0]['ids'].length; i++) {
+              if (etapa_obj['etapa'][0]['ids'][i] !== "null") {
+                etapa_html = etapa_html + '<option value="' + etapa_obj['etapa'][0]['ids'][i] + '">' + etapa_obj['etapa'][0]['nms'][i] + '</option>'
+              }
+            }
+            document.getElementById('etapa').innerHTML = etapa_html;
+            document.getElementById('etapa').value = document.getElementById("id_etapa").value;
+          }
+        });
+      }
+      etapa();
+
+      function ano(etapa) {
+        document.getElementById('ano').innerHTML = '';
+        document.getElementById('unidade_tematica').innerHTML = '';
+        document.getElementById('objeto_de_conhecimento').innerHTML = '';
+        document.getElementById('nivel_de_dificuldade').innerHTML = '';
+
+        Etapa = etapa;
+
+        System.Ajax.Get({
+          url: URL + "/questao/listar/anos/" + Etapa + "/",
+          data: "",
+          success: function(data) {
+            html = "";
+            values = JSON.parse(data);
+            values = values.filter(function(a) {
+              return !this[JSON.stringify(a)] && (this[JSON.stringify(a)] = true);
+            }, Object.create(null))
+            for (var i = 0; i < values.length; i++) {
+              if (values[i] !== "") {
+                html = html + '<option value="' + values[i] + '">' + values[i] + '</option>';
+              }
+            }
+            document.getElementById('ano').innerHTML = html;
+            document.getElementById('ano').value = document.getElementById("id_ano").value;
+          }
+        });
+      }
+
+      ano(document.getElementById("id_etapa").value);
+
+      function unidade_tematica(ano) {
+        document.getElementById('unidade_tematica').innerHTML = '';
+        document.getElementById('objeto_de_conhecimento').innerHTML = '';
+        document.getElementById('nivel_de_dificuldade').innerHTML = '';
+        Ano = ano
+        document.getElementById('unidade_tematica').innerHTML = '';
+        document.getElementById('objeto_de_conhecimento').innerHTML = '';
+        System.Ajax.Get({
+          url: URL + "/questao/listar/unidadetematica/" + Etapa + "/" + Ano + "/",
+          data: "",
+          success: function(data) {
+            var unidade_tematica_obj = JSON.parse(data);
+            var unidade_tematica_html = "";
+            for (var i = 0; i < unidade_tematica_obj['unidade_tematica'][0]['ids'].length; i++) {
+              if (unidade_tematica_obj['unidade_tematica'][0]['ids'][i] !== "null") {
+                unidade_tematica_html = unidade_tematica_html + '<option value="' + unidade_tematica_obj['unidade_tematica'][0]['ids'][i] + '">' + unidade_tematica_obj['unidade_tematica'][0]['nms'][i] + '</option>'
+              }
+            }
+            document.getElementById('unidade_tematica').innerHTML = unidade_tematica_html;
+            document.getElementById('unidade_tematica').value = document.getElementById("id_unidade_tematica").value;
+
+          }
+        });
+      }
+      unidade_tematica(document.getElementById("id_ano").value);
+
+
+      function objeto_de_conhecimento(unidade_tematica) {
+        document.getElementById('objeto_de_conhecimento').innerHTML = '';
+        document.getElementById('nivel_de_dificuldade').innerHTML = '';
+        Unidade_temática = unidade_tematica;
+        document.getElementById('objeto_de_conhecimento').innerHTML = '';
+        System.Ajax.Get({
+          url: URL + "/questao/listar/objetodeconhecimento/" + Etapa + "/" + Ano + "/" + Unidade_temática + "/",
+          data: "",
+          success: function(data) {
+
+            var objeto_de_conhecimento_obj = JSON.parse(data);
+            var objeto_de_conhecimento_html = "";
+            for (var i = 0; i < objeto_de_conhecimento_obj['objeto_de_conhecimento'][0]['ids'].length; i++) {
+              if (objeto_de_conhecimento_obj['objeto_de_conhecimento'][0]['ids'][i] !== "null") {
+                objeto_de_conhecimento_html = objeto_de_conhecimento_html + '<option value="' + objeto_de_conhecimento_obj['objeto_de_conhecimento'][0]['ids'][i] + '">' + objeto_de_conhecimento_obj['objeto_de_conhecimento'][0]['nms'][i] + '</option>'
+              }
+            }
+
+            document.getElementById('objeto_de_conhecimento').innerHTML = objeto_de_conhecimento_html;
+            document.getElementById('objeto_de_conhecimento').value = document.getElementById("id_objeto_de_conhecimento").value;
+          }
+
+        });
+      }
+      objeto_de_conhecimento(document.getElementById("id_unidade_tematica").value)
+
+
+      function nivel_de_dificuldade(objeto_de_conhecimento) {
+        document.getElementById('nivel_de_dificuldade').innerHTML = '';
+        Objeto_de_conhecimento = objeto_de_conhecimento;
+        System.Ajax.Get({
+          url: URL + "/questao/listar/niveldedificuldade/",
+          data: "",
+          success: function(data) {
+
+            var nivel_de_dificuldade_obj = JSON.parse(data);
+            var nivel_de_dificuldade_html = "";
+            for (var i = 0; i < nivel_de_dificuldade_obj['nivel_de_dificuldade'][0]['ids'].length; i++) {
+              if (nivel_de_dificuldade_obj['nivel_de_dificuldade'][0]['ids'][i] !== "null") {
+                nivel_de_dificuldade_html = nivel_de_dificuldade_html + '<option value="' + nivel_de_dificuldade_obj['nivel_de_dificuldade'][0]['ids'][i] + '">' + nivel_de_dificuldade_obj['nivel_de_dificuldade'][0]['nms'][i] + '</option>'
+              }
+            }
+
+            document.getElementById('nivel_de_dificuldade').innerHTML = nivel_de_dificuldade_html;
+            document.getElementById('nivel_de_dificuldade').value = document.getElementById("id_nivel_de_dificuldade").value;
+          }
+        });
+      }
+
+      nivel_de_dificuldade(document.getElementById("id_objeto_de_conhecimento").value);
+
+      Preview.Init();
+      PreviewAnswer.Init();
+      set('questao_img', document.getElementById("id_imagem").value);
+      set('pergunta_input', document.getElementById("id_pergunta").value);
+      set('resposta_input', document.getElementById("id_resposta").value);
+      set('id_status','2');
+
+    </script>
+
+{% endblock main_gama %}

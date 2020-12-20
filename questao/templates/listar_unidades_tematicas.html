@@ -1,0 +1,22 @@
+{
+  "unidade_tematica": [
+    {
+    "ids": [
+      {% for el in unidade_tematica %}
+           
+          "{{el.unidade_tematica}}", 
+          
+      {% endfor %}
+      "null"
+      ],
+    "nms": [
+      {% for el in unidade_tematica %}
+           
+          "{{el.unidade_tematica_nome}}", 
+          
+      {% endfor %}
+      "null"
+      ]
+    }
+  ]
+}

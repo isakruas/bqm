@@ -1,0 +1,22 @@
+{
+  "etapa": [
+    {
+    "ids": [
+      {% for el in etapa %}
+           
+          "{{el.etapa}}", 
+          
+      {% endfor %}
+      "null"
+      ],
+    "nms": [
+      {% for el in etapa %}
+           
+          "{{el.etapa_nome}}", 
+          
+      {% endfor %}
+      "null"
+      ]
+    }
+  ]
+}

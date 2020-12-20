@@ -1,0 +1,278 @@
+{% extends 'templates/base.html' %}
+
+{% block is_not_authenticated %}
+ <meta http-equiv="refresh" content="0; URL='../usuario/sair/'"/>
+{% endblock is_not_authenticated %}
+
+{% block is_authenticated_alfa %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/alfa/'"/>
+{% endblock is_authenticated_alfa %}
+
+{% block is_authenticated_gama %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/gama/'"/>
+{% endblock is_authenticated_gama %}
+
+{% block is_authenticated_delta %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/delta/'"/>
+{% endblock is_authenticated_delta %}
+
+{% block is_authenticated_epsilon %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/epsilon/'"/>
+{% endblock is_authenticated_epsilon %}
+
+ 
+
+{% block nav_beta %}
+    <div class="nav-three-row">
+
+      <div class="nav-three-row-one">
+    
+      </div>
+     
+      <div class="nav-three-row-two">
+        <svg onclick = "System.Redirect('../')"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3.222 18.917c5.666-5.905-.629-10.828-5.011-7.706l1.789 1.789h-6v-6l1.832 1.832c7.846-6.07 16.212 4.479 7.39 10.085z" />
+        </svg>
+      </div>
+
+      <div class="nav-three-row-three">
+ 
+      </div>
+
+    </div>
+{% endblock nav_beta %}
+
+{% block main_beta %}
+<script type="text/javascript">
+  document.getElementById('info').innerHTML = '<h2 style="white-space: nowrap">DASHBOARD > CONFIGURAÇÃO</h2>';
+</script>
+  <div class="main-one-row">
+      <div class="main-one-row-one">
+          <div class="profile-header" style="height: 20vh">
+            <center>
+              <svg class="profile-header-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path  fill="currentColor" d="M512.1 191l-8.2 14.3c-3 5.3-9.4 7.5-15.1 5.4-11.8-4.4-22.6-10.7-32.1-18.6-4.6-3.8-5.8-10.5-2.8-15.7l8.2-14.3c-6.9-8-12.3-17.3-15.9-27.4h-16.5c-6 0-11.2-4.3-12.2-10.3-2-12-2.1-24.6 0-37.1 1-6 6.2-10.4 12.2-10.4h16.5c3.6-10.1 9-19.4 15.9-27.4l-8.2-14.3c-3-5.2-1.9-11.9 2.8-15.7 9.5-7.9 20.4-14.2 32.1-18.6 5.7-2.1 12.1.1 15.1 5.4l8.2 14.3c10.5-1.9 21.2-1.9 31.7 0L552 6.3c3-5.3 9.4-7.5 15.1-5.4 11.8 4.4 22.6 10.7 32.1 18.6 4.6 3.8 5.8 10.5 2.8 15.7l-8.2 14.3c6.9 8 12.3 17.3 15.9 27.4h16.5c6 0 11.2 4.3 12.2 10.3 2 12 2.1 24.6 0 37.1-1 6-6.2 10.4-12.2 10.4h-16.5c-3.6 10.1-9 19.4-15.9 27.4l8.2 14.3c3 5.2 1.9 11.9-2.8 15.7-9.5 7.9-20.4 14.2-32.1 18.6-5.7 2.1-12.1-.1-15.1-5.4l-8.2-14.3c-10.4 1.9-21.2 1.9-31.7 0zm-10.5-58.8c38.5 29.6 82.4-14.3 52.8-52.8-38.5-29.7-82.4 14.3-52.8 52.8zM386.3 286.1l33.7 16.8c10.1 5.8 14.5 18.1 10.5 29.1-8.9 24.2-26.4 46.4-42.6 65.8-7.4 8.9-20.2 11.1-30.3 5.3l-29.1-16.8c-16 13.7-34.6 24.6-54.9 31.7v33.6c0 11.6-8.3 21.6-19.7 23.6-24.6 4.2-50.4 4.4-75.9 0-11.5-2-20-11.9-20-23.6V418c-20.3-7.2-38.9-18-54.9-31.7L74 403c-10 5.8-22.9 3.6-30.3-5.3-16.2-19.4-33.3-41.6-42.2-65.7-4-10.9.4-23.2 10.5-29.1l33.3-16.8c-3.9-20.9-3.9-42.4 0-63.4L12 205.8c-10.1-5.8-14.6-18.1-10.5-29 8.9-24.2 26-46.4 42.2-65.8 7.4-8.9 20.2-11.1 30.3-5.3l29.1 16.8c16-13.7 34.6-24.6 54.9-31.7V57.1c0-11.5 8.2-21.5 19.6-23.5 24.6-4.2 50.5-4.4 76-.1 11.5 2 20 11.9 20 23.6v33.6c20.3 7.2 38.9 18 54.9 31.7l29.1-16.8c10-5.8 22.9-3.6 30.3 5.3 16.2 19.4 33.2 41.6 42.1 65.8 4 10.9.1 23.2-10 29.1l-33.7 16.8c3.9 21 3.9 42.5 0 63.5zm-117.6 21.1c59.2-77-28.7-164.9-105.7-105.7-59.2 77 28.7 164.9 105.7 105.7zm243.4 182.7l-8.2 14.3c-3 5.3-9.4 7.5-15.1 5.4-11.8-4.4-22.6-10.7-32.1-18.6-4.6-3.8-5.8-10.5-2.8-15.7l8.2-14.3c-6.9-8-12.3-17.3-15.9-27.4h-16.5c-6 0-11.2-4.3-12.2-10.3-2-12-2.1-24.6 0-37.1 1-6 6.2-10.4 12.2-10.4h16.5c3.6-10.1 9-19.4 15.9-27.4l-8.2-14.3c-3-5.2-1.9-11.9 2.8-15.7 9.5-7.9 20.4-14.2 32.1-18.6 5.7-2.1 12.1.1 15.1 5.4l8.2 14.3c10.5-1.9 21.2-1.9 31.7 0l8.2-14.3c3-5.3 9.4-7.5 15.1-5.4 11.8 4.4 22.6 10.7 32.1 18.6 4.6 3.8 5.8 10.5 2.8 15.7l-8.2 14.3c6.9 8 12.3 17.3 15.9 27.4h16.5c6 0 11.2 4.3 12.2 10.3 2 12 2.1 24.6 0 37.1-1 6-6.2 10.4-12.2 10.4h-16.5c-3.6 10.1-9 19.4-15.9 27.4l8.2 14.3c3 5.2 1.9 11.9-2.8 15.7-9.5 7.9-20.4 14.2-32.1 18.6-5.7 2.1-12.1-.1-15.1-5.4l-8.2-14.3c-10.4 1.9-21.2 1.9-31.7 0zM501.6 431c38.5 29.6 82.4-14.3 52.8-52.8-38.5-29.6-82.4 14.3-52.8 52.8z"/></svg>
+            </center>
+
+            <center>
+              <span class="profile-header-span">{{ user.email }}</span>
+            </center>
+
+          </div>
+
+          <div class="main-auto-row-auto">
+
+              <div class="profile-footer-ul">
+                   <div style="height: 1cm; border: 0.05cm solid #002907; background: #f4f5f6" onclick = "System.Redirect('./modificar_senha/')" >
+                      <p style="position: relative ; width: 5cm; top: 25%; text-align: center;left: 50%;margin-left: -2.5cm; font-weight: bold;">Modificar senha</p>
+                  </div>
+              </div>
+
+          </div>
+
+          <!--div class="main-auto-row-auto">
+
+              <div class="profile-footer-ul">
+                  <div style="height: 1cm; border: 0.05cm solid #002907; background: #f4f5f6" onclick=" document.getElementById('alert_excluir_conta_01').style.visibility = 'visible'">
+                      <p style="position: relative ; width: 5cm; top: 25%; text-align: center;left: 50%;margin-left: -2.5cm; font-weight: bold;">Excluir conta</p>
+                  </div>
+              </div>
+
+          </div-->
+
+      </div>
+  </div>
+{% endblock main_beta %}
+
+
+{% block nav_gama %}
+    <div class="nav-three-row">
+
+      <div class="nav-three-row-one">
+    
+      </div>
+     
+      <div class="nav-three-row-two">
+        <svg onclick = "System.Redirect('../')"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3.222 18.917c5.666-5.905-.629-10.828-5.011-7.706l1.789 1.789h-6v-6l1.832 1.832c7.846-6.07 16.212 4.479 7.39 10.085z" />
+        </svg>
+      </div>
+
+      <div class="nav-three-row-three">
+ 
+      </div>
+
+    </div>
+{% endblock nav_gama %}
+
+{% block main_gama %}
+<script type="text/javascript">
+  document.getElementById('info').innerHTML = '<h2 style="white-space: nowrap">DASHBOARD > CONFIGURAÇÃO</h2>';
+</script>
+  <div class="main-one-row">
+      <div class="main-one-row-one">
+          <div class="profile-header" style="height: 20vh">
+            <center>
+              <svg class="profile-header-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path  fill="currentColor" d="M512.1 191l-8.2 14.3c-3 5.3-9.4 7.5-15.1 5.4-11.8-4.4-22.6-10.7-32.1-18.6-4.6-3.8-5.8-10.5-2.8-15.7l8.2-14.3c-6.9-8-12.3-17.3-15.9-27.4h-16.5c-6 0-11.2-4.3-12.2-10.3-2-12-2.1-24.6 0-37.1 1-6 6.2-10.4 12.2-10.4h16.5c3.6-10.1 9-19.4 15.9-27.4l-8.2-14.3c-3-5.2-1.9-11.9 2.8-15.7 9.5-7.9 20.4-14.2 32.1-18.6 5.7-2.1 12.1.1 15.1 5.4l8.2 14.3c10.5-1.9 21.2-1.9 31.7 0L552 6.3c3-5.3 9.4-7.5 15.1-5.4 11.8 4.4 22.6 10.7 32.1 18.6 4.6 3.8 5.8 10.5 2.8 15.7l-8.2 14.3c6.9 8 12.3 17.3 15.9 27.4h16.5c6 0 11.2 4.3 12.2 10.3 2 12 2.1 24.6 0 37.1-1 6-6.2 10.4-12.2 10.4h-16.5c-3.6 10.1-9 19.4-15.9 27.4l8.2 14.3c3 5.2 1.9 11.9-2.8 15.7-9.5 7.9-20.4 14.2-32.1 18.6-5.7 2.1-12.1-.1-15.1-5.4l-8.2-14.3c-10.4 1.9-21.2 1.9-31.7 0zm-10.5-58.8c38.5 29.6 82.4-14.3 52.8-52.8-38.5-29.7-82.4 14.3-52.8 52.8zM386.3 286.1l33.7 16.8c10.1 5.8 14.5 18.1 10.5 29.1-8.9 24.2-26.4 46.4-42.6 65.8-7.4 8.9-20.2 11.1-30.3 5.3l-29.1-16.8c-16 13.7-34.6 24.6-54.9 31.7v33.6c0 11.6-8.3 21.6-19.7 23.6-24.6 4.2-50.4 4.4-75.9 0-11.5-2-20-11.9-20-23.6V418c-20.3-7.2-38.9-18-54.9-31.7L74 403c-10 5.8-22.9 3.6-30.3-5.3-16.2-19.4-33.3-41.6-42.2-65.7-4-10.9.4-23.2 10.5-29.1l33.3-16.8c-3.9-20.9-3.9-42.4 0-63.4L12 205.8c-10.1-5.8-14.6-18.1-10.5-29 8.9-24.2 26-46.4 42.2-65.8 7.4-8.9 20.2-11.1 30.3-5.3l29.1 16.8c16-13.7 34.6-24.6 54.9-31.7V57.1c0-11.5 8.2-21.5 19.6-23.5 24.6-4.2 50.5-4.4 76-.1 11.5 2 20 11.9 20 23.6v33.6c20.3 7.2 38.9 18 54.9 31.7l29.1-16.8c10-5.8 22.9-3.6 30.3 5.3 16.2 19.4 33.2 41.6 42.1 65.8 4 10.9.1 23.2-10 29.1l-33.7 16.8c3.9 21 3.9 42.5 0 63.5zm-117.6 21.1c59.2-77-28.7-164.9-105.7-105.7-59.2 77 28.7 164.9 105.7 105.7zm243.4 182.7l-8.2 14.3c-3 5.3-9.4 7.5-15.1 5.4-11.8-4.4-22.6-10.7-32.1-18.6-4.6-3.8-5.8-10.5-2.8-15.7l8.2-14.3c-6.9-8-12.3-17.3-15.9-27.4h-16.5c-6 0-11.2-4.3-12.2-10.3-2-12-2.1-24.6 0-37.1 1-6 6.2-10.4 12.2-10.4h16.5c3.6-10.1 9-19.4 15.9-27.4l-8.2-14.3c-3-5.2-1.9-11.9 2.8-15.7 9.5-7.9 20.4-14.2 32.1-18.6 5.7-2.1 12.1.1 15.1 5.4l8.2 14.3c10.5-1.9 21.2-1.9 31.7 0l8.2-14.3c3-5.3 9.4-7.5 15.1-5.4 11.8 4.4 22.6 10.7 32.1 18.6 4.6 3.8 5.8 10.5 2.8 15.7l-8.2 14.3c6.9 8 12.3 17.3 15.9 27.4h16.5c6 0 11.2 4.3 12.2 10.3 2 12 2.1 24.6 0 37.1-1 6-6.2 10.4-12.2 10.4h-16.5c-3.6 10.1-9 19.4-15.9 27.4l8.2 14.3c3 5.2 1.9 11.9-2.8 15.7-9.5 7.9-20.4 14.2-32.1 18.6-5.7 2.1-12.1-.1-15.1-5.4l-8.2-14.3c-10.4 1.9-21.2 1.9-31.7 0zM501.6 431c38.5 29.6 82.4-14.3 52.8-52.8-38.5-29.6-82.4 14.3-52.8 52.8z"/></svg>
+            </center>
+
+            <center>
+              <span class="profile-header-span">{{ user.email }}</span>
+            </center>
+
+          </div>
+
+          <div class="main-auto-row-auto">
+
+              <div class="profile-footer-ul">
+                   <div style="height: 1cm; border: 0.05cm solid #002907; background: #f4f5f6" onclick = "System.Redirect('./modificar_senha/')" >
+                      <p style="position: relative ; width: 5cm; top: 25%; text-align: center;left: 50%;margin-left: -2.5cm; font-weight: bold;">Modificar senha</p>
+                  </div>
+              </div>
+
+          </div>
+
+          <!--div class="main-auto-row-auto">
+
+              <div class="profile-footer-ul">
+                  <div style="height: 1cm; border: 0.05cm solid #002907; background: #f4f5f6" onclick=" document.getElementById('alert_excluir_conta_01').style.visibility = 'visible'">
+                      <p style="position: relative ; width: 5cm; top: 25%; text-align: center;left: 50%;margin-left: -2.5cm; font-weight: bold;">Excluir conta</p>
+                  </div>
+              </div>
+
+          </div-->
+
+      </div>
+  </div>
+{% endblock main_gama %}
+
+{% block nav_delta %}
+    <div class="nav-three-row">
+
+      <div class="nav-three-row-one">
+    
+      </div>
+     
+      <div class="nav-three-row-two">
+        <svg onclick = "System.Redirect('../')"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3.222 18.917c5.666-5.905-.629-10.828-5.011-7.706l1.789 1.789h-6v-6l1.832 1.832c7.846-6.07 16.212 4.479 7.39 10.085z" />
+        </svg>
+      </div>
+
+      <div class="nav-three-row-three">
+ 
+      </div>
+
+    </div>
+{% endblock nav_delta %}
+
+{% block main_delta %}
+<script type="text/javascript">
+  document.getElementById('info').innerHTML = '<h2 style="white-space: nowrap">DASHBOARD > CONFIGURAÇÃO</h2>';
+</script>
+  <div class="main-one-row">
+      <div class="main-one-row-one">
+          <div class="profile-header" style="height: 20vh">
+
+            <center>
+              <svg class="profile-header-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path  fill="currentColor" d="M512.1 191l-8.2 14.3c-3 5.3-9.4 7.5-15.1 5.4-11.8-4.4-22.6-10.7-32.1-18.6-4.6-3.8-5.8-10.5-2.8-15.7l8.2-14.3c-6.9-8-12.3-17.3-15.9-27.4h-16.5c-6 0-11.2-4.3-12.2-10.3-2-12-2.1-24.6 0-37.1 1-6 6.2-10.4 12.2-10.4h16.5c3.6-10.1 9-19.4 15.9-27.4l-8.2-14.3c-3-5.2-1.9-11.9 2.8-15.7 9.5-7.9 20.4-14.2 32.1-18.6 5.7-2.1 12.1.1 15.1 5.4l8.2 14.3c10.5-1.9 21.2-1.9 31.7 0L552 6.3c3-5.3 9.4-7.5 15.1-5.4 11.8 4.4 22.6 10.7 32.1 18.6 4.6 3.8 5.8 10.5 2.8 15.7l-8.2 14.3c6.9 8 12.3 17.3 15.9 27.4h16.5c6 0 11.2 4.3 12.2 10.3 2 12 2.1 24.6 0 37.1-1 6-6.2 10.4-12.2 10.4h-16.5c-3.6 10.1-9 19.4-15.9 27.4l8.2 14.3c3 5.2 1.9 11.9-2.8 15.7-9.5 7.9-20.4 14.2-32.1 18.6-5.7 2.1-12.1-.1-15.1-5.4l-8.2-14.3c-10.4 1.9-21.2 1.9-31.7 0zm-10.5-58.8c38.5 29.6 82.4-14.3 52.8-52.8-38.5-29.7-82.4 14.3-52.8 52.8zM386.3 286.1l33.7 16.8c10.1 5.8 14.5 18.1 10.5 29.1-8.9 24.2-26.4 46.4-42.6 65.8-7.4 8.9-20.2 11.1-30.3 5.3l-29.1-16.8c-16 13.7-34.6 24.6-54.9 31.7v33.6c0 11.6-8.3 21.6-19.7 23.6-24.6 4.2-50.4 4.4-75.9 0-11.5-2-20-11.9-20-23.6V418c-20.3-7.2-38.9-18-54.9-31.7L74 403c-10 5.8-22.9 3.6-30.3-5.3-16.2-19.4-33.3-41.6-42.2-65.7-4-10.9.4-23.2 10.5-29.1l33.3-16.8c-3.9-20.9-3.9-42.4 0-63.4L12 205.8c-10.1-5.8-14.6-18.1-10.5-29 8.9-24.2 26-46.4 42.2-65.8 7.4-8.9 20.2-11.1 30.3-5.3l29.1 16.8c16-13.7 34.6-24.6 54.9-31.7V57.1c0-11.5 8.2-21.5 19.6-23.5 24.6-4.2 50.5-4.4 76-.1 11.5 2 20 11.9 20 23.6v33.6c20.3 7.2 38.9 18 54.9 31.7l29.1-16.8c10-5.8 22.9-3.6 30.3 5.3 16.2 19.4 33.2 41.6 42.1 65.8 4 10.9.1 23.2-10 29.1l-33.7 16.8c3.9 21 3.9 42.5 0 63.5zm-117.6 21.1c59.2-77-28.7-164.9-105.7-105.7-59.2 77 28.7 164.9 105.7 105.7zm243.4 182.7l-8.2 14.3c-3 5.3-9.4 7.5-15.1 5.4-11.8-4.4-22.6-10.7-32.1-18.6-4.6-3.8-5.8-10.5-2.8-15.7l8.2-14.3c-6.9-8-12.3-17.3-15.9-27.4h-16.5c-6 0-11.2-4.3-12.2-10.3-2-12-2.1-24.6 0-37.1 1-6 6.2-10.4 12.2-10.4h16.5c3.6-10.1 9-19.4 15.9-27.4l-8.2-14.3c-3-5.2-1.9-11.9 2.8-15.7 9.5-7.9 20.4-14.2 32.1-18.6 5.7-2.1 12.1.1 15.1 5.4l8.2 14.3c10.5-1.9 21.2-1.9 31.7 0l8.2-14.3c3-5.3 9.4-7.5 15.1-5.4 11.8 4.4 22.6 10.7 32.1 18.6 4.6 3.8 5.8 10.5 2.8 15.7l-8.2 14.3c6.9 8 12.3 17.3 15.9 27.4h16.5c6 0 11.2 4.3 12.2 10.3 2 12 2.1 24.6 0 37.1-1 6-6.2 10.4-12.2 10.4h-16.5c-3.6 10.1-9 19.4-15.9 27.4l8.2 14.3c3 5.2 1.9 11.9-2.8 15.7-9.5 7.9-20.4 14.2-32.1 18.6-5.7 2.1-12.1-.1-15.1-5.4l-8.2-14.3c-10.4 1.9-21.2 1.9-31.7 0zM501.6 431c38.5 29.6 82.4-14.3 52.8-52.8-38.5-29.6-82.4 14.3-52.8 52.8z"/></svg>
+            </center>
+
+            <center>
+              <span class="profile-header-span">{{ user.email }}</span>
+            </center>
+
+          </div>
+
+          <div class="main-auto-row-auto">
+
+              <div class="profile-footer-ul">
+                   <div style="height: 1cm; border: 0.05cm solid #002907; background: #f4f5f6" onclick = "System.Redirect('./modificar_senha/')" >
+                      <p style="position: relative ; width: 5cm; top: 25%; text-align: center;left: 50%;margin-left: -2.5cm; font-weight: bold;">Modificar senha</p>
+                  </div>
+              </div>
+
+          </div>
+
+          <!--div class="main-auto-row-auto">
+
+              <div class="profile-footer-ul">
+                  <div style="height: 1cm; border: 0.05cm solid #002907; background: #f4f5f6" onclick=" document.getElementById('alert_excluir_conta_01').style.visibility = 'visible'">
+                      <p style="position: relative ; width: 5cm; top: 25%; text-align: center;left: 50%;margin-left: -2.5cm; font-weight: bold;">Excluir conta</p>
+                  </div>
+              </div>
+
+          </div-->
+
+      </div>
+  </div>
+{% endblock main_delta %}
+
+
+
+{% block alert_u %}
+
+<div class="alert" id="alert_excluir_conta_01">
+    <div class="alert-box">
+        <div class="alert-two-row">
+            <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+               Ao continuar este processo, sua conta será desativada. Este processo não será reversível, sua conta será desativada definitivamente, sem a possibilidade de recuperá-la. 
+                <br /><br />
+               Deseja continuar o processo?
+            </div>
+            <div class="alert-two-row-two">
+
+                <!--div class="alert-one-columns">
+                    <div class="alert-one-columns-one" onclick=" document.getElementById('alert').style.visibility = 'hidden'" >
+                        <p>Ok</p>
+                    </div>
+                </div-->
+
+                <div class="alert-two-columns">
+                    <div class="alert-two-columns-one" onclick="document.getElementById('alert_excluir_conta_01').style.visibility = 'hidden';">
+                        <p>Não</p>
+                    </div>
+                    <div class="alert-two-columns-two" onclick="document.getElementById('alert_excluir_conta_01').style.visibility = 'hidden'; document.getElementById('alert_excluir_conta_02').style.visibility = 'visible'">
+                        <p>Sim</p>
+                    </div>
+                </div>
+                 
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="alert" id="alert_excluir_conta_02">
+    <div class="alert-box">
+        <div class="alert-two-row">
+            <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+
+              Ok, iremos processamos sua solicitação.
+              <br /><br />
+              Sentiremos sua falta! Esperamos ter conseguido fornecer a você um serviço util; nosso principal objetivo é fornecer a você recursos que venham a facilitar o processo de ensino e aprendizagem de matemática. Esperamos que em algum momento futuro você volte a utilizar os nossos serviços, obrigado pelo tempo que ficou conosco.
+
+             
+            </div>
+            <div class="alert-two-row-two">
+
+                <!--div class="alert-one-columns">
+                    <div class="alert-one-columns-one" onclick=" document.getElementById('alert').style.visibility = 'hidden'" >
+                        <p>Ok</p>
+                    </div>
+                </div-->
+
+                <div class="alert-two-columns">
+                    <div class="alert-two-columns-one" onclick="document.getElementById('alert_excluir_conta_02').style.visibility = 'hidden';">
+                        <p>Cancelar exclusão</p>
+                    </div>
+                    <div class="alert-two-columns-two" onclick="document.getElementById('alert_excluir_conta_02').style.visibility = 'hidden'; location.href='./excluir_conta/{{user.id}}/' ">
+                        <p>Prosseguir</p>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock alert_u %}

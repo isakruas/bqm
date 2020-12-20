@@ -1,0 +1,22 @@
+{
+  "objeto_de_conhecimento": [
+    {
+    "ids": [
+      {% for el in objeto_de_conhecimento %}
+           
+          "{{el.objeto_de_conhecimento}}", 
+          
+      {% endfor %}
+      "null"
+      ],
+    "nms": [
+      {% for el in objeto_de_conhecimento %}
+           
+          "{{el.objeto_de_conhecimento_nome}}", 
+          
+      {% endfor %}
+      "null"
+      ]
+    }
+  ]
+}

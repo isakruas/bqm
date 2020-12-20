@@ -1,0 +1,14 @@
+{
+  "fsi": [
+    {
+    "ids": [
+      {% for el in fsi %}
+           
+          "{{el.inferior}}", 
+          
+      {% endfor %}
+      "null"
+      ]
+    }
+  ]
+}

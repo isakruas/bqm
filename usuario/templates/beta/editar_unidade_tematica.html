@@ -1,0 +1,85 @@
+{% extends 'templates/base.html' %}
+
+{% block is_not_authenticated %}
+ <meta http-equiv="refresh" content="0; URL='../usuario/sair/'"/>
+{% endblock is_not_authenticated %}
+
+{% block is_authenticated_alfa %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/alfa/'"/>
+{% endblock is_authenticated_alfa %}
+
+{% block is_authenticated_gama %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/gama/'"/>
+{% endblock is_authenticated_gama %}
+
+{% block is_authenticated_delta %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/delta/'"/>
+{% endblock is_authenticated_delta %}
+
+{% block is_authenticated_epsilon %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/epsilon/'"/>
+{% endblock is_authenticated_epsilon %}
+
+{% block nav_beta %}
+<div class="nav-three-row">
+
+  <div class="nav-three-row-one">
+
+  </div>
+
+  <div class="nav-three-row-two">
+    <svg onclick = "System.Redirect('../../../listar/unidade_tematica/')"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3.222 18.917c5.666-5.905-.629-10.828-5.011-7.706l1.789 1.789h-6v-6l1.832 1.832c7.846-6.07 16.212 4.479 7.39 10.085z" />
+    </svg>
+  </div>
+
+  <div class="nav-three-row-three">
+
+  </div>
+
+</div>
+{% endblock nav_beta %}
+
+{% block main_beta %}
+ 
+<script type="text/javascript">
+  function set(el, va){
+    if (document.getElementById(el) != null) {
+      document.getElementById(el).value = va;
+    } 
+  }
+
+</script>
+<script type="text/javascript">
+  document.getElementById('info').innerHTML = '<h2 style="white-space: nowrap">DASHBOARD > EDITAR > UNIDADE TEMÁTICA</h2>';
+</script>
+<div class="main-one-columns">
+  <div class="main-one-columns-one">
+      <p class="a b"  style="margin-bottom: 0cm;">Etapa (id):</p>
+      <input class="a b" type="number" min="1" id="etapa" onchange="set('id_etapa', this.value);" >
+      <br>
+      <p class="a b"  style="margin-bottom: 0cm;">Ano (nome):</p>
+      <input class="a b"  type="text" id="ano" onchange="set('id_ano', this.value);"  >
+      <br>
+      <p class="a b"  style="margin-bottom: 0cm;">Unidade temática (nome):</p>
+      <input class="a b"  type="text" id="unidade_tematica_nome" onchange="set('id_unidade_tematica_nome', this.value);"   >
+      <br>
+      <form method="post" >
+        {% csrf_token %}
+        <ul style=" visibility: hidden;display: none;">
+        {{ form.as_ul }}  
+        </ul>
+        <button class="a b" type="submit">Salvar alteração</button>
+      </form>
+
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  set("etapa",document.getElementById("id_etapa").value);
+  set("ano",document.getElementById("id_ano").value);
+  set("unidade_tematica_nome",document.getElementById("id_unidade_tematica_nome").value);
+</script>
+
+{% endblock main_beta %}
