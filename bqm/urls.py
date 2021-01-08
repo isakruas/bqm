@@ -61,7 +61,7 @@ urlpatterns = [
     path('api/docs/', include_docs_urls(title='BQM: APIs Docs', public=False)),
     re_path('app.js', app_js),
     path('manifest.json', manifest_json),
-    path('sw.js', sw_js),
+    # path('sw.js', sw_js),
     path('robots.txt', robots_txt),
     path('sitemap.xml', sitemap_xml),
     path('api/v1/token/csrf/',csrf),

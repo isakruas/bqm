@@ -68,16 +68,27 @@
                   <br />
                   <button class="button"  onclick="alterar_senha(0)"> MODIFICAR SENHA</button>
                   <br />
-                  <button class="button" onclick="excluir_conta(0)"> EXCLUIR CONTA</button>
+                  <button class="button" style="background-color: #A30000" onclick="excluir_conta(0)"> EXCLUIR CONTA</button>
                   <br />
+                  <button class="button" onclick="sair()"> SAIR</button>
+                  <br />
+
                 </center>
 
               </div>
         </div>
       </div>
+
   </div>
+  
+  <br /><br />
 
 <script type="text/javascript">
+
+
+function sair(){
+  location.href = '../../sair/';
+}
 
 function alterar_senha(status){
 
