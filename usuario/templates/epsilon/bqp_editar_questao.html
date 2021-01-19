@@ -44,7 +44,7 @@
 <script type="text/javascript">
 
 
-if (BQ.Storage.Get({key:'editar_avaliacao'}) == null) {
+if (BQ.Storage.Get({key:'editar_questao'}) == null) {
     location.href = '../../';
 }
  
@@ -57,13 +57,13 @@ BQ.Storage.Set({key:'imprimir_avaliacao', value:null});
 
 
 
-var editar_avaliacao = BQ.Storage.Get({key:'editar_avaliacao'});
+var editar_questao = BQ.Storage.Get({key:'editar_questao'});
 
 
 BQ.Api.Get({
 
   route:'questao/',
-  id:editar_avaliacao,
+  id:editar_questao,
   headers: {
       'Access-Control-Allow-Origin': window.location.href,
       'Authorization': 'Token ' + token,
@@ -1045,7 +1045,7 @@ function cadastrar(){
       'Authorization': 'Token ' + token,
     },
 
-    id:BQ.Storage.Get({key:'editar_avaliacao'}),
+    id:BQ.Storage.Get({key:'editar_questao'}),
 
     data: {
         'status'                  :3,

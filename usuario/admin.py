@@ -1,7 +1,8 @@
 from django.contrib import admin
 
 from .models import (
-    Usuario
+    Usuario,
+    Filiacao
 )
 
 
@@ -16,5 +17,15 @@ class UsuarioAdmin(admin.ModelAdmin):
         'nivel_de_acesso',
         'is_superuser',
         'is_active'
+
+    )
+
+
+@admin.register(Filiacao)
+class FiliacaoAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'superior',
+        'inferior'
 
     )

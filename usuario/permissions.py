@@ -1,12 +1,4 @@
-import json
-
-from django.core import serializers
 from rest_framework import permissions
-
-from questao.models import (
-    Imprimir
-)
-
 
 
 class FiliacaoPermissions(permissions.BasePermission):
@@ -23,8 +15,8 @@ class FiliacaoPermissions(permissions.BasePermission):
         else:
             return False
 
-class ImprimirPermissions(permissions.BasePermission):
 
+class ImprimirPermissions(permissions.BasePermission):
     methods = ('POST', 'PUT', 'PATCH', 'DELETE')
     niveis = ('admin', 'alfa', 'beta', 'gama', 'delta')
 
@@ -55,10 +47,7 @@ class ImprimirPermissions(permissions.BasePermission):
             return True
 
 
-
-
 class UsuarioPermissions(permissions.BasePermission):
-
     methods = ('POST',)
     niveis = ('admin', 'alfa', 'beta', 'gama', 'delta')
 

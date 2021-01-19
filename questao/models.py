@@ -197,4 +197,3 @@ class Questao(Base):
 
     def __str__(self):
         return ''
- 

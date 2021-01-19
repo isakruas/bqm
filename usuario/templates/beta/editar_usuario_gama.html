@@ -23,13 +23,124 @@
 
 
 {% block main_beta %}
+<script type="text/javascript">
+  document.getElementById('info').innerHTML = '<h2 style="white-space: nowrap">DASHBOARD > REDE > EDITAR > USUÁRIO > GAMA</h2>';
+</script>
+<div class="main-auto-row-auto">
+
+  <div class="forms">
+
+  <p style="margin-bottom: 0cm; color: #A30000" id="error"></p>
+  <br />
+
+  <p>NOME</p>
+  <input  type="text"  id="nome" required>
+  <br>
+  <p>SOBRENOME</p>
+  <input  type="text"  id="sobrenome"  >
+  <br>
+
+  <p>EMAIL</p>
+  <input  type="email" id="email" required>
+  <br>
+
+  <p>ESCOLARIDADE</p>
+  <select  id="escolaridade">
  
+  </select>
+  <br>
+  <p>SENHA</p>
+  <input  type="password" id="password1" >
+  <br>
+  <p>REPITA A SENHA</p>
+  <input  type="password" id="password2"  >
+  <br>
+  </div>
+
+<center>
+  <button  type="button" class="button" style="width: auto;" onclick="salvar()">SALVAR</button>
+    
+</center>
+
+</div>
  
 <script type="text/javascript">
 
-  document.getElementById('info').innerHTML = '<h2 style="white-space: nowrap">DASHBOARD > REDE > CADASTRAR > USUÁRIO > GAMA</h2>';
+const token = BQ.Storage.Get({key:'token'});
+const id = BQ.Storage.Get({key:'id'});
 
-function criar_conta() {
+
+function voltar() {
+
+ 
+  location.href = '../../../detalhes/usuario/gama/';
+ 
+
+
+}
+
+
+function carregar(){
+
+  var usuario_detalhes = BQ.Storage.Get({key:'usuario_detalhes'});
+
+ 
+
+    BQ.Api.Get({
+        route:'usuario/',
+        headers: {
+            'Access-Control-Allow-Origin': window.location.href,
+            'Authorization': 'Token ' + token,
+        },
+        id:usuario_detalhes,
+        success:function(rtn) {
+            var json = JSON.parse(rtn);
+ 
+
+            var html = '<option value="">- - - - - - - - -</option>';
+
+            var option = [
+                "Fundamental - Incompleto",
+                "Fundamental - Completo",
+                "Médio - Incompleto",
+                "Médio - Completo",
+                "Superior - Incompleto",
+                "Superior - Completo",
+                "Pós-graduação (Lato senso) - Incompleto",
+                "Pós-graduação (Lato senso) - Completo",
+                "Pós-graduação (Strictosensu, nível mestrado) - Incompleto",
+                "Pós-graduação (Strictosensu, nível mestrado) - Completo",
+                "Pós-graduação (Strictosensu, nível doutor) - Incompleto",
+                "Pós-graduação (Strictosensu, nível doutor) - Completo"
+            ];
+
+
+            for (var i = 0; i < option.length; i++) {
+
+              if (option[i] == json.escolaridade) {
+                 html = html + '<option value="'+option[i]+'" selected>'+option[i]+'</option>';
+              } else {
+                html = html + '<option value="'+option[i]+'">'+option[i]+'</option>';
+              }
+
+            }
+
+
+            document.getElementById('nome').value = json.nome;
+            document.getElementById('sobrenome').value = json.sobrenome;
+            document.getElementById('email').value = json.email;
+            document.getElementById('escolaridade').innerHTML = html;
+            
+
+
+        }
+    });
+
+}
+ 
+
+
+function salvar() {
 
   var email = document.getElementById('email');
   var nome = document.getElementById('nome');
@@ -97,12 +208,15 @@ function criar_conta() {
 
   const token = BQ.Storage.Get({key:'token'});
   const id = BQ.Storage.Get({key:'id'});
-  BQ.Api.Post({
+
+  BQ.Api.Patch({
       route:'usuario/',
       headers: {
             'Access-Control-Allow-Origin': window.location.href,
             'Authorization': 'Token ' + token,
       },
+
+      id:BQ.Storage.Get({key:'usuario_detalhes'}),
 
       data: {
         'email':email.value,
@@ -117,54 +231,11 @@ function criar_conta() {
       success:function(rtn) {
           var json = JSON.parse(rtn);
 
-          console.log(json)
-
-          if (json.id) {
-
+          document.getElementById('alert_01').style.visibility = 'visible';
+          document.getElementById('alert_01').style.display = 'block';
 
 
-            BQ.Api.Post({
-
-              route:'usuario/filiacao/',
-              headers: {
-                    'Access-Control-Allow-Origin': window.location.href,
-                    'Authorization': 'Token ' + token,
-              },
-
-              data: {
-                'superior':id,
-                "inferior":json.id
-              },
-
-              success:function(rtn){
-                var json = JSON.parse(rtn);
-
-                console.log(json)
-
-              document.getElementById('alert_01').style.visibility = 'visible';
-              document.getElementById('alert_01').style.display = 'block';
-
-                email.value = '';
-                nome.value = '';
-                sobrenome.value = '';
-                escolaridade.value = '';
-                password1.value = '';
-                password2.value = '';
-                error.innerHTML = 'Para adicionar um novo usuário, preencha os dados novamente';
-
-
-              return true;
-
-
-
-
-              }
-
-            });
-
-
-
-          }
+ 
       },
 
       error:function(rtn) {
@@ -181,55 +252,18 @@ function criar_conta() {
 }
 
 
-</script>
-<div class="main-auto-row-auto">
+document.addEventListener('readystatechange', event => {
+if (event.target.readyState === 'complete') {
 
-  <div class="forms">
+    carregar();
 
-  <p style="margin-bottom: 0cm; color: #A30000" id="error"></p>
-  <br />
-  <p>EMAIL</p>
-  <input  type="email" id="email" required>
-  <br>
-  <p>NOME</p>
-  <input  type="text"  id="nome" required>
-  <br>
-  <p>SOBRENOME</p>
-  <input  type="text"  id="sobrenome"  >
-  <br>
-  <p>ESCOLARIDADE</p>
-  <select  id="escolaridade">
-    <option value="" selected>- - - - - - - - -</option>
-    <option value="Fundamental - Incompleto">Fundamental - Incompleto</option>
-    <option value="Fundamental - Completo">Fundamental - Completo</option>
-    <option value="Médio - Incompleto">Médio - Incompleto</option>
-    <option value="Médio - Completo">Médio - Completo</option>
-    <option value="Superior - Incompleto">Superior - Incompleto</option>
-    <option value="Superior - Completo">Superior - Completo</option>
-    <option value="Pós-graduação (Lato senso) - Incompleto">Pós-graduação (Lato senso) - Incompleto</option>
-    <option value="Pós-graduação (Lato senso) - Completo">Pós-graduação (Lato senso) - Completo</option>
-    <option value="Pós-graduação (Strictosensu, nível mestrado) - Incompleto">Pós-graduação (Strictosensu, nível mestrado) - Incompleto</option>
-    <option value="Pós-graduação (Strictosensu, nível mestrado) - Completo">Pós-graduação (Strictosensu, nível mestrado) - Completo</option>
-    <option value="Pós-graduação (Strictosensu, nível doutor) - Incompleto">Pós-graduação (Strictosensu, nível doutor) - Incompleto</option>
-    <option value="Pós-graduação (Strictosensu, nível doutor) - Completo">Pós-graduação (Strictosensu, nível doutor) - Completo</option>
-  </select>
-  <br>
-  <p>SENHA</p>
-  <input  type="password" id="password1" >
-  <br>
-  <p>REPITA A SENHA</p>
-  <input  type="password" id="password2"  >
-  <br>
-  </div>
+}});
 
-<center>
-  <button  type="button" class="button" style="width: auto;" onclick="criar_conta()">CADASTRAR</button>
-    
-</center>
+</script>  
 
-</div>
 
 {% endblock main_beta %}
+
 
 
 {% block nav_beta %}
@@ -240,7 +274,7 @@ function criar_conta() {
   </div>
 
   <div class="nav-three-row-two">
-    <svg onclick = " location.href = '../../../ir_para/'"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <svg onclick = "voltar()"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
       <path fill="currentColor" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3.222 18.917c5.666-5.905-.629-10.828-5.011-7.706l1.789 1.789h-6v-6l1.832 1.832c7.846-6.07 16.212 4.479 7.39 10.085z" />
     </svg>
   </div>
@@ -253,7 +287,6 @@ function criar_conta() {
 {% endblock nav_beta %}
 
 
-
 {% block alert_u %}
 
 
@@ -263,8 +296,9 @@ function criar_conta() {
                 <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
                   
                 <br /><br /><br /><br />
+                 
 
-                Um novo usuário foi adicionado a sua rede<br /><br />
+               Dados atualizados com sucesso<br /><br />
 
                 </div>
                 <div class="alert-two-row-two">

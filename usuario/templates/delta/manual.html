@@ -15,6 +15,8 @@
 <meta http-equiv="refresh" content="0; URL='../../../usuario/epsilon/'"/>
 {% endblock is_authenticated_epsilon %}
 
+
+
 {% block nav_delta %}
     <div class="nav-three-row">
 
@@ -23,7 +25,7 @@
       </div>
      
       <div class="nav-three-row-two">
-        <svg onclick = "System.Redirect('../')"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <svg onclick = "location.href = '../' "  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <path fill="currentColor" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3.222 18.917c5.666-5.905-.629-10.828-5.011-7.706l1.789 1.789h-6v-6l1.832 1.832c7.846-6.07 16.212 4.479 7.39 10.085z" />
         </svg>
       </div>
@@ -35,167 +37,17 @@
     </div>
 {% endblock nav_delta %}
 
-{% block main_delta %}
 
+{% block main_delta %}
 <script type="text/javascript">
   document.getElementById('info').innerHTML = '<h2 style="white-space: nowrap">DASHBOARD > MANUAL</h2>';
 </script>
  
  
-<p class="paragraph"><span>
-Olá usuário, bem vindo ao Manual de Utilização do Banco de Questões de Matemática (BQM), aqui você encontrará informações que lhe permitirão entender a maneira em que esta plataforma funciona, este manual é composto por três parte, inicialmente falaremos sobre alguns aspectos da interface, após, falaremos das funcionalidades e por fim, daremos exemplos de utilização.
-</span></p>
+<p class="paragraph">
+  <span>
+Olá usuário, bem vindo ao Manual de Utilização do Banco de Questões de Matemática (BQM), aqui você encontrará informações que lhe permitirão entender a maneira em que esta plataforma funciona.
+  </span>
+</p>
 
-<p class="paragraph"><span>
-1. Dá interface
-</span></p>
-
-<p class="paragraph"><span>
-A interface desta plataforma foi projetada pensando na simplicidade de sua utilização, para isso, recorremos a recursos tecnológicos que possibilitassem a construção de um layout simples e responsivo, para isso, construímos um Framework CSS inteiramente novo, o IR CSS, projetado especificamente para atender as necessidades de funcionalidade desta plataforma. 
-</span></p>
-
-<p class="paragraph"><span>
-Essencialmente, os elementos nesta interface são divididos em quatro partes: 1) painel de navegação, 2) painel informativo, 3) cabeçalho e 4) corpo.
-</span></p>
-
-<p class="paragraph"><span>
-Representação dos elementos na tela:
-</span></p>
-
-<p class="paragraph"><span>
-     <center>
-      <img src="/media/manual/01.png" style="border: 0.05cm solid #0b2639" />
-      <br />
-      Design Desktop
-    </center>
-</span></p>
-
-<p class="paragraph"><span>
-     <center>
-      <img src="/media/manual/02.png" style="border: 0.05cm solid #0b2639" />
-      <br />
-      Design Mobile
-    </center>
-</span></p>
-
-
-<p class="paragraph"><span>
-No painel de navegação você encontrará os ícones que darão acesso às funcionalidades da plataforma; no painel informativo você encontrará o seu caminho de navegação destro do sistema, desta forma você sempre saberá em qual parte do sistema está navegando; no cabeçalho você encontrará um atalho para ir à página inicial da plataforma, assim como links de instituições parceiras; no corpo você encontrará os elementos interativos da plataforma, é nesta parte que aparecerá todos os elementos da plataforma.
-</span></p>
-
-<p class="paragraph"><span>
-2. Das funcionalidades
-</span></p>
-
-<p class="paragraph"><span>
-
-Em seu painel de navegação, além do ícone que dá acesso a esse manual, você também encontrará os ícones de logout, configuração e cadastro de questões.
-
-</span></p>
-
-<p class="paragraph"><span>
-Em configurações você terá acesso a funcionalidades como a mudança de senha. Em cadastro de questões você será apresentado a um painel que possibilitaŕa, em poucos cliques, cadastrar uma nova Questão ao banco de Questões de Matemática (BQM). 
-</span></p>
-
-
-<p class="paragraph"><span>
-3. Exemplos de utilização
-</span></p>
-
-<p class="paragraph"><span>
-3.1 Mudança de senha
-</span></p>
-
-<p class="paragraph"><span>
-Para efetuar a mudança da senha, clique no ícone de configurações em seu painel de navegação.
-</span></p>
-
-<p class="paragraph"><span>
-     <center>
-      <img src="/media/manual/delta/01.png" style="border: 0.05cm solid #0b2639" />
-      <br />
-      Design Desktop
-    </center>
-</span></p>
-
-<p class="paragraph"><span>
-Após clique sobre modificar senha. 
-</span></p>
-
-<p class="paragraph"><span>
-     <center>
-      <img src="/media/manual/delta/02.png" style="border: 0.05cm solid #0b2639" />
-      <br />
-      Design Desktop
-    </center>
-</span></p>
-
-<p class="paragraph"><span>
-Após, insira sua senha atual no campo Senha Antiga, e em seguida digite a nova senha desejada nos dois campos subsequentes, por fim clique em Salvar alterações. 
-</span></p>
-
-<p class="paragraph"><span>
-     <center>
-      <img src="/media/manual/delta/03.png" style="border: 0.05cm solid #0b2639" />
-      <br />
-      Design Desktop
-    </center>
-</span></p>
-
-<p class="paragraph"><span>
-Se as informações solicitadas forem informadas corretamente, o sistema irá emitir a seguinte mensagem:
-</span></p>
-
-<p class="paragraph"><span>
-     <center>
-      <img src="/media/manual/delta/04.png" style="border: 0.05cm solid #0b2639" />
-      <br />
-      Design Desktop
-    </center>
-</span></p>
-
-<p class="paragraph"><span>
-Caso contrário, uma mensagem de erro será exibida informando o erro ocorrido.
-</span></p>
-
-<p class="paragraph"><span>
-3.2 Cadastramento de questão
-</span></p>
-
-
-<p class="paragraph"><span>
-Para efetuar o cadastro de uma nova questão, clique no ícone de cadastramento de questões em seu painel de navegação.
-</span></p>
-
-<p class="paragraph"><span>
-     <center>
-      <img src="/media/manual/delta/05.png" style="border: 0.05cm solid #0b2639" />
-      <br />
-      Design Desktop
-    </center>
-</span></p>
-
-<p class="paragraph"><span>
-Selecione a etapa, ano, unidade temática, objeto de conhecimento e nível de dificuldade no qual a questão se caracteriza.
-</span></p>
-
-<p class="paragraph"><span>
-Digite a pergunta e resposta na caixa de texto correspondente, para escrita matemática utiliza-se a escrita em LaTex. Você pode encontrar mais  informações sobre a escrita em LaTex em <a target="_blank" href="https://pt.overleaf.com/learn/latex/Mathematical_expressions ">https://pt.overleaf.com/learn/latex/Mathematical_expressions </a> 
-</span></p>
-
-
-<p class="paragraph"><span>
-Parabéns! Chegamos ao fim deste manual, agora você já está mais familiarizado com esta plataforma e é capaz de usufruir de suas funcionalidades.  Não deixe de frequentar esta seção da plataforma com frequência, pois, quaisquer modificações realizadas, que podem ser correções, melhorias e/ou ampliações dos módulos, serão detalhadas aqui.
-</span></p>
-
-
-
-
-
-
-
-
-
-
- 
 {% endblock main_delta %}

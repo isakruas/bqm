@@ -30,7 +30,7 @@ class UsuarioCreationForm(forms.ModelForm):
         user.set_password(self.cleaned_data["password1"])
         if commit:
             user.save()
-            token = Token.objects.create(user=user)
+            Token.objects.create(user=user)
         return user
 
 

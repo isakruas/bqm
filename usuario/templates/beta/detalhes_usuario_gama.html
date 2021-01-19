@@ -1,0 +1,307 @@
+{% extends 'templates/base.html' %}
+
+{% block is_not_authenticated %}
+ <meta http-equiv="refresh" content="0; URL='../usuario/sair/'"/>
+{% endblock is_not_authenticated %}
+
+{% block is_authenticated_alfa %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/alfa/'"/>
+{% endblock is_authenticated_alfa %}
+
+{% block is_authenticated_gama %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/gama/'"/>
+{% endblock is_authenticated_gama %}
+
+{% block is_authenticated_delta %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/delta/'"/>
+{% endblock is_authenticated_delta %}
+
+{% block is_authenticated_epsilon %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/epsilon/'"/>
+{% endblock is_authenticated_epsilon %}
+
+
+
+{% block main_beta %}
+<script type="text/javascript">
+  document.getElementById('info').innerHTML = '<h2 style="white-space: nowrap">DASHBOARD > REDE > DETALHES > USUÁRIO > GAMA</h2>';
+</script>
+
+<div class="main-auto-row-auto">
+
+  <div class="forms">
+
+  <p style="margin-bottom: 0cm; color: #A30000" id="error"></p>
+  <br />
+
+  <p>NOME</p>
+  <input  type="text"  id="nome" disabled>
+  <br>
+  <p>SOBRENOME</p>
+  <input  type="text"  id="sobrenome" disabled>
+  <br>
+  <p>EMAIL</p>
+  <input  type="text" id="email" disabled>
+  <br>
+  <p>ESCOLARIDADE</p>
+  <input  type="text" id="escolaridade" disabled>
+  <br>
+  <p>IDENTIFICADOR</p>
+  <input  type="text" id="id" disabled>
+  <br>
+  <p>NÍVEL DE ACESSO</p>
+  <input  type="text" id="nivel_de_acesso"  disabled>
+  <br>
+  </div>
+
+<center>
+  <button  type="button" class="button" style="width: auto;" onclick="location.href = '../../../editar/usuario/gama/';">EDITAR</button>
+  <br />
+  <button  type="button" class="button" style="width: auto;" onclick="excluir()">EXCLUIR</button>
+</center>
+
+
+ 
+
+
+</div>
+ 
+<script type="text/javascript">
+
+const token = BQ.Storage.Get({key:'token'});
+const id = BQ.Storage.Get({key:'id'});
+
+
+function voltar() {
+
+  BQ.Storage.Set({key:'usuario_detalhes', value:''})
+
+  location.href = '../../../listar/usuario/gama/';
+
+  BQ.Storage.Remove({key:'usuario_detalhes'})
+
+}
+
+
+function carregar(){
+
+  var usuario_detalhes = BQ.Storage.Get({key:'usuario_detalhes'});
+
+
+
+
+
+    BQ.Api.Get({
+        route:'usuario/',
+        headers: {
+            'Access-Control-Allow-Origin': window.location.href,
+            'Authorization': 'Token ' + token,
+        },
+        id:usuario_detalhes,
+        success:function(rtn) {
+            var json = JSON.parse(rtn);
+
+ 
+            document.getElementById('nome').value = json.nome;
+            document.getElementById('sobrenome').value = json.sobrenome;
+            document.getElementById('email').value = json.email;
+            document.getElementById('nivel_de_acesso').value = json.nivel_de_acesso;
+            document.getElementById('id').value = json.id;
+            document.getElementById('escolaridade').value = json.escolaridade;
+
+        }
+    });
+
+}
+
+
+
+
+function excluir(uid){
+
+
+  BQ.Api.Get({
+
+      route:'usuario/filiacao/',
+      headers: {
+            'Access-Control-Allow-Origin': window.location.href,
+            'Authorization': 'Token ' + token,
+      },
+
+      data: {
+        'superior':uid
+      },
+
+      success:function(rtn){
+
+        var json = JSON.parse(rtn);
+
+        if(json.count === 0) {
+ 
+        } else {
+          for (var i = json.results.length - 1; i >= 0; i--) {
+            BQ.Api.Get({
+              route:'usuario/',
+              id:json.results[i].inferior,
+              success:function(rtn){
+                var json = JSON.parse(rtn);
+
+                  BQ.Api.Delete({
+
+                    route:'usuario/',
+
+                    headers: {
+                          'Access-Control-Allow-Origin': window.location.href,
+                          'Authorization': 'Token ' + token,
+                    },
+
+                    id:json.id,
+
+                    success:function(){
+
+                      BQ.Api.Get({
+                        route:'usuario/filiacao/',
+                        headers: {
+                              'Access-Control-Allow-Origin': window.location.href,
+                              'Authorization': 'Token ' + token,
+                        },
+
+                        data: {
+                          'superior':uid,
+                          'inferior':json.id
+                        },
+
+                        success:function(rtn){
+
+                          var json = JSON.parse(rtn)
+
+                          BQ.Api.Delete({
+
+                            route:'usuario/filiacao/',
+
+                            headers: {
+                                  'Access-Control-Allow-Origin': window.location.href,
+                                  'Authorization': 'Token ' + token,
+                            },
+
+                            id:json.results[0].id,
+
+                            success:function(){
+                 
+                            }
+                          });
+                        }
+                      });
+                    }
+                  });
+
+              }
+            });
+
+          }
+        }
+      }
+  });
+
+
+
+
+  BQ.Api.Delete({
+
+    route:'usuario/',
+
+    headers: {
+          'Access-Control-Allow-Origin': window.location.href,
+          'Authorization': 'Token ' + token,
+    },
+
+    id:uid,
+
+    success:function(){
+
+      BQ.Api.Get({
+        route:'usuario/filiacao/',
+        headers: {
+              'Access-Control-Allow-Origin': window.location.href,
+              'Authorization': 'Token ' + token,
+        },
+
+        data: {
+          'superior':BQ.Storage.Get({key:'id'}),
+          'inferior':uid
+        },
+
+        success:function(rtn){
+
+          var json = JSON.parse(rtn)
+
+          BQ.Api.Delete({
+
+            route:'usuario/filiacao/',
+
+            headers: {
+                  'Access-Control-Allow-Origin': window.location.href,
+                  'Authorization': 'Token ' + token,
+            },
+
+            id:json.results[0].id,
+
+            success:function(){
+              document.getElementById('el').innerHTML = '<div class="main-auto-row-auto">'+
+                  '<div class="profile-footer-ul">'+
+                      '<div class="main-row-columns profile-footer-li" >'+
+                          '<div class="main-row-columns-one" style="overflow-x: auto; padding: 1cm; max-width: 93vw">'+
+                              '<p style="text-align: justify; max-width: 93vw; height: 100%;">'+
+                                  'CARREGANDO . . .'+
+                              '</p>'+
+                          '</div>'+
+                      '</div>'+
+                  '</div>'+
+              '</div>';
+              carregar();
+            }
+          });
+        }
+      });
+    }
+  });
+  
+}
+
+
+
+
+document.addEventListener('readystatechange', event => {
+if (event.target.readyState === 'complete') {
+
+    carregar();
+
+}});
+
+</script>  
+
+
+{% endblock main_beta %}
+
+
+
+{% block nav_beta %}
+<div class="nav-three-row">
+
+  <div class="nav-three-row-one">
+
+  </div>
+
+  <div class="nav-three-row-two">
+    <svg onclick = "voltar()"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3.222 18.917c5.666-5.905-.629-10.828-5.011-7.706l1.789 1.789h-6v-6l1.832 1.832c7.846-6.07 16.212 4.479 7.39 10.085z" />
+    </svg>
+  </div>
+
+  <div class="nav-three-row-three">
+
+  </div>
+
+</div>
+{% endblock nav_beta %}
+

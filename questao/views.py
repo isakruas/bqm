@@ -1,7 +1,5 @@
 from rest_framework import mixins
 from rest_framework import viewsets
-from django.http import HttpResponse
-from django.template import loader
 from rest_framework.response import Response
 from .models import (
     Etapa,
@@ -9,7 +7,6 @@ from .models import (
     ObjetoDeConhecimento,
     NivelDeDificuldade,
     Questao,
-    Imprimir
 )
 from .serializers import (
     EtapaSerializer,
@@ -191,7 +188,6 @@ class QuestaoViewSet(
         if 'format' in params:
             params.pop('format')
 
-
         if len(params) >> 0:
             query = {}
             for key in params:
@@ -202,16 +198,20 @@ class QuestaoViewSet(
                                 if 'cadastro_pelo_usuario' in params:
                                     query['cadastro_pelo_usuario'] = int(params['cadastro_pelo_usuario'])
                                 else:
-                                    query['cadastro_pelo_usuario'] = int(request.user.id)
+                                    if str(request.user.nivel_de_acesso) == 'admin':
+                                        pass
+                                    elif str(request.user.nivel_de_acesso) == 'alfa':
+                                        pass
+                                    else:
+                                        query['cadastro_pelo_usuario'] = int(request.user.id)
                             else:
                                 if int(params[key]) == 3:
                                     query['cadastro_pelo_usuario'] = int(request.user.id)
                                 else:
                                     pass
 
-                         
                         query[key] = int(params[key])
-                         
+
                 except ValueError:
                     pass
 
@@ -226,7 +226,6 @@ class QuestaoViewSet(
             serializer = self.get_serializer(queryset, many=True)
             return Response(serializer.data)
 
-
         queryset = self.filter_queryset(self.get_queryset())
         page = self.paginate_queryset(queryset)
 
@@ -236,91 +235,3 @@ class QuestaoViewSet(
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
-
-
-#############################################################
-#                  Usuario nao autenticado                  #
-#############################################################
-
-def contagem_questao(request):
-    contagem_questao = Questao.objects.all()
-
-    return HttpResponse(contagem_questao.count())
-
-
-def contagem_questao_status_2(request):
-    contagem_questao_status_2 = Questao.objects.filter(status=2)
-
-    return HttpResponse(contagem_questao_status_2.count())
-
-
-def contagem_imprimir(request):
-    contagem_imprimir = Imprimir.objects.all()
-
-    return HttpResponse(contagem_imprimir.count())
-
-
-def listar_etapas(request):
-    etapa = Etapa.objects.all()
-
-    template = loader.get_template('questao/templates/listar_etapas.html')
-    context = {
-        'etapa': etapa,
-    }
-
-    return HttpResponse(template.render(context, request))
-
-
-def listar_anos(request, etapa):
-    ano = UnidadeTematica.objects.filter(etapa=etapa)
-
-    template = loader.get_template('questao/templates/listar_anos.html')
-    context = {
-        'ano': ano,
-    }
-
-    return HttpResponse(template.render(context, request))
-
-
-def listar_unidades_tematicas(request, etapa, ano):
-    unidade_tematica = UnidadeTematica.objects.filter(etapa=etapa, ano=ano)
-
-    template = loader.get_template('questao/templates/listar_unidades_tematicas.html')
-    context = {
-        'unidade_tematica': unidade_tematica,
-    }
-
-    return HttpResponse(template.render(context, request))
-
-
-def listar_objetos_de_conhecimento(request, etapa, ano, unidade_tematica):
-    objeto_de_conhecimento = ObjetoDeConhecimento.objects.filter(etapa=etapa, ano=ano,
-                                                                 unidade_tematica=unidade_tematica)
-    template = loader.get_template('questao/templates/listar_objetos_de_conhecimento.html')
-    context = {
-        'objeto_de_conhecimento': objeto_de_conhecimento,
-    }
-
-    return HttpResponse(template.render(context, request))
-
-
-def listar_niveis_de_dificuldade(request):
-    nivel_de_dificuldade = NivelDeDificuldade.objects.all()
-
-    template = loader.get_template('questao/templates/listar_niveis_de_dificuldade.html')
-    context = {
-        'nivel_de_dificuldade': nivel_de_dificuldade,
-    }
-
-    return HttpResponse(template.render(context, request))
-
-
-def listar_usuario(request, id_u):
-    usuario = Questao.objects.filter(cadastro_pelo_usuario=id_u)
-
-    template = loader.get_template('questao/templates/listar_usuario.html')
-    context = {
-        'usuario': usuario,
-    }
-
-    return HttpResponse(template.render(context, request))

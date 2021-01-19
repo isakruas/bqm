@@ -49,15 +49,13 @@ class UsuarioPermissions(permissions.BasePermission):
 
 
 class QuestaoPermissions(permissions.BasePermission):
-
     niveis = ('admin', 'alfa', 'beta', 'gama', 'delta')
 
-    
     def has_permission(self, request, view):
 
         if not request.user.is_authenticated:
             return False
-        
+
         if request.method == 'POST':
             if request.data:
                 user = request.user
@@ -66,9 +64,9 @@ class QuestaoPermissions(permissions.BasePermission):
                 if 'cadastro_pelo_usuario' in request.data:
                     id_request = request.data['cadastro_pelo_usuario']
                     if int(id_request) == int(user.id):
-                      return True
+                        return True
                     else:
-                     return False
+                        return False
                 else:
                     return False
             else:

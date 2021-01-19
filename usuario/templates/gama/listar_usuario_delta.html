@@ -24,7 +24,7 @@
   </div>
 
   <div class="nav-three-row-two">
-    <svg onclick = "System.Redirect('../../../ir_para/')"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <svg onclick = "location.href = '../../../ir_para/'"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
       <path fill="currentColor" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3.222 18.917c5.666-5.905-.629-10.828-5.011-7.706l1.789 1.789h-6v-6l1.832 1.832c7.846-6.07 16.212 4.479 7.39 10.085z" />
     </svg>
   </div>
@@ -39,40 +39,148 @@
 
 {% block main_gama %}
 <script type="text/javascript">
-  
-  if (window.location.hostname == "localhost") {
-    var URL = "http://localhost:8000";
-  } else {
-    var URL = "https://bq.mat.br";
-  }
 
+const token = BQ.Storage.Get({key:'token'});
+const id = BQ.Storage.Get({key:'id'});
 
-   
-    System.Ajax.Get({
-        url: URL + "/usuario/filiacao/superior/inferior/{{ user.id }}/",
-        data:"",
-        success:function(fsi){
-            var rtn_fsi = JSON.parse(fsi);
-            var obj_fsi = rtn_fsi['fsi'][0]['ids'];
+function carregar(){
 
-            
-            var listar_usuário = "";
+  document.getElementById('el').innerHTML = '';
 
-            for (var i = 0; i < obj_fsi.length; i++) {
-                if (obj_fsi[i] !== "null") {
-                     
-                    listar_usuário = listar_usuário +  '<div class="profile-footer-ul"><div class="main-three-columns profile-footer-li"><div class="main-three-columns-one" style="height: 1cm"><p style="position: relative ;  top: 30%; text-align: center;">'+obj_fsi[i]+'</p></div><div class="main-three-columns-two" onclick="System.Redirect(' + "'detalhes/"+obj_fsi[i]+"/')" + '" style="border-left: 0.05cm solid #002907; min-width: 1cm;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z"/></svg></div><div class="main-three-columns-three" style="min-width: 1cm; border-left: 0.05cm solid #002907;"><!--svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M3 6v18h18v-18h-18zm5 14c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712z" /></svg--></div></div></div>';
+  BQ.Api.Get({
 
-                }
-            
-            }
+      route:'usuario/filiacao/',
+      headers: {
+            'Access-Control-Allow-Origin': window.location.href,
+            'Authorization': 'Token ' + token,
+      },
 
+      data: {
+        'superior':id
+      },
 
-          
-            document.getElementById('listar_usuário').innerHTML = listar_usuário;
+      success:function(rtn){
 
+        var json = JSON.parse(rtn);
+
+        if(json.count === 0) {
+              document.getElementById('el').innerHTML = '<div class="main-auto-row-auto">'+
+                  '<div class="profile-footer-ul">'+
+                      '<div class="main-row-columns profile-footer-li" >'+
+                          '<div class="main-row-columns-one" style="overflow-x: auto; padding: 1cm; max-width: 93vw">'+
+                              '<p style="text-align: justify; max-width: 93vw; height: 100%;">'+
+                                  'Nenhum usuário cadastrado.'+
+                              '</p>'+
+                          '</div>'+
+                      '</div>'+
+                  '</div>'+
+              '</div>';
+        } else {
+          for (var i = json.results.length - 1; i >= 0; i--) {
+            BQ.Api.Get({
+              route:'usuario/',
+              id:json.results[i].inferior,
+              success:function(rtn){
+                var json = JSON.parse(rtn);
+                var el = document.getElementById('el');
+                el.innerHTML = el.innerHTML +  '<div class="profile-footer-ul"><div class="main-four-columns profile-footer-li"><div class="main-four-columns-one" style="height: 1cm"><p style="position: relative ;  top: 30%; text-align: center;">'+ json.email +'</p></div><div class="main-four-columns-two" onclick="detalhes('+json.id+')" style="border-left: 0.05cm solid #002907; min-width: 1cm;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z"/></svg></div><div class="main-four-columns-three" style="min-width: 1cm; border-left: 0.05cm solid #002907;"><svg onclick="editar('+json.id+')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z" /></svg></div><div class="main-four-columns-four" style="min-width: 1cm; border-left: 0.05cm solid #002907;"><svg onclick="excluir('+json.id+')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M3 6v18h18v-18h-18zm5 14c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712z" /></svg></div></div></div>';
+              }
+            });
+
+          }
         }
-    });
+      }
+  });
+}
+
+
+function editar(id){
+
+  BQ.Storage.Set({key:'usuario_detalhes', value:id})
+
+  location.href = '../../../editar/usuario/delta/';
+}
+
+function excluir(id){
+
+  BQ.Api.Delete({
+
+    route:'usuario/',
+
+    headers: {
+          'Access-Control-Allow-Origin': window.location.href,
+          'Authorization': 'Token ' + token,
+    },
+
+    id:id,
+
+    success:function(){
+
+      BQ.Api.Get({
+        route:'usuario/filiacao/',
+        headers: {
+              'Access-Control-Allow-Origin': window.location.href,
+              'Authorization': 'Token ' + token,
+        },
+
+        data: {
+          'superior':BQ.Storage.Get({key:'id'}),
+          'inferior':id
+        },
+
+        success:function(rtn){
+
+          var json = JSON.parse(rtn)
+
+          BQ.Api.Delete({
+
+            route:'usuario/filiacao/',
+
+            headers: {
+                  'Access-Control-Allow-Origin': window.location.href,
+                  'Authorization': 'Token ' + token,
+            },
+
+            id:json.results[0].id,
+
+            success:function(){
+              document.getElementById('el').innerHTML = '<div class="main-auto-row-auto">'+
+                  '<div class="profile-footer-ul">'+
+                      '<div class="main-row-columns profile-footer-li" >'+
+                          '<div class="main-row-columns-one" style="overflow-x: auto; padding: 1cm; max-width: 93vw">'+
+                              '<p style="text-align: justify; max-width: 93vw; height: 100%;">'+
+                                  'CARREGANDO . . .'+
+                              '</p>'+
+                          '</div>'+
+                      '</div>'+
+                  '</div>'+
+              '</div>';
+              carregar();
+            }
+          });
+        }
+      });
+    }
+  });
+
+}
+
+
+function detalhes(id){
+ 
+  BQ.Storage.Set({key:'usuario_detalhes', value:id})
+
+  location.href = '../../../detalhes/usuario/delta/';
+}
+
+document.addEventListener('readystatechange', event => {
+if (event.target.readyState === 'complete') {
+
+  carregar();
+
+}});
+
+
 
 </script>
 <script type="text/javascript">
@@ -83,26 +191,36 @@
  
          <div class="main-auto-row-auto">
           <div class="profile-footer-ul">
-            <div class="main-three-columns profile-footer-li">
-              <div class="main-three-columns-one" style="height: 1cm">
-                <p style="position: relative ; width: auto; top: 30%; text-align: center; font-weight: bold;">UID</p>
+            <div class="main-four-columns profile-footer-li">
+              <div class="main-four-columns-one" style="height: 1cm">
+                <p style="position: relative ; width: auto; top: 30%; text-align: center; font-weight: bold;">EMAIL</p>
               </div>
-              <div class="main-three-columns-two" style="min-width: 1cm; border-left: 0.05cm solid #002907;">
+              <div class="main-four-columns-two" style="min-width: 1cm; border-left: 0.05cm solid #002907;">
                 <p style="position: relative ; width: auto; top: 30%; text-align: center; font-weight: bold;">
-                Detalhes
+                DETALHES
                 </p>
               </div>
-              <div class="main-three-columns-three" style="min-width: 1cm; border-left: 0.05cm solid #002907;">
-                <!--p style="position: relative ; width: auto; top: 30%; text-align: center; font-weight: bold;">
-                 Excluir
-               </p-->
+              <div class="main-four-columns-three" style="min-width: 1cm; border-left: 0.05cm solid #002907;">
+                <p style="position: relative ; width: auto; top: 30%; text-align: center; font-weight: bold;">
+                 EDITAR
+               </p>
               </div>
+
+
+
+              <div class="main-four-columns-four" style="min-width: 1cm; border-left: 0.05cm solid #002907;">
+                <p style="position: relative ; width: auto; top: 30%; text-align: center; font-weight: bold;">
+                 EXCLUIR
+               </p>
+              </div>
+
+
             </div>
           </div>
         </div>
         <!--- Incluir com JS -->
-        <div class="main-auto-row-auto" id="listar_usuário">
-
+        <div class="main-auto-row-auto" id="el">
+          <div class="main-auto-row-auto"><div class="profile-footer-ul"><div class="main-row-columns profile-footer-li"><div class="main-row-columns-one" style="overflow-x: auto; padding: 1cm; max-width: 93vw"><p style="text-align: justify; max-width: 93vw; height: 100%;">CARREGANDO . . .</p></div></div></div></div>
         </div>
  
     </div>

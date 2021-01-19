@@ -1,7 +1,6 @@
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser, PermissionsMixin
 )
-
 from django.db import models
 from rest_framework.authtoken.models import Token
 
@@ -15,7 +14,7 @@ class Base(BaseUserManager):
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
-        token = Token.objects.create(user=user)
+        Token.objects.create(user=user)
 
         return user.id
 
@@ -35,7 +34,6 @@ class Base(BaseUserManager):
 
 
 class Usuario(AbstractBaseUser, PermissionsMixin):
-
     objects = Base()
 
     nome = models.CharField(
@@ -82,39 +80,36 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
         return self.email
 
     def has_perm(self, perm, obj=None):
-        "Does the user have a specific permission?"
         # Simplest possible answer: Yes, always
         return True
 
     def has_module_perms(self, app_label):
-        "Does the user have permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
         return True
 
     @property
     def is_staff(self):
-        "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_superuser
 
     @property
     def is_admin(self):
-        "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_superuser
 
 
 class Filiacao(models.Model):
-    filiacao = models.AutoField(
-        primary_key=True
-    )
-    superior = models.CharField(
-        max_length=500,
+    superior = models.IntegerField(
         null=False,
         blank=False,
     )
-    inferior = models.CharField(
-        max_length=500,
+
+    inferior = models.IntegerField(
         null=False,
         blank=False,
     )
+
+    class Meta:
+        verbose_name = 'Filiação'
+        verbose_name_plural = 'Filiações'
+        ordering = ['id']

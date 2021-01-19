@@ -1,54 +1,32 @@
-from rest_framework import mixins, status
+from rest_framework import mixins
 from rest_framework import viewsets
-
 from .serializers import (
     UsuarioSerializer,
     FiliacaoSerializer
 )
-
 from questao.serializers import (
     ImprimirSerializer
 )
-
-from django.shortcuts import redirect
 from django.views.generic import TemplateView, CreateView
-from django.views.generic.edit import DeleteView, UpdateView
 from questao.models import (
-    Etapa,
-    UnidadeTematica,
-    ObjetoDeConhecimento,
-    NivelDeDificuldade,
-    Questao,
     Imprimir
 )
-from questao.forms import (
-    EtapaForm,
-    UnidadeTematicaForm,
-    ObjetoDeConhecimentoForm,
-    NivelDeDificuldadeForm,
-    QuestaoForm
-)
 from django.http import HttpResponse
-from django.template import loader
 from .forms import (
     UsuarioCreationForm
 )
 from .models import (
     Usuario,
     Filiacao
-
 )
-
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
-
 from .permissions import (
     UsuarioPermissions,
     FiliacaoPermissions,
     ImprimirPermissions
 )
-from rest_framework.settings import api_settings
 
 
 class FiliacaoViewSet(
@@ -64,6 +42,53 @@ class FiliacaoViewSet(
     queryset = Filiacao.objects.all()
     serializer_class = FiliacaoSerializer
 
+    def list(self, request, *args, **kwargs):
+
+        params = request.query_params
+        params = params.dict()
+
+        filters = ('superior', 'inferior')
+        permission = ('admin', 'alfa', 'beta')
+        if 'format' in params:
+            params.pop('format')
+
+        if len(params) >> 0:
+            query = {}
+            for key in params:
+                try:
+                    if key in filters:
+                        if str(request.user.nivel_de_acesso) in permission:
+                            if 'superior' in params:
+                                query['superior'] = int(params['superior'])
+                        elif str(request.user.nivel_de_acesso) == 'gama':
+                            if 'superior' in params:
+                                query['superior'] = int(request.user.id)
+                        query[key] = int(params[key])
+                except ValueError:
+                    pass
+
+            queryset = Filiacao.objects.filter(**query)
+            queryset = self.filter_queryset(queryset)
+            page = self.paginate_queryset(queryset)
+
+            if page is not None:
+                serializer = self.get_serializer(page, many=True)
+                return self.get_paginated_response(serializer.data)
+
+            serializer = self.get_serializer(queryset, many=True)
+            return Response(serializer.data)
+
+        queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+
 class UsuarioViewSet(
     mixins.CreateModelMixin,
     mixins.RetrieveModelMixin,
@@ -71,11 +96,53 @@ class UsuarioViewSet(
     mixins.DestroyModelMixin,
     mixins.ListModelMixin,
     viewsets.GenericViewSet):
-
     permission_classes = (UsuarioPermissions,)
 
     queryset = Usuario.objects.all()
     serializer_class = UsuarioSerializer
+
+    def list(self, request, *args, **kwargs):
+
+        params = request.query_params
+        params = params.dict()
+
+        filters = 'nivel_de_acesso'
+        permission = ('admin', 'alfa')
+        if 'format' in params:
+            params.pop('format')
+
+        if len(params) >> 0:
+            query = {}
+            for key in params:
+                try:
+                    if key in filters:
+                        if str(request.user.nivel_de_acesso) in permission:
+                            if 'nivel_de_acesso' in params:
+                                query['nivel_de_acesso'] = str(params['nivel_de_acesso'])
+                        query[key] = int(params[key])
+                except ValueError:
+                    pass
+
+            queryset = Usuario.objects.filter(**query)
+            queryset = self.filter_queryset(queryset)
+            page = self.paginate_queryset(queryset)
+
+            if page is not None:
+                serializer = self.get_serializer(page, many=True)
+                return self.get_paginated_response(serializer.data)
+
+            serializer = self.get_serializer(queryset, many=True)
+            return Response(serializer.data)
+
+        queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class ImprimirViewSet(
@@ -85,7 +152,6 @@ class ImprimirViewSet(
     mixins.DestroyModelMixin,
     mixins.ListModelMixin,
     viewsets.GenericViewSet):
-
     permission_classes = (ImprimirPermissions,)
 
     queryset = Imprimir.objects.all()
@@ -108,9 +174,8 @@ def get_or_create_token(request):
         Token.objects.get_or_create(user=user)
 
     token = Token.objects.get(user=int(uid))
-    
-    return HttpResponse('{"token":"' + f"{token}" + '", "id":' + f"{uid}" + '}')
 
+    return HttpResponse('{"token":"' + f"{token}" + '", "id":' + f"{uid}" + '}')
 
 
 class UsuarioObtainAuthToken(ObtainAuthToken):
@@ -120,32 +185,11 @@ class UsuarioObtainAuthToken(ObtainAuthToken):
         return Response({'token': token.key, 'id': token.user_id})
 
 
-class Redirecionar:
-
-    def para_usuario(url):
-        return redirect('/usuario/')
-
-    def para_entrar(url):
-        return redirect('/usuario/entrar/')
-
-    def para_criar_conta(url):
-        return redirect('/usuario/criar_conta/')
-
-    def para_recuperar_senha(url):
-        return redirect('/usuario/recuperar_senha/')
-
-    def para_entrar_concluido(request):
-        template = loader.get_template('usuario/templates/registration/entrar_concluido.html')
-        context = {}
-        return HttpResponse(template.render(context, request))
-
-
 #############################################################
 #                  Usuario nao autenticado                  #
 #############################################################
 
 class UsuarioCriarConta(CreateView):
-    '''  '''
     template_name = 'usuario/templates/registration/criar_conta.html'
     form_class = UsuarioCreationForm
     success_url = 'concluido/'
@@ -153,28 +197,6 @@ class UsuarioCriarConta(CreateView):
 
 class UsuarioEntrarConcluido(TemplateView):
     template_name = 'usuario/templates/registration/entrar_concluido.html'
-
-
-def UsuarioFiliacaoSuperiorInferior(request, id_u):
-    fsi = Filiacao.objects.filter(superior=id_u)
-
-    template = loader.get_template('usuario/templates/filiacao_superior_inferior.html')
-    context = {
-        'fsi': fsi,
-    }
-
-    return HttpResponse(template.render(context, request))
-
-
-def UsuarioFiliacaoInferiorSuperior(request, id_u):
-    fis = Filiacao.objects.filter(inferior=id_u)
-
-    template = loader.get_template('usuario/templates/filiacao_inferior_superior.html')
-    context = {
-        'fis': fis,
-    }
-
-    return HttpResponse(template.render(context, request))
 
 
 #############################################################
@@ -185,19 +207,12 @@ def UsuarioFiliacaoInferiorSuperior(request, id_u):
 #              Usuario com nivel de acesso Alfa             #
 #############################################################
 
-
 class UsuarioAlfaInicio(TemplateView):
     template_name = 'usuario/templates/alfa/inicio.html'
 
 
 class UsuarioAlfaConfiguracao(TemplateView):
     template_name = 'usuario/templates/alfa/configuracao.html'
-
-
-class UsuarioAlfaConfiguracaoExcluirConta(DeleteView):
-    model = Usuario
-    template_name = 'usuario/templates/alfa/excluir_conta.html'
-    success_url = '../../../sair/'
 
 
 class UsuarioAlfaManual(TemplateView):
@@ -208,95 +223,20 @@ class UsuarioAlfaIrPara(TemplateView):
     template_name = 'usuario/templates/alfa/ir_para.html'
 
 
-class UsuarioAlfaCadastrarUsuarioBeta(CreateView):
+class UsuarioAlfaCadastrarUsuarioBeta(TemplateView):
     template_name = 'usuario/templates/alfa/cadastrar_usuario_beta.html'
-    form_class = UsuarioCreationForm
-    success_url = './concluido/'
-
-
-def UsuarioAlfaCadastrarFiliacao(request):
-    # tem que melhorar essa função para evitar erros no processamento, como por exemplo, a duplicidade de registro de ids
-    el = Usuario.objects.last()
-    user = request.user.id
-    filiacao = Filiacao(superior=user, inferior=el.id)
-    filiacao.save();
-
-    return redirect('../../../../')
-
-
-class UsuarioAlfaListarUsuarioGama(TemplateView):
-    template_name = 'usuario/templates/alfa/listar_usuario_gama.html'
-
-
-def UsuarioAlfaListarUsuarioGamaDetalhes(request, id_u):
-    usuario = Usuario.objects.filter(id=id_u)
-
-    template = loader.get_template('usuario/templates/alfa/listar_usuario_gama_detalhes.html')
-    context = {
-        'detalhes': usuario,
-    }
-
-    return HttpResponse(template.render(context, request))
-
-
-class UsuarioAlfaListarUsuarioDelta(TemplateView):
-    template_name = 'usuario/templates/alfa/listar_usuario_delta.html'
-
-
-def UsuarioAlfaListarUsuarioDeltaDetalhes(request, id_u):
-    usuario = Usuario.objects.filter(id=id_u)
-
-    template = loader.get_template('usuario/templates/alfa/listar_usuario_delta_detalhes.html')
-    context = {
-        'detalhes': usuario,
-    }
-
-    return HttpResponse(template.render(context, request))
 
 
 class UsuarioAlfaListarUsuarioBeta(TemplateView):
     template_name = 'usuario/templates/alfa/listar_usuario_beta.html'
 
 
-def UsuarioAlfaListarUsuarioBetaDetalhes(request, id_u):
-    usuario = Usuario.objects.filter(id=id_u)
-
-    template = loader.get_template('usuario/templates/alfa/listar_usuario_beta_detalhes.html')
-    context = {
-        'detalhes': usuario,
-    }
-
-    return HttpResponse(template.render(context, request))
+class UsuarioAlfaDetalhesUsuarioBeta(TemplateView):
+    template_name = 'usuario/templates/alfa/detalhes_usuario_beta.html'
 
 
-def usuario_alfa_contagem_usuario_alfa(request):
-    usuario_alfa_contagem_usuario_alfa = Usuario.objects.filter(nivel_de_acesso='alfa')
-
-    return HttpResponse(usuario_alfa_contagem_usuario_alfa.count())
-
-
-def usuario_alfa_contagem_usuario_beta(request):
-    usuario_alfa_contagem_usuario_beta = Usuario.objects.filter(nivel_de_acesso='beta')
-
-    return HttpResponse(usuario_alfa_contagem_usuario_beta.count())
-
-
-def usuario_alfa_contagem_usuario_gama(request):
-    usuario_alfa_contagem_usuario_gama = Usuario.objects.filter(nivel_de_acesso='gama')
-
-    return HttpResponse(usuario_alfa_contagem_usuario_gama.count())
-
-
-def usuario_alfa_contagem_usuario_delta(request):
-    usuario_alfa_contagem_usuario_delta = Usuario.objects.filter(nivel_de_acesso='delta')
-
-    return HttpResponse(usuario_alfa_contagem_usuario_delta.count())
-
-
-def usuario_alfa_contagem_usuario_epsilon(request):
-    usuario_alfa_contagem_usuario_epsilon = Usuario.objects.filter(nivel_de_acesso='epsilon')
-
-    return HttpResponse(usuario_alfa_contagem_usuario_epsilon.count())
+class UsuarioAlfaEditarUsuarioBeta(TemplateView):
+    template_name = 'usuario/templates/alfa/editar_usuario_beta.html'
 
 
 #############################################################
@@ -311,12 +251,6 @@ class UsuarioBetaConfiguracao(TemplateView):
     template_name = 'usuario/templates/beta/configuracao.html'
 
 
-class UsuarioBetaConfiguracaoExcluirConta(DeleteView):
-    model = Usuario
-    template_name = 'usuario/templates/beta/excluir_conta.html'
-    success_url = '../../../sair/'
-
-
 class UsuarioBetaManual(TemplateView):
     template_name = 'usuario/templates/beta/manual.html'
 
@@ -325,146 +259,68 @@ class UsuarioBetaIrPara(TemplateView):
     template_name = 'usuario/templates/beta/ir_para.html'
 
 
-class UsuarioBetaCadastrarEtapa(CreateView):
-    template_name = 'usuario/templates/beta/cadastrar_etapa.html'
-    form_class = EtapaForm
-    success_url = 'concluido/'
-
-
-class UsuarioBetaCadastrarUnidadeTematica(CreateView):
-    template_name = 'usuario/templates/beta/cadastrar_unidade_tematica.html'
-    form_class = UnidadeTematicaForm
-    success_url = 'concluido/'
-
-
-class UsuarioBetaCadastrarObjetoDeConhecimento(CreateView):
-    template_name = 'usuario/templates/beta/cadastrar_objeto_de_conhecimento.html'
-    form_class = ObjetoDeConhecimentoForm
-    success_url = 'concluido/'
-
-
-class UsuarioBetaCadastrarNivelDeDificuldade(CreateView):
-    template_name = 'usuario/templates/beta/cadastrar_nivel_de_dificuldade.html'
-    form_class = NivelDeDificuldadeForm
-    success_url = 'concluido/'
-
-
-def UsuarioBetaListarEtapa(request):
-    etapa = Etapa.objects.all()
-
-    template = loader.get_template('usuario/templates/beta/listar_etapa.html')
-    context = {
-        'etapa': etapa,
-    }
-
-    return HttpResponse(template.render(context, request))
-
-
-def UsuarioBetaListarUnidadeTematica(request):
-    unidade_tematica = UnidadeTematica.objects.all()
-
-    template = loader.get_template('usuario/templates/beta/listar_unidade_tematica.html')
-    context = {
-        'unidade_tematica': unidade_tematica,
-    }
-
-    return HttpResponse(template.render(context, request))
-
-
-def UsuarioBetaListarObjetoDeConhecimento(request):
-    objeto_de_conhecimento = ObjetoDeConhecimento.objects.all()
-
-    template = loader.get_template('usuario/templates/beta/listar_objeto_de_conhecimento.html')
-    context = {
-        'objeto_de_conhecimento': objeto_de_conhecimento,
-    }
-
-    return HttpResponse(template.render(context, request))
-
-
-def UsuarioBetaListarNivelDeDificuldade(request):
-    nivel_de_dificuldade = NivelDeDificuldade.objects.all()
-
-    template = loader.get_template('usuario/templates/beta/listar_nivel_de_dificuldade.html')
-    context = {
-        'nivel_de_dificuldade': nivel_de_dificuldade,
-    }
-
-    return HttpResponse(template.render(context, request))
-
-
-class UsuarioBetaEditarEtapa(UpdateView):
-    model = Etapa
-    template_name = 'usuario/templates/beta/editar_etapa.html'
-    fields = ['etapa_nome']
-    success_url = '../concluido/'
-
-
-class UsuarioBetaEditarUnidadeTematica(UpdateView):
-    model = UnidadeTematica
-    template_name = 'usuario/templates/beta/editar_unidade_tematica.html'
-    fields = ['etapa', 'ano', 'unidade_tematica_nome']
-    success_url = '../concluido/'
-
-
-class UsuarioBetaEditarObjetoDeConhecimento(UpdateView):
-    model = ObjetoDeConhecimento
-    template_name = 'usuario/templates/beta/editar_objeto_de_conhecimento.html'
-    fields = ['etapa', 'unidade_tematica', 'ano', 'objeto_de_conhecimento_nome']
-    success_url = '../concluido/'
-
-
-class UsuarioBetaEditarNivelDeDificuldade(UpdateView):
-    model = NivelDeDificuldade
-    template_name = 'usuario/templates/beta/editar_nivel_de_dificuldade.html'
-    fields = ['nivel_de_dificuldade_nome']
-    success_url = '../concluido/'
-
-
 class UsuarioBetaListarUsuarioGama(TemplateView):
     template_name = 'usuario/templates/beta/listar_usuario_gama.html'
 
 
-def UsuarioBetaListarUsuarioGamaDetalhes(request, id_u):
-    usuario = Usuario.objects.filter(id=id_u)
-
-    template = loader.get_template('usuario/templates/beta/listar_usuario_gama_detalhes.html')
-    context = {
-        'detalhes': usuario,
-    }
-
-    return HttpResponse(template.render(context, request))
-
-
-class UsuarioBetaListarUsuarioDelta(TemplateView):
-    template_name = 'usuario/templates/beta/listar_usuario_delta.html'
-
-
-def UsuarioBetaListarUsuarioDeltaDetalhes(request, id_u):
-    usuario = Usuario.objects.filter(id=id_u)
-
-    template = loader.get_template('usuario/templates/beta/listar_usuario_delta_detalhes.html')
-    context = {
-        'detalhes': usuario,
-    }
-
-    return HttpResponse(template.render(context, request))
-
-
-class UsuarioBetaCadastrarUsuarioGama(CreateView):
+class UsuarioBetaCadastrarUsuarioGama(TemplateView):
     template_name = 'usuario/templates/beta/cadastrar_usuario_gama.html'
-    form_class = UsuarioCreationForm
-    success_url = './concluido/'
 
 
-def UsuarioBetaCadastrarFiliacao(request):
-    # tem que melhorar essa função para evitar erros no processamento, como por exemplo, a duplicidade de registro de ids
-    el = Usuario.objects.last()
-    user = request.user.id
-    filiacao = Filiacao(superior=user, inferior=el.id)
-    filiacao.save();
+class UsuarioBetaDetalhesUsuarioGama(TemplateView):
+    template_name = 'usuario/templates/beta/detalhes_usuario_gama.html'
 
-    return redirect('../../../../ir_para/')
+
+class UsuarioBetaEditarUsuarioGama(TemplateView):
+    template_name = 'usuario/templates/beta/editar_usuario_gama.html'
+
+
+class UsuarioBetaCadastrarEtapa(TemplateView):
+    template_name = 'usuario/templates/beta/cadastrar_etapa.html'
+
+
+class UsuarioBetaListarEtapa(TemplateView):
+    template_name = 'usuario/templates/beta/listar_etapa.html'
+
+
+class UsuarioBetaEditarEtapa(TemplateView):
+    template_name = 'usuario/templates/beta/editar_etapa.html'
+
+
+class UsuarioBetaCadastrarUnidadeTematica(TemplateView):
+    template_name = 'usuario/templates/beta/cadastrar_unidade_tematica.html'
+
+
+class UsuarioBetaListarUnidadeTematica(TemplateView):
+    template_name = 'usuario/templates/beta/listar_unidade_tematica.html'
+
+
+class UsuarioBetaEditarUnidadeTematica(TemplateView):
+    template_name = 'usuario/templates/beta/editar_unidade_tematica.html'
+
+
+class UsuarioBetaCadastrarObjetoDeConhecimento(TemplateView):
+    template_name = 'usuario/templates/beta/cadastrar_objeto_de_conhecimento.html'
+
+
+class UsuarioBetaListarObjetoDeConhecimento(TemplateView):
+    template_name = 'usuario/templates/beta/listar_objeto_de_conhecimento.html'
+
+
+class UsuarioBetaEditarObjetoDeConhecimento(TemplateView):
+    template_name = 'usuario/templates/beta/editar_objeto_de_conhecimento.html'
+
+
+class UsuarioBetaCadastrarNivelDeDificuldade(TemplateView):
+    template_name = 'usuario/templates/beta/cadastrar_nivel_de_dificuldade.html'
+
+
+class UsuarioBetaListarNivelDeDificuldade(TemplateView):
+    template_name = 'usuario/templates/beta/listar_nivel_de_dificuldade.html'
+
+
+class UsuarioBetaEditarNivelDeDificuldade(TemplateView):
+    template_name = 'usuario/templates/beta/editar_nivel_de_dificuldade.html'
 
 
 #############################################################
@@ -479,12 +335,6 @@ class UsuarioGamaConfiguracao(TemplateView):
     template_name = 'usuario/templates/gama/configuracao.html'
 
 
-class UsuarioGamaConfiguracaoExcluirConta(DeleteView):
-    model = Usuario
-    template_name = 'usuario/templates/gama/excluir_conta.html'
-    success_url = '../../../sair/'
-
-
 class UsuarioGamaManual(TemplateView):
     template_name = 'usuario/templates/gama/manual.html'
 
@@ -493,50 +343,32 @@ class UsuarioGamaIrPara(TemplateView):
     template_name = 'usuario/templates/gama/ir_para.html'
 
 
-class UsuarioGamaCadastrarUsuarioDelta(CreateView):
+class UsuarioGamaCadastrarUsuarioDelta(TemplateView):
     template_name = 'usuario/templates/gama/cadastrar_usuario_delta.html'
-    form_class = UsuarioCreationForm
-    success_url = './concluido/'
-
-
-def UsuarioGamaCadastrarFiliacao(request):
-    # tem que melhorar essa função para evitar erros no processamento, como por exemplo, a duplicidade de registro de ids
-    el = Usuario.objects.last()
-    user = request.user.id
-    filiacao = Filiacao(superior=user, inferior=el.id)
-    filiacao.save();
-
-    return redirect('../../../../ir_para/')
 
 
 class UsuarioGamaListarUsuarioDelta(TemplateView):
     template_name = 'usuario/templates/gama/listar_usuario_delta.html'
 
 
-def UsuarioGamaListarUsuarioDeltaDetalhes(request, id_u):
-    usuario = Usuario.objects.filter(id=id_u)
-
-    template = loader.get_template('usuario/templates/gama/listar_usuario_delta_detalhes.html')
-    context = {
-        'detalhes': usuario,
-    }
-
-    return HttpResponse(template.render(context, request))
+class UsuarioGamaDetalhesUsuarioDelta(TemplateView):
+    template_name = 'usuario/templates/gama/detalhes_usuario_delta.html'
 
 
-class UsuarioGamaEditarQuestao(UpdateView):
-    model = Questao
-    template_name = 'usuario/templates/gama/editar_questao.html'
-    fields = ['etapa', 'ano', 'unidade_tematica', 'objeto_de_conhecimento', 'nivel_de_dificuldade', 'imagem',
-              'pergunta', 'resposta', 'status']
-
-    success_url = '../concluido/'
+class UsuarioGamaEditarUsuarioDelta(TemplateView):
+    template_name = 'usuario/templates/gama/editar_usuario_delta.html'
 
 
-class UsuarioGamaExcluirQuestao(DeleteView):
-    model = Questao
-    template_name = 'usuario/templates/gama/excluir_questao.html'
-    success_url = '../concluido/'
+class UsuarioGamaRevisarQuestao(TemplateView):
+    template_name = 'usuario/templates/gama/revisar_questao.html'
+
+
+class UsuarioGamaListarQuestao(TemplateView):
+    template_name = 'usuario/templates/gama/listar_questao.html'
+
+
+class UsuarioGamaListarQuestaoUID(TemplateView):
+    template_name = 'usuario/templates/gama/listar_questao_uid.html'
 
 
 #############################################################
@@ -551,35 +383,20 @@ class UsuarioDeltaConfiguracao(TemplateView):
     template_name = 'usuario/templates/delta/configuracao.html'
 
 
-class UsuarioDeltaConfiguracaoExcluirConta(DeleteView):
-    model = Usuario
-    template_name = 'usuario/templates/delta/excluir_conta.html'
-    success_url = '../../../sair/'
-
-
 class UsuarioDeltaManual(TemplateView):
     template_name = 'usuario/templates/delta/manual.html'
 
 
-class UsuarioDeltaCadastrarQuestao(CreateView):
+class UsuarioDeltaCadastrarQuestao(TemplateView):
     template_name = 'usuario/templates/delta/cadastrar_questao.html'
-    form_class = QuestaoForm
-    success_url = 'concluido/'
 
 
-class UsuarioDeltaEditarQuestao(UpdateView):
-    model = Questao
+class UsuarioDeltaListarQuestao(TemplateView):
+    template_name = 'usuario/templates/delta/listar_questao.html'
+
+
+class UsuarioDeltaEditarQuestao(TemplateView):
     template_name = 'usuario/templates/delta/editar_questao.html'
-    fields = ['etapa', 'ano', 'unidade_tematica', 'objeto_de_conhecimento', 'nivel_de_dificuldade', 'imagem',
-              'pergunta', 'resposta']
-
-    success_url = '../concluido/'
-
-
-class UsuarioDeltaExcluirQuestao(DeleteView):
-    model = Questao
-    template_name = 'usuario/templates/delta/excluir_questao.html'
-    success_url = '../concluido/'
 
 
 #############################################################
@@ -603,12 +420,12 @@ class UsuarioEpsilonBQPCadastrarQuestao(TemplateView):
 
 
 class UsuarioEpsilonBQPListarQuestao(TemplateView):
-    template_name =  'usuario/templates/epsilon/bqp_listar_questao.html'
+    template_name = 'usuario/templates/epsilon/bqp_listar_questao.html'
 
 
 class UsuarioEpsilonBQPEditarQuestao(TemplateView):
-    template_name =  'usuario/templates/epsilon/bqp_editar_questao.html'
- 
+    template_name = 'usuario/templates/epsilon/bqp_editar_questao.html'
+
 
 class UsuarioEpsilonInicio(TemplateView):
     template_name = 'usuario/templates/epsilon/inicio.html'
@@ -624,4 +441,3 @@ class UsuarioEpsilonGerarAvaliacaoVisualizar(TemplateView):
 
 class UsuarioEpsilonImprimirAvaliacao(TemplateView):
     template_name = 'usuario/templates/epsilon/imprimir_avaliacao.html'
-

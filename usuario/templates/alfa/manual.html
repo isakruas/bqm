@@ -20,6 +20,8 @@
 <meta http-equiv="refresh" content="0; URL='../../../usuario/epsilon/'"/>
 {% endblock is_authenticated_epsilon %}
 
+
+
 {% block nav_alfa %}
     <div class="nav-three-row">
 
@@ -28,7 +30,7 @@
       </div>
      
       <div class="nav-three-row-two">
-        <svg onclick = "System.Redirect('../')"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <svg onclick = "location.href = '../' "  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <path fill="currentColor" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3.222 18.917c5.666-5.905-.629-10.828-5.011-7.706l1.789 1.789h-6v-6l1.832 1.832c7.846-6.07 16.212 4.479 7.39 10.085z" />
         </svg>
       </div>
@@ -40,65 +42,17 @@
     </div>
 {% endblock nav_alfa %}
 
+
 {% block main_alfa %}
- 
 <script type="text/javascript">
   document.getElementById('info').innerHTML = '<h2 style="white-space: nowrap">DASHBOARD > MANUAL</h2>';
 </script>
-
-
-
-<p class="paragraph"><span>
-O  usuário  de  nível Alfa  de  acesso  possibilitará cadastrar  e gerenciar  os  usuários  de  nível Beta.   Este   nível   de   usuário   torna-se   necessário,   quando   considera-se   a   possibilidade   de escalabilidade  desta  plataforma,  no  qual,  em  cada  região  do  brasil  pode-se  ter  um  representante e/ou  responsável,  tornado-o  assim  uma  plataforma  de  construção  colaborativa.  O  usuário  com este nível de acesso será o responsável pela coordenação da plataforma em um município, região ou estado.
-
-</span></p>
-
-
-
-
-<p class="paragraph"><span>
-1. Informações gerais
-</span></p>
-
-<p class="paragraph"><span>
-     <center>
-      <video controls poster="/media/poster.png">
-        <source src="/media/manual/alfa/01.mp4" type="video/mp4">
-        <source src="/media/manual/alfa/01.ogg" type="video/ogg">
-        Seu navegador não suporta a tag de vídeo.
-      </video> 
-    </center>
-</span></p>
-
-<p class="paragraph"><span>
-2. Modificação de senha
-</span></p>
-
-<p class="paragraph"><span>
-     <center>
-      <video controls poster="/media/poster.png">
-        <source src="/media/manual/alfa/02.mp4" type="video/mp4">
-        <source src="/media/manual/alfa/02.ogg" type="video/ogg">
-        Seu navegador não suporta a tag de vídeo.
-      </video> 
-    </center>
-</span></p>
-  
-
-<p class="paragraph"><span>
-3. Adicionar usuário de nivel Beta
-</span></p>
-
-<p class="paragraph"><span>
-     <center>
-      <video controls poster="/media/poster.png">
-        <source src="/media/manual/alfa/03.mp4" type="video/mp4">
-        <source src="/media/manual/alfa/03.ogg" type="video/ogg">
-        Seu navegador não suporta a tag de vídeo.
-      </video> 
-    </center>
-</span></p>
-  
-
+ 
+ 
+<p class="paragraph">
+  <span>
+Olá usuário, bem vindo ao Manual de Utilização do Banco de Questões de Matemática (BQM), aqui você encontrará informações que lhe permitirão entender a maneira em que esta plataforma funciona.
+  </span>
+</p>
 
 {% endblock main_alfa %}

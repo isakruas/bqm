@@ -4,6 +4,7 @@ from .models import (
     Upload
 )
 
+
 class UploadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Upload
