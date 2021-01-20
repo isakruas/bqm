@@ -14,6 +14,10 @@ https://iconmonstr.com/
             <meta charset="utf-8">
             <title>BQM: BANCO DE QUESTÕES DE MATEMÁTICA</title>
                 <!-- Redirecionamento -->
+                {% if user.nivel_de_acesso == 'admin' %}
+                    {% block is_authenticated_admin %}
+                    {% endblock is_authenticated_admin %}
+                {% endif %}
                 {% if user.nivel_de_acesso == 'alfa' %}
                     {% block is_authenticated_alfa %}
                     {% endblock is_authenticated_alfa %}
@@ -50,13 +54,13 @@ https://iconmonstr.com/
                 <script type="text/x-mathjax-config">
                 MathJax.Hub.Config({showProcessingMessages: false, tex2jax: { inlineMath: [['\\(','\\)']] } });
                 </script>
-                <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+ 
                 <script type="text/javascript" src="{% static 'js/editor.js' %}"></script>
                 <script type="text/javascript" src="{% static 'js/api.js' %}"></script>
 
             <!-- PWA -->
-            <script type="text/javascript" src="http://localhost:8000/app.js"></script>
-            <link href="http://localhost:8000/manifest.json" rel="manifest" />
+            <script type="text/javascript" src="https://bq.mat.br/app.js"></script>
+            <link href="https://bq.mat.br/manifest.json" rel="manifest" />
             <!-- ios support -->
             <meta name="mobile-web-app-capable" content="yes">
             <meta name="apple-mobile-web-app-capable" content="yes">
@@ -68,26 +72,26 @@ https://iconmonstr.com/
             <meta name="msapplication-starturl" content="/">
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-            <link rel="icon" type="image/png" sizes="48x48" href="http://localhost:8000/media/icon48x48px.png">
-            <link rel="apple-touch-icon" type="image/png" sizes="48x48" href="http://localhost:8000/media/icon48x48px.png">
-            <link rel="icon" type="image/png" sizes="72x72" href="http://localhost:8000/media/icon72x72px.png">
-            <link rel="apple-touch-icon" type="image/png" sizes="72x72" href="http://localhost:8000/media/icon72x72px.png">
-            <link rel="icon" type="image/png" sizes="96x96" href="http://localhost:8000/media/icon96x96px.png">
-            <link rel="apple-touch-icon" type="image/png" sizes="96x96" href="http://localhost:8000/media/icon96x96px.png">
-            <link rel="icon" type="image/png" sizes="128x128" href="http://localhost:8000/media/icon128x128px.png">
-            <link rel="apple-touch-icon" type="image/png" sizes="128x128" href="http://localhost:8000/media/icon128x128px.png">
-            <link rel="icon" type="image/png" sizes="144x144" href="http://localhost:8000/media/icon144x144px.png">
-            <link rel="apple-touch-icon" type="image/png" sizes="144x144" href="http://localhost:8000/media/icon144x144px.png">
-            <link rel="icon" type="image/png" sizes="152x152" href="http://localhost:8000/media/icon152x152px.png">
-            <link rel="apple-touch-icon" type="image/png" sizes="152x152" href="http://localhost:8000/media/icon152x152px.png">
-            <link rel="icon" type="image/png" sizes="192x192" href="http://localhost:8000/media/icon192x192px.png">
-            <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="http://localhost:8000/media/icon192x192px.png">
-            <link rel="icon" type="image/png" sizes="256x256" href="http://localhost:8000/media/icon256x256px.png">
-            <link rel="apple-touch-icon" type="image/png" sizes="256x256" href="http://localhost:8000/media/icon256x256px.png">
-            <link rel="icon" type="image/png" sizes="384x384" href="http://localhost:8000/media/icon384x384px.png">
-            <link rel="apple-touch-icon" type="image/png" sizes="384x384" href="http://localhost:8000/media/icon384x384px.png">
-            <link rel="icon" type="image/png" sizes="512x512" href="http://localhost:8000/media/icon512x512px.png">
-            <link rel="apple-touch-icon" type="image/png" sizes="512x512" href="http://localhost:8000/media/icon512x512px.png">
+            <link rel="icon" type="image/png" sizes="48x48" href="https://bq.mat.br/media/icon48x48px.png">
+            <link rel="apple-touch-icon" type="image/png" sizes="48x48" href="https://bq.mat.br/media/icon48x48px.png">
+            <link rel="icon" type="image/png" sizes="72x72" href="https://bq.mat.br/media/icon72x72px.png">
+            <link rel="apple-touch-icon" type="image/png" sizes="72x72" href="https://bq.mat.br/media/icon72x72px.png">
+            <link rel="icon" type="image/png" sizes="96x96" href="https://bq.mat.br/media/icon96x96px.png">
+            <link rel="apple-touch-icon" type="image/png" sizes="96x96" href="https://bq.mat.br/media/icon96x96px.png">
+            <link rel="icon" type="image/png" sizes="128x128" href="https://bq.mat.br/media/icon128x128px.png">
+            <link rel="apple-touch-icon" type="image/png" sizes="128x128" href="https://bq.mat.br/media/icon128x128px.png">
+            <link rel="icon" type="image/png" sizes="144x144" href="https://bq.mat.br/media/icon144x144px.png">
+            <link rel="apple-touch-icon" type="image/png" sizes="144x144" href="https://bq.mat.br/media/icon144x144px.png">
+            <link rel="icon" type="image/png" sizes="152x152" href="https://bq.mat.br/media/icon152x152px.png">
+            <link rel="apple-touch-icon" type="image/png" sizes="152x152" href="https://bq.mat.br/media/icon152x152px.png">
+            <link rel="icon" type="image/png" sizes="192x192" href="https://bq.mat.br/media/icon192x192px.png">
+            <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="https://bq.mat.br/media/icon192x192px.png">
+            <link rel="icon" type="image/png" sizes="256x256" href="https://bq.mat.br/media/icon256x256px.png">
+            <link rel="apple-touch-icon" type="image/png" sizes="256x256" href="https://bq.mat.br/media/icon256x256px.png">
+            <link rel="icon" type="image/png" sizes="384x384" href="https://bq.mat.br/media/icon384x384px.png">
+            <link rel="apple-touch-icon" type="image/png" sizes="384x384" href="https://bq.mat.br/media/icon384x384px.png">
+            <link rel="icon" type="image/png" sizes="512x512" href="https://bq.mat.br/media/icon512x512px.png">
+            <link rel="apple-touch-icon" type="image/png" sizes="512x512" href="https://bq.mat.br/media/icon512x512px.png">
 
             {% block head_u %}
 
@@ -202,12 +206,12 @@ https://iconmonstr.com/
             <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
             <link rel="stylesheet" type="text/css" href="{% static 'css/stylesheet.css' %}">
  
-            <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+ 
             <script type="text/javascript" src="{% static 'js/api.js' %}"></script>
            
             <!-- PWA -->
-            <script type="text/javascript" src="http://localhost:8000/app.js"></script>
-            <link href="http://localhost:8000/manifest.json" rel="manifest" />
+            <script type="text/javascript" src="https://bq.mat.br/app.js"></script>
+            <link href="https://bq.mat.br/manifest.json" rel="manifest" />
             <!-- ios support -->
             <meta name="mobile-web-app-capable" content="yes">
             <meta name="apple-mobile-web-app-capable" content="yes">
@@ -219,26 +223,26 @@ https://iconmonstr.com/
             <meta name="msapplication-starturl" content="/">
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-            <link rel="icon" type="image/png" sizes="48x48" href="http://localhost:8000/media/icon48x48px.png">
-            <link rel="apple-touch-icon" type="image/png" sizes="48x48" href="http://localhost:8000/media/icon48x48px.png">
-            <link rel="icon" type="image/png" sizes="72x72" href="http://localhost:8000/media/icon72x72px.png">
-            <link rel="apple-touch-icon" type="image/png" sizes="72x72" href="http://localhost:8000/media/icon72x72px.png">
-            <link rel="icon" type="image/png" sizes="96x96" href="http://localhost:8000/media/icon96x96px.png">
-            <link rel="apple-touch-icon" type="image/png" sizes="96x96" href="http://localhost:8000/media/icon96x96px.png">
-            <link rel="icon" type="image/png" sizes="128x128" href="http://localhost:8000/media/icon128x128px.png">
-            <link rel="apple-touch-icon" type="image/png" sizes="128x128" href="http://localhost:8000/media/icon128x128px.png">
-            <link rel="icon" type="image/png" sizes="144x144" href="http://localhost:8000/media/icon144x144px.png">
-            <link rel="apple-touch-icon" type="image/png" sizes="144x144" href="http://localhost:8000/media/icon144x144px.png">
-            <link rel="icon" type="image/png" sizes="152x152" href="http://localhost:8000/media/icon152x152px.png">
-            <link rel="apple-touch-icon" type="image/png" sizes="152x152" href="http://localhost:8000/media/icon152x152px.png">
-            <link rel="icon" type="image/png" sizes="192x192" href="http://localhost:8000/media/icon192x192px.png">
-            <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="http://localhost:8000/media/icon192x192px.png">
-            <link rel="icon" type="image/png" sizes="256x256" href="http://localhost:8000/media/icon256x256px.png">
-            <link rel="apple-touch-icon" type="image/png" sizes="256x256" href="http://localhost:8000/media/icon256x256px.png">
-            <link rel="icon" type="image/png" sizes="384x384" href="http://localhost:8000/media/icon384x384px.png">
-            <link rel="apple-touch-icon" type="image/png" sizes="384x384" href="http://localhost:8000/media/icon384x384px.png">
-            <link rel="icon" type="image/png" sizes="512x512" href="http://localhost:8000/media/icon512x512px.png">
-            <link rel="apple-touch-icon" type="image/png" sizes="512x512" href="http://localhost:8000/media/icon512x512px.png">
+            <link rel="icon" type="image/png" sizes="48x48" href="https://bq.mat.br/media/icon48x48px.png">
+            <link rel="apple-touch-icon" type="image/png" sizes="48x48" href="https://bq.mat.br/media/icon48x48px.png">
+            <link rel="icon" type="image/png" sizes="72x72" href="https://bq.mat.br/media/icon72x72px.png">
+            <link rel="apple-touch-icon" type="image/png" sizes="72x72" href="https://bq.mat.br/media/icon72x72px.png">
+            <link rel="icon" type="image/png" sizes="96x96" href="https://bq.mat.br/media/icon96x96px.png">
+            <link rel="apple-touch-icon" type="image/png" sizes="96x96" href="https://bq.mat.br/media/icon96x96px.png">
+            <link rel="icon" type="image/png" sizes="128x128" href="https://bq.mat.br/media/icon128x128px.png">
+            <link rel="apple-touch-icon" type="image/png" sizes="128x128" href="https://bq.mat.br/media/icon128x128px.png">
+            <link rel="icon" type="image/png" sizes="144x144" href="https://bq.mat.br/media/icon144x144px.png">
+            <link rel="apple-touch-icon" type="image/png" sizes="144x144" href="https://bq.mat.br/media/icon144x144px.png">
+            <link rel="icon" type="image/png" sizes="152x152" href="https://bq.mat.br/media/icon152x152px.png">
+            <link rel="apple-touch-icon" type="image/png" sizes="152x152" href="https://bq.mat.br/media/icon152x152px.png">
+            <link rel="icon" type="image/png" sizes="192x192" href="https://bq.mat.br/media/icon192x192px.png">
+            <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="https://bq.mat.br/media/icon192x192px.png">
+            <link rel="icon" type="image/png" sizes="256x256" href="https://bq.mat.br/media/icon256x256px.png">
+            <link rel="apple-touch-icon" type="image/png" sizes="256x256" href="https://bq.mat.br/media/icon256x256px.png">
+            <link rel="icon" type="image/png" sizes="384x384" href="https://bq.mat.br/media/icon384x384px.png">
+            <link rel="apple-touch-icon" type="image/png" sizes="384x384" href="https://bq.mat.br/media/icon384x384px.png">
+            <link rel="icon" type="image/png" sizes="512x512" href="https://bq.mat.br/media/icon512x512px.png">
+            <link rel="apple-touch-icon" type="image/png" sizes="512x512" href="https://bq.mat.br/media/icon512x512px.png">
 
  
             {% block is_not_authenticated %}

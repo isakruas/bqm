@@ -1,89 +1,93 @@
-const CACHE_NAME = 'bqm-cache-v1';
-const urlsToCache = [
+var CACHE_NAME = 'bqm-cache-v' + new Date().getTime();
 
-  'https://bq.mat.br/',
-  'https://bq.mat.br/sobre/',
-  'https://bq.mat.br/politica_de_privacidade/',
-  'https://bq.mat.br/ir_para/',
+var urlsToCache = [
+  '/',
+  '/app.js',
+  '/manifest.json',
+  '/media/icon48x48px.png',
+  '/media/icon72x72px.png',
+  '/media/icon96x96px.png',
+  '/media/icon128x128px.png',
+  '/media/icon144x144px.png',
+  '/media/icon152x152px.png',
+  '/media/icon192x192px.png',
+  '/media/icon256x256px.png',
+  '/media/icon384x384px.png',
+  '/media/icon512x512px.png',
+  '/media/poster.png',
+  '/offline/',
+  '/politica_de_privacidade/',
+  '/sobre/',
+  '/static/css/fonts.css',
+  '/static/css/reset.css', 
+  '/static/css/stylesheet.css', 
+  '/static/fonts/Roboto-Regular-webfont.woff',
+  '/static/img/grid.png',
+  '/static/js/api.js',
+  '/static/js/editor.js',
+];
 
-  'https://bq.mat.br/app.js',
-  'https://bq.mat.br/sw.js',
-  'https://bq.mat.br/manifest.json',
-
-  'https://bq.mat.br/media/offline.html',
-
-  'https://bq.mat.br/static/css/fonts.css',
-  'https://bq.mat.br/static/css/reset.css',
-  'https://bq.mat.br/static/css/stylesheet.css',
-  'https://bq.mat.br/static/fonts/Roboto-Regular-webfont.woff',
-  'https://bq.mat.br/static/js/script.js'
-]
-
-self.addEventListener('install', function(event){
+self.addEventListener('install', event => {
+    this.skipWaiting();
     event.waitUntil(
         caches.open(CACHE_NAME)
-        .then(function(cache){
-            //console.log('Opened cache');
-            return cache.addAll(urlsToCache)
+            .then(cache => {
+                return cache.addAll(urlsToCache);
+            })
+    )
+});
+
+
+self.addEventListener('activate', event => {
+    event.waitUntil(
+
+        caches.keys().then(cacheNames => {
+            return Promise.all(
+                cacheNames
+                    .filter(cacheName => (cacheName.startsWith('bqm-cache-')))
+                    .filter(cacheName => (cacheName !== CACHE_NAME))
+                    .map(cacheName => caches.delete(cacheName))
+            );
         })
     );
 });
 
-self.addEventListener('fetch', function(event) {
-  if (event.request.method !== 'GET') return;
-  event.respondWith(
-    caches.match(event.request)
-    .then(function(response) {
-      return response || fetchAndCache(event.request);
-    })
-  );
-});
 
-function fetchAndCache(url) {
-  return fetch(url)
-  .then(function(response) {
-     
-    if (response.type === 'opaqueredirect') {
-      return response;
-    }
+self.addEventListener('fetch', event => {
 
-    if (!response.ok) {
-      throw Error(response.statusText);
-    }
+  if(!event.request.url.includes('/api/')) {
 
-    let ContentType = response.headers.get('Content-Type');
+    event.respondWith(
+        caches.match(event.request).then(response => {
+          return response || fetch(event.request);
+        }).catch(() => {
+          return caches.match('/offline/');
+        })
+    );
 
-    if (ContentType == 'text/html; charset=utf-8' || ContentType == 'text/html') {
-      return response;
-    } else {
-      return caches.open(CACHE_NAME)
-      .then(function(cache) {
-        cache.put(url, response.clone());
-        return response;
-      });
-    }
-
-  }).catch(function(error) {
- 
-    console.log('Request failed:', error);
-
+    event.waitUntil(
+        caches.open(CACHE_NAME).then(cache => {
+          cache.keys().then(function (keys) {
+              for (var i = 0; i < keys.length; i++) {
+                if (event.request.url == keys[i].url) {
+                  update(event.request)
+                }
+              }
+          })
+        })
+    );
     
+  }
 
-    return caches.match('https://bq.mat.br/media/offline.html');
-  });
-}
-
-self.addEventListener('activate', function (event) {
-  event.waitUntil(
-    caches.keys().then(function (keys) {
-      return Promise.all(keys
-        .filter(function (key) {
-          return key.indexOf(CACHE_NAME) !== 0;
-        })
-        .map(function (key) {
-          return caches.delete(key);
-        })
-      );
-    })
-  );
 });
+
+
+function update(request) {
+  return fetch(request.url).then(response => {
+    if (!response.ok) {
+      throw new Error('Não foi possivel conectar ao url');
+    } else {
+      return caches.open(CACHE_NAME).then(cache => cache.put(request, response.clone())).then(() => response)
+    }
+  })
+}

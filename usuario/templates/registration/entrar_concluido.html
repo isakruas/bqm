@@ -1,5 +1,9 @@
 {% extends 'templates/base.html' %}
 
+{% block is_authenticated_admin %}
+<meta http-equiv="refresh" content="0; URL='../../../admin/'"/>
+{% endblock is_authenticated_admin %}
+
 {% block is_authenticated_alfa %}
 <meta http-equiv="refresh" content="0; URL='../../../usuario/alfa/'"/>
 {% endblock is_authenticated_alfa %}

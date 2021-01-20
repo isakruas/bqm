@@ -1,18 +1,17 @@
 if ('serviceWorker' in navigator) {
 
-    navigator.serviceWorker.register('https://bq.mat.br/sw.js', { scope: '/' })
-    .then(function(registration) {
+  navigator.serviceWorker.register('https://bq.mat.br/sw.js', { scope: '/' }).then(function(registration) {
 
-    if(registration.installing) {
-      console.log('Service worker installing');
-    } else if(registration.waiting) {
-      console.log('Service worker installed');
-    } else if(registration.active) {
-      console.log('Service worker active');
-    }
+      if(registration.installing) {
+        console.log('Service worker installing');
+      } else if(registration.waiting) {
+        console.log('Service worker installed');
+      } else if(registration.active) {
+        console.log('Service worker active');
+      }
 
   }).catch(function(error) {
-    // registration failed
-    console.log('Registration failed with ' + error);
+      console.log('Registration failed with ' + error);
   });
+
 }
