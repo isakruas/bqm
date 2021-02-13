@@ -1,0 +1,688 @@
+{% extends 'templates/base.html' %}
+{% block is_not_authenticated %}
+
+<meta http-equiv="refresh" content="0; URL="{% url 'usuario_sair' %}"/>
+{% endblock is_not_authenticated %} 
+{% block is_authenticated_alfa %}
+<meta http-equiv="refresh" content="0; URL="{% url 'usuario_alfa_inicio' %}"/>
+{% endblock is_authenticated_alfa %}
+{% block is_authenticated_beta %}
+<meta http-equiv="refresh" content="0; URL="{% url 'usuario_beta_inicio' %}"/>
+{% endblock is_authenticated_beta %}
+{% block is_authenticated_gama %}
+<meta http-equiv="refresh" content="0; URL="{% url 'usuario_gama_inicio' %}"/>
+{% endblock is_authenticated_gama %}
+{% block is_authenticated_delta %}
+<meta http-equiv="refresh" content="0; URL="{% url 'usuario_delta_inicio' %}"/>
+{% endblock is_authenticated_delta %}
+
+
+{% block nav_epsilon %}
+
+ 
+    <div class="nav-four-row">
+        <div class="nav-four-row-one">
+            <svg onclick = "location.href = '{% url 'usuario_epsilon_configuracao' %}' " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path  fill="#286090" d="M512.1 191l-8.2 14.3c-3 5.3-9.4 7.5-15.1 5.4-11.8-4.4-22.6-10.7-32.1-18.6-4.6-3.8-5.8-10.5-2.8-15.7l8.2-14.3c-6.9-8-12.3-17.3-15.9-27.4h-16.5c-6 0-11.2-4.3-12.2-10.3-2-12-2.1-24.6 0-37.1 1-6 6.2-10.4 12.2-10.4h16.5c3.6-10.1 9-19.4 15.9-27.4l-8.2-14.3c-3-5.2-1.9-11.9 2.8-15.7 9.5-7.9 20.4-14.2 32.1-18.6 5.7-2.1 12.1.1 15.1 5.4l8.2 14.3c10.5-1.9 21.2-1.9 31.7 0L552 6.3c3-5.3 9.4-7.5 15.1-5.4 11.8 4.4 22.6 10.7 32.1 18.6 4.6 3.8 5.8 10.5 2.8 15.7l-8.2 14.3c6.9 8 12.3 17.3 15.9 27.4h16.5c6 0 11.2 4.3 12.2 10.3 2 12 2.1 24.6 0 37.1-1 6-6.2 10.4-12.2 10.4h-16.5c-3.6 10.1-9 19.4-15.9 27.4l8.2 14.3c3 5.2 1.9 11.9-2.8 15.7-9.5 7.9-20.4 14.2-32.1 18.6-5.7 2.1-12.1-.1-15.1-5.4l-8.2-14.3c-10.4 1.9-21.2 1.9-31.7 0zm-10.5-58.8c38.5 29.6 82.4-14.3 52.8-52.8-38.5-29.7-82.4 14.3-52.8 52.8zM386.3 286.1l33.7 16.8c10.1 5.8 14.5 18.1 10.5 29.1-8.9 24.2-26.4 46.4-42.6 65.8-7.4 8.9-20.2 11.1-30.3 5.3l-29.1-16.8c-16 13.7-34.6 24.6-54.9 31.7v33.6c0 11.6-8.3 21.6-19.7 23.6-24.6 4.2-50.4 4.4-75.9 0-11.5-2-20-11.9-20-23.6V418c-20.3-7.2-38.9-18-54.9-31.7L74 403c-10 5.8-22.9 3.6-30.3-5.3-16.2-19.4-33.3-41.6-42.2-65.7-4-10.9.4-23.2 10.5-29.1l33.3-16.8c-3.9-20.9-3.9-42.4 0-63.4L12 205.8c-10.1-5.8-14.6-18.1-10.5-29 8.9-24.2 26-46.4 42.2-65.8 7.4-8.9 20.2-11.1 30.3-5.3l29.1 16.8c16-13.7 34.6-24.6 54.9-31.7V57.1c0-11.5 8.2-21.5 19.6-23.5 24.6-4.2 50.5-4.4 76-.1 11.5 2 20 11.9 20 23.6v33.6c20.3 7.2 38.9 18 54.9 31.7l29.1-16.8c10-5.8 22.9-3.6 30.3 5.3 16.2 19.4 33.2 41.6 42.1 65.8 4 10.9.1 23.2-10 29.1l-33.7 16.8c3.9 21 3.9 42.5 0 63.5zm-117.6 21.1c59.2-77-28.7-164.9-105.7-105.7-59.2 77 28.7 164.9 105.7 105.7zm243.4 182.7l-8.2 14.3c-3 5.3-9.4 7.5-15.1 5.4-11.8-4.4-22.6-10.7-32.1-18.6-4.6-3.8-5.8-10.5-2.8-15.7l8.2-14.3c-6.9-8-12.3-17.3-15.9-27.4h-16.5c-6 0-11.2-4.3-12.2-10.3-2-12-2.1-24.6 0-37.1 1-6 6.2-10.4 12.2-10.4h16.5c3.6-10.1 9-19.4 15.9-27.4l-8.2-14.3c-3-5.2-1.9-11.9 2.8-15.7 9.5-7.9 20.4-14.2 32.1-18.6 5.7-2.1 12.1.1 15.1 5.4l8.2 14.3c10.5-1.9 21.2-1.9 31.7 0l8.2-14.3c3-5.3 9.4-7.5 15.1-5.4 11.8 4.4 22.6 10.7 32.1 18.6 4.6 3.8 5.8 10.5 2.8 15.7l-8.2 14.3c6.9 8 12.3 17.3 15.9 27.4h16.5c6 0 11.2 4.3 12.2 10.3 2 12 2.1 24.6 0 37.1-1 6-6.2 10.4-12.2 10.4h-16.5c-3.6 10.1-9 19.4-15.9 27.4l8.2 14.3c3 5.2 1.9 11.9-2.8 15.7-9.5 7.9-20.4 14.2-32.1 18.6-5.7 2.1-12.1-.1-15.1-5.4l-8.2-14.3c-10.4 1.9-21.2 1.9-31.7 0zM501.6 431c38.5 29.6 82.4-14.3 52.8-52.8-38.5-29.6-82.4 14.3-52.8 52.8z"/></svg>
+        </div>
+        <div class="nav-four-row-two">
+            <svg onclick = "location.href = '{% url 'usuario_epsilon_bqp' %}' " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#286090"  d="M448 73.143v45.714C448 159.143 347.667 192 224 192S0 159.143 0 118.857V73.143C0 32.857 100.333 0 224 0s224 32.857 224 73.143zM448 176v102.857C448 319.143 347.667 352 224 352S0 319.143 0 278.857V176c48.125 33.143 136.208 48.572 224 48.572S399.874 209.143 448 176zm0 160v102.857C448 479.143 347.667 512 224 512S0 479.143 0 438.857V336c48.125 33.143 136.208 48.572 224 48.572S399.874 369.143 448 336z"/></svg>
+        </div>
+        <div class="nav-four-row-three">
+            <svg onclick = "location.href = '{% url 'usuario_epsilon_gerar_avaliacao' %}'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path  fill="#286090" d="M5.641 22.569l-5.641 1.431 1.397-5.674 4.244 4.243zm-2.829-5.657l4.243 4.243 16.945-16.913-4.242-4.242-16.946 16.912zm14.114-2.783l-1.414 1.414.708.708 1.414-1.414 1.414 1.414-2.122 2.122.707.707 2.122-2.122 1.417 1.385-2.829 2.829-4.232-4.233-1.415 1.413 5.648 5.648 5.656-5.657-5.643-5.643-1.431 1.429zm-9.887-4.261l-4.21-4.21 2.828-2.829 1.369 1.401-2.121 2.121.707.707 2.121-2.122 1.414 1.415-1.414 1.414.707.707 1.414-1.414 1.432-1.429-5.629-5.629-5.657 5.657 5.623 5.624 1.416-1.413z" />
+            </svg>
+        </div>
+        <div class="nav-four-row-four">
+            <svg onclick = "location.href = '{% url 'usuario_epsilon_manual' %}'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path fill="#286090" d="M5.495 4c-1.375 0-1.375-2 0-2h16.505v-2h-17c-1.657 0-3 1.343-3 3v18c0 1.657 1.343 3 3 3h17v-20h-16.505z" />
+            </svg>
+        </div>
+ 
+    </div>
+
+
+{% endblock nav_epsilon %}
+
+{% block main_epsilon %}
+
+<script type="text/javascript">
+
+document.getElementById('info').innerHTML = '<h2 style="white-space: nowrap">DASHBOARD</h2>';
+ 
+
+function carregar () {
+
+    console.log('carregando avaliações')
+
+    const token = BQ.Storage.Get({key:'token'});
+    const id = BQ.Storage.Get({key:'id'});
+    const avaliacao = BQ.Storage.Get({key:'avaliacao'});
+    BQ.Storage.Set({key:'imprimir_avaliacao', value:null});
+
+
+    try {
+
+        var i = avaliacao.split(',');
+
+        document.getElementById('questao_associada_ao_id_do_usuario_logado').innerHTML = '';
+
+        for (var j = 0; j < i.length;) {
+
+            BQ.Api.Get({
+
+              route:'imprimir/',
+
+              id:i[j],
+
+              headers: {
+                'Access-Control-Allow-Origin': window.location.href,
+                'Authorization': 'Token ' + token,
+              },
+
+              success:function(rtn){
+
+                if (!JSON.parse(rtn)) {
+                  return false;
+                }
+                
+                var obj1 = JSON.parse(rtn);
+     
+                document.getElementById('questao_associada_ao_id_do_usuario_logado').innerHTML = document.getElementById('questao_associada_ao_id_do_usuario_logado').innerHTML + '<div class="profile-footer-ul"><div class="main-four-columns profile-footer-li"><div class="main-four-columns-one" style="height: 1cm"><p style="position: relative ; width: 5cm; top: 30%; text-align: left; left: 0.5cm;">'+obj1.nome+'</p></div><div class="main-four-columns-two" onclick="imprimir_avaliacao('+obj1.id+')" style="border-left: 0.05cm solid #002907; min-width: 1cm;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#286090"  d="M448 192V77.25c0-8.49-3.37-16.62-9.37-22.63L393.37 9.37c-6-6-14.14-9.37-22.63-9.37H96C78.33 0 64 14.33 64 32v160c-35.35 0-64 28.65-64 64v112c0 8.84 7.16 16 16 16h48v96c0 17.67 14.33 32 32 32h320c17.67 0 32-14.33 32-32v-96h48c8.84 0 16-7.16 16-16V256c0-35.35-28.65-64-64-64zm-64 256H128v-96h256v96zm0-224H128V64h192v48c0 8.84 7.16 16 16 16h48v96zm48 72c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24z"/></svg></div><div class="main-four-columns-three" onclick="BQ.Storage.Set({key:'+"'editar_avaliacao'"+', value:'+obj1.id+'});editar_avaliacao(0)"style="border-left: 0.05cm solid #002907; min-width: 1cm;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="#286090" d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"/></svg></div><div class="main-four-columns-four" style="min-width: 1cm; border-left: 0.05cm solid #002907;" onclick="BQ.Storage.Set({key:'+"'excluir_avaliacao'"+', value:'+obj1.id+'});excluir_avaliacao(0)" ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#286090" d="M3 6v18h18v-18h-18zm5 14c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712z" /></svg></div></div></div>';
+
+              }
+
+            });
+
+            j++;
+        }
+
+     } catch (e) {
+        document.getElementById('questao_associada_ao_id_do_usuario_logado').innerHTML = '<div class="profile-footer-ul"> <div class="main-one-columns profile-footer-li"> <div class="main-one-columns-one" style="height: 25vh;"> <p style="position: relative; top: 45%; text-align:justify; width: 90%; left: 0.5cm;"> Quando uma avaliação for gerada e salva ela aparecerá listada aqui neste espaço, juntamente com algumas opções de modificação. <br /> </p> </div> </div> </div>';
+    }
+
+
+}
+
+
+function view (token, id){
+
+    BQ.Api.Get({
+        route:'usuario/',
+        headers: {
+            'Access-Control-Allow-Origin': window.location.href,
+            'Authorization': 'Token ' + token,
+        },
+        id:id,
+        success:function(rtn) {
+            var json = JSON.parse(rtn);
+
+            if (json.imprimir.length > 0) {
+                console.log('há avaliações geradas')
+                BQ.Storage.Set({key:'avaliacao', value:json.imprimir});
+                carregar ();
+            }  else {
+
+                document.getElementById('questao_associada_ao_id_do_usuario_logado').innerHTML = '<div class="profile-footer-ul"> <div class="main-one-columns profile-footer-li"> <div class="main-one-columns-one" style="height: 25vh;"> <p style="position: relative; top: 45%; text-align:justify; width: 90%; left: 0.5cm;"> Quando uma avaliação for gerada e salva ela aparecerá listada aqui neste espaço, juntamente com algumas opções de modificação. <br /> </p> </div> </div> </div>';
+            }
+        }
+    });
+}
+
+document.addEventListener('readystatechange', event => {
+if (event.target.readyState === 'complete') {
+
+    BQ.Api.Get({
+        route:'token/getorcreate/',
+        success:function(rtn) {
+            var json = JSON.parse(rtn);
+
+            if (json.token) {
+
+
+
+                BQ.Storage.Set({
+                    key:'token', 
+                    value:json.token
+                });
+
+                BQ.Storage.Set({
+                    key:'id', 
+                    value:json.id
+                }); 
+                
+                /*
+                BQ.Api.CreateStorageAll({
+                    token:json.token,
+                    success:function(rtn){
+                        console.log(rtn);
+                    }
+                });
+                */
+
+                view(json.token, json.id);
+
+            }  
+        }
+    });
+
+}});
+
+</script>
+
+ 
+
+<div class="main-one-columns">
+    <div class="main-one-columns-one">
+ 
+        <div class="main-auto-row-auto">
+            <div class="profile-footer-ul">
+                <div style="height: 1cm; border: 0.01cm solid #ccc background: #337ab7">
+                    <center>
+                        <p style="padding-top: 0.25cm">AVALIAÇÕES GERADAS</p>
+                    </center>
+                </div>
+            </div>
+        </div>
+ 
+ 
+        <div class="main-auto-row-auto" id="questao_associada_ao_id_do_usuario_logado">
+        <div class="profile-footer-ul"> <div class="main-one-columns profile-footer-li"> <div class="main-one-columns-one" style="height: 25vh;"> <p style="position: relative; top: 45%; text-align:justify; width: 90%; left: 0.5cm;"> CARREGANDO . . .<br /> </p> </div> </div> </div>
+        </div>
+    </div>
+</div>
+ 
+
+<script type="text/javascript">
+
+
+function imprimir_avaliacao(id){
+
+    /*
+        devife uma variavel de ferificação, ela serve
+        para evitar conflito com  as outras formas de impreção
+        redireciona para pagina de impresao
+    */
+    BQ.Storage.Set({key:'imprimir_avaliacao', value:id});
+
+    location.href = 'imprimir/avaliacao/';
+
+}
+
+function editar_avaliacao(status) {
+    // status == 0 perguntar se deseja excluir 
+    // status == 1 cancelar exclusao
+    // status == 2 renomear
+    if (status == 0) {
+    
+        document.getElementById('editar_avaliacao_01').style.visibility = 'visible';
+
+        return true;
+    }
+
+    if (status == 1) {
+    
+       BQ.Storage.Set({key:'editar_avaliacao', value:''});
+
+       return true;
+
+    }
+
+
+    if (status == 2) {
+
+        var nome = BQ.Storage.Get({key:'editar_avaliacao_nome'});
+        var id = BQ.Storage.Get({key:'editar_avaliacao'});
+        const token = BQ.Storage.Get({key:'token'});
+
+
+
+
+        if (nome == '' || nome == null)  {
+            today = new Date();
+
+            h = today.getHours();
+
+            m = today.getMinutes();
+
+            s = today.getSeconds();
+
+            nome = 'Avaliação '+h+':'+m+':'+s;
+        }
+
+        console.log(id)
+        console.log(nome)
+
+        BQ.Api.Patch({
+            route:'imprimir/',
+            data:{
+                'nome':nome
+            },
+            id:id,
+            headers: {
+                'Access-Control-Allow-Origin': window.location.href,
+                'Authorization': 'Token ' + token,
+            },
+            success:function(rtn){
+                BQ.Storage.Set({key:'editar_avaliacao', value:''});
+                BQ.Storage.Set({key:'editar_avaliacao_nome', value:''});
+                carregar();
+            }
+        })
+    }
+
+
+}
+
+function excluir_avaliacao (status) {
+
+    // status == 0 perguntar se deseja excluir 
+    // status == 1 cancelar exclusao
+    // status == 2 realizar exclusao
+
+    if (status == 0) {
+    
+        document.getElementById('excluir_avaliacao_01').style.visibility = 'visible';
+
+        return true;
+
+    }
+
+    if (status == 1) {
+    
+       BQ.Storage.Set({key:'excluir_avaliacao', value:''});
+
+       return true;
+
+    }
+
+
+    if (status == 2) {
+        
+        var avaliacao = BQ.Storage.Get({key:'avaliacao'});
+        var excluir_avaliacao = BQ.Storage.Get({key:'excluir_avaliacao'});
+        const token = BQ.Storage.Get({key:'token'});
+
+
+        var qids = [];
+
+        var i = avaliacao.split(',');
+
+        for (var j = 0; j < i.length; j++) {
+            if (!qids.includes(i[j])) {
+                qids.push(i[j]);                                       
+            }
+        }
+
+        console.log(qids)
+
+
+        var el = qids.indexOf(excluir_avaliacao);
+        if ( el !== -1) {
+            qids.splice(el, 1);
+        }
+
+        console.log(qids)
+
+        BQ.Storage.Set({key:'avaliacao',value:qids});
+
+
+
+
+        console.log(avaliacao);
+        console.log(excluir_avaliacao);
+        console.log(token);
+            
+        BQ.Api.Delete({
+
+            route:'imprimir/',
+            
+            id:excluir_avaliacao,
+
+            headers: {
+                'Access-Control-Allow-Origin': window.location.href,
+                'Authorization': 'Token ' + token,
+            },
+
+            success:function(rtn){
+                //recarrega a pagina novamente
+
+                BQ.Storage.Set({key:'excluir_avaliacao',value:''});
+                carregar();
+            }
+
+        });
+       
+        
+    }
+}
+ 
+</script>
+
+<script type="text/javascript">
+document.addEventListener('readystatechange', event => {
+if (event.target.readyState === 'complete') {
+  //Verifica se o tutorial de inicio já rodou
+
+  let tutorial = localStorage.getItem('tutorial_epsilon_inicio');
+
+  if(tutorial == '0') {
+   
+    document.getElementById('tutorial_epsilon_inicio_01').style.visibility = 'visible';
+    //localStorage.setItem('tutorial_epsilon_inicio', '1');
+
+  } else {
+    if(tutorial !== '1') {
+        localStorage.setItem('tutorial_epsilon_inicio', '0');
+        document.getElementById('tutorial_epsilon_inicio_01').style.visibility = 'visible';
+    }
+  }
+
+}});
+</script>
+
+{% endblock main_epsilon %}
+
+
+{% block alert_u %}
+ 
+
+<div class="alert" id="excluir_avaliacao_01" style="visibility: hidden;">
+    <div class="alert-box">
+        <div class="alert-two-row">
+            <div class="alert-two-row-one" style="text-align:justify;">
+            <br /><br /> <br /><br />
+            Deseja excluir esta avaliação?
+            </div>
+            <div class="alert-two-row-two">
+                <div class="alert-two-columns">
+                    <div class="alert-two-columns-one" onclick="document.getElementById('excluir_avaliacao_01').style.visibility = 'hidden';excluir_avaliacao(1);">
+                        <p>Cancelar</p>
+                    </div>
+                    <div class="alert-two-columns-two" onclick="document.getElementById('excluir_avaliacao_01').style.visibility = 'hidden';excluir_avaliacao(2);">
+                        <p>Sim</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="alert" id="editar_avaliacao_01" style="visibility: hidden;">
+    <div class="alert-box">
+        <div class="alert-two-row">
+            <div class="alert-two-row-one" style="text-align:justify;">
+            <br /><br /> <br /><br />
+            Deseja renomear esta avaliação?
+            </div>
+            <div class="alert-two-row-two">
+                <div class="alert-two-columns">
+                    <div class="alert-two-columns-one" onclick="document.getElementById('editar_avaliacao_01').style.visibility = 'hidden'; editar_avaliacao(1);">
+                        <p>Não</p>
+                    </div>
+                    <div class="alert-two-columns-two" onclick="document.getElementById('editar_avaliacao_01').style.visibility = 'hidden';document.getElementById('editar_avaliacao_02').style.visibility = 'visible';">
+                        <p>Sim</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+ <div class="alert" id="editar_avaliacao_02" style="visibility: hidden;">
+    <div class="alert-box">
+        <div class="alert-two-row">
+            <div class="alert-two-row-one" style="text-align:justify;">
+            <br /><br /> <br /><br />
+            <p> Qual o novo nome? </p>
+            <br />
+            <input type="text" name="avaliacao" style="height: 1cm; width: 100%; border:0.01cm solid #e1e1e8;" onchange="BQ.Storage.Set({key:'editar_avaliacao_nome', value:this.value});">
+            </div>
+            <div class="alert-two-row-two">
+
+                <div class="alert-one-columns">
+                    <div class="alert-one-columns-one" onclick="document.getElementById('editar_avaliacao_02').style.visibility = 'hidden';editar_avaliacao(2);">
+                        <p>Salvar</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     <div class="alert" id="tutorial_epsilon_inicio_01">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+                    <br />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="32" viewBox="0 0 24 26"><path  fill="#2c2c2c" d="M16.5 14.492c0 .828-.56 1.5-1.25 1.5s-1.25-.671-1.25-1.5.56-1.5 1.25-1.5 1.25.672 1.25 1.5zm-7.75-1.5c-.69 0-1.25.672-1.25 1.5s.56 1.5 1.25 1.5 1.25-.672 1.25-1.5-.56-1.5-1.25-1.5zm3.25 8.354c2.235 0 3-2.354 3-2.354h-6s.847 2.354 3 2.354zm12-6.041c0 1.765-.985 3.991-3.139 4.906-2.348 3.731-5.484 5.781-8.861 5.781-3.377 0-6.513-2.05-8.862-5.781-2.153-.915-3.138-3.141-3.138-4.906 0-1.472.387-2.937 1.682-3.636-.377-2.311-.117-6.176 4.193-7.593 1.031-1.99 3.125-4.084 6.125-4.084s5.094 2.094 6.125 4.083c4.31 1.418 4.57 5.282 4.193 7.594 1.295.699 1.682 2.164 1.682 3.636zm-2.176-1.252c-4.687-.258-6.833-4.66-7.241-7.394-1.167 6.333-9 1.792-9.896 9.052-.886-.467-1.715-1.308-2.215-2.159-.996.997-.54 4.154 1.661 4.899.224.076.413.228.535.43 1.991 3.296 4.595 5.111 7.332 5.111s5.34-1.815 7.331-5.111c.122-.202.312-.354.535-.43 1.771-.599 2.517-2.769 1.958-4.398z"/></svg><br />
+
+                    Olá, sou Sibele, sua assistente virtual. <br /><br />
+                    Este é um pequeno tutorial para lhe explicar alguns detalhes sobre os ícones da interface desta plataforma. Estes tutoriais além de apresentarem características da plataforma, podem lhe apresentar eventuais modificações efetuadas.<br /><br />
+                    Deseja prosseguir o tutorial?
+
+                </div>
+                <div class="alert-two-row-two">
+                    <div class="alert-two-columns">
+                        <div class="alert-two-columns-one" onclick="document.getElementById('tutorial_epsilon_inicio_01').style.visibility = 'hidden'">
+                            <p>Não</p>
+                        </div>
+                      <div class="alert-two-columns-two" onclick="document.getElementById('tutorial_epsilon_inicio_01').style.visibility = 'hidden'; document.getElementById('tutorial_epsilon_inicio_02').style.visibility = 'visible'">
+                          <p>Sim</p>
+                      </div>
+                    </div>
+                    <p>Ok</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert" id="tutorial_epsilon_inicio_02">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+                    <br /><br />
+                    <center>
+                    <svg width="64px" xmlns="http://www.w3.org/2000/svg"viewBox="0 0 640 512"><path  fill="#286090" d="M512.1 191l-8.2 14.3c-3 5.3-9.4 7.5-15.1 5.4-11.8-4.4-22.6-10.7-32.1-18.6-4.6-3.8-5.8-10.5-2.8-15.7l8.2-14.3c-6.9-8-12.3-17.3-15.9-27.4h-16.5c-6 0-11.2-4.3-12.2-10.3-2-12-2.1-24.6 0-37.1 1-6 6.2-10.4 12.2-10.4h16.5c3.6-10.1 9-19.4 15.9-27.4l-8.2-14.3c-3-5.2-1.9-11.9 2.8-15.7 9.5-7.9 20.4-14.2 32.1-18.6 5.7-2.1 12.1.1 15.1 5.4l8.2 14.3c10.5-1.9 21.2-1.9 31.7 0L552 6.3c3-5.3 9.4-7.5 15.1-5.4 11.8 4.4 22.6 10.7 32.1 18.6 4.6 3.8 5.8 10.5 2.8 15.7l-8.2 14.3c6.9 8 12.3 17.3 15.9 27.4h16.5c6 0 11.2 4.3 12.2 10.3 2 12 2.1 24.6 0 37.1-1 6-6.2 10.4-12.2 10.4h-16.5c-3.6 10.1-9 19.4-15.9 27.4l8.2 14.3c3 5.2 1.9 11.9-2.8 15.7-9.5 7.9-20.4 14.2-32.1 18.6-5.7 2.1-12.1-.1-15.1-5.4l-8.2-14.3c-10.4 1.9-21.2 1.9-31.7 0zm-10.5-58.8c38.5 29.6 82.4-14.3 52.8-52.8-38.5-29.7-82.4 14.3-52.8 52.8zM386.3 286.1l33.7 16.8c10.1 5.8 14.5 18.1 10.5 29.1-8.9 24.2-26.4 46.4-42.6 65.8-7.4 8.9-20.2 11.1-30.3 5.3l-29.1-16.8c-16 13.7-34.6 24.6-54.9 31.7v33.6c0 11.6-8.3 21.6-19.7 23.6-24.6 4.2-50.4 4.4-75.9 0-11.5-2-20-11.9-20-23.6V418c-20.3-7.2-38.9-18-54.9-31.7L74 403c-10 5.8-22.9 3.6-30.3-5.3-16.2-19.4-33.3-41.6-42.2-65.7-4-10.9.4-23.2 10.5-29.1l33.3-16.8c-3.9-20.9-3.9-42.4 0-63.4L12 205.8c-10.1-5.8-14.6-18.1-10.5-29 8.9-24.2 26-46.4 42.2-65.8 7.4-8.9 20.2-11.1 30.3-5.3l29.1 16.8c16-13.7 34.6-24.6 54.9-31.7V57.1c0-11.5 8.2-21.5 19.6-23.5 24.6-4.2 50.5-4.4 76-.1 11.5 2 20 11.9 20 23.6v33.6c20.3 7.2 38.9 18 54.9 31.7l29.1-16.8c10-5.8 22.9-3.6 30.3 5.3 16.2 19.4 33.2 41.6 42.1 65.8 4 10.9.1 23.2-10 29.1l-33.7 16.8c3.9 21 3.9 42.5 0 63.5zm-117.6 21.1c59.2-77-28.7-164.9-105.7-105.7-59.2 77 28.7 164.9 105.7 105.7zm243.4 182.7l-8.2 14.3c-3 5.3-9.4 7.5-15.1 5.4-11.8-4.4-22.6-10.7-32.1-18.6-4.6-3.8-5.8-10.5-2.8-15.7l8.2-14.3c-6.9-8-12.3-17.3-15.9-27.4h-16.5c-6 0-11.2-4.3-12.2-10.3-2-12-2.1-24.6 0-37.1 1-6 6.2-10.4 12.2-10.4h16.5c3.6-10.1 9-19.4 15.9-27.4l-8.2-14.3c-3-5.2-1.9-11.9 2.8-15.7 9.5-7.9 20.4-14.2 32.1-18.6 5.7-2.1 12.1.1 15.1 5.4l8.2 14.3c10.5-1.9 21.2-1.9 31.7 0l8.2-14.3c3-5.3 9.4-7.5 15.1-5.4 11.8 4.4 22.6 10.7 32.1 18.6 4.6 3.8 5.8 10.5 2.8 15.7l-8.2 14.3c6.9 8 12.3 17.3 15.9 27.4h16.5c6 0 11.2 4.3 12.2 10.3 2 12 2.1 24.6 0 37.1-1 6-6.2 10.4-12.2 10.4h-16.5c-3.6 10.1-9 19.4-15.9 27.4l8.2 14.3c3 5.2 1.9 11.9-2.8 15.7-9.5 7.9-20.4 14.2-32.1 18.6-5.7 2.1-12.1-.1-15.1-5.4l-8.2-14.3c-10.4 1.9-21.2 1.9-31.7 0zM501.6 431c38.5 29.6 82.4-14.3 52.8-52.8-38.5-29.6-82.4 14.3-52.8 52.8z"/></svg>
+
+                    </center>
+
+                    <br /><br />
+
+                    Este é o ícone de configurações, para quaisquer informações relativas a configurações de sua conta, como mudança de senha e exclusão, você terá acesso ao clicar neste ícone.
+                </div>
+                <div class="alert-two-row-two">
+
+                    <div class="alert-one-columns">
+                        <div class="alert-one-columns-one" onclick="document.getElementById('tutorial_epsilon_inicio_02').style.visibility = 'hidden'; document.getElementById('tutorial_epsilon_inicio_03').style.visibility = 'visible'">
+                            <p>Prosseguir</p>
+                        </div>
+                    </div>
+ 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert" id="tutorial_epsilon_inicio_03">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+                    
+                    <br /><br />
+
+                    <center>  
+                    
+                    <svg width="64px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="#286090"  d="M448 73.143v45.714C448 159.143 347.667 192 224 192S0 159.143 0 118.857V73.143C0 32.857 100.333 0 224 0s224 32.857 224 73.143zM448 176v102.857C448 319.143 347.667 352 224 352S0 319.143 0 278.857V176c48.125 33.143 136.208 48.572 224 48.572S399.874 209.143 448 176zm0 160v102.857C448 479.143 347.667 512 224 512S0 479.143 0 438.857V336c48.125 33.143 136.208 48.572 224 48.572S399.874 369.143 448 336z"/></svg>
+
+                    </center>
+
+                    <br /><br />
+
+                    Este é o ícone do Banco de Questões Privado (BQP), ao clicar neste ícone você será direcionado a um painel que permitirá você adicionar suas próprias questões de matemática, uma funcionalidade disponibilizada para você, caso queira criar o seu próprio banco de questões.
+                </div>
+                <div class="alert-two-row-two">
+
+                    <div class="alert-one-columns">
+                        <div class="alert-one-columns-one" onclick="document.getElementById('tutorial_epsilon_inicio_03').style.visibility = 'hidden'; document.getElementById('tutorial_epsilon_inicio_04').style.visibility = 'visible'">
+                            <p>Prosseguir</p>
+                        </div>
+                    </div>
+ 
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="alert" id="tutorial_epsilon_inicio_04">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+
+                    <br /><br />
+
+                    <center>
+                    
+                    <svg width="64px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path  fill="#286090" d="M5.641 22.569l-5.641 1.431 1.397-5.674 4.244 4.243zm-2.829-5.657l4.243 4.243 16.945-16.913-4.242-4.242-16.946 16.912zm14.114-2.783l-1.414 1.414.708.708 1.414-1.414 1.414 1.414-2.122 2.122.707.707 2.122-2.122 1.417 1.385-2.829 2.829-4.232-4.233-1.415 1.413 5.648 5.648 5.656-5.657-5.643-5.643-1.431 1.429zm-9.887-4.261l-4.21-4.21 2.828-2.829 1.369 1.401-2.121 2.121.707.707 2.121-2.122 1.414 1.415-1.414 1.414.707.707 1.414-1.414 1.432-1.429-5.629-5.629-5.657 5.657 5.623 5.624 1.416-1.413z" /></svg>
+
+                    </center>
+
+                    <br /><br />
+
+                  Este é o ícone do criador de avaliações, ao clicar neste ícone você será direcionado a um painel que permitirá a você, em poucos cliques, criar sua atividade avaliativa personalizada, com questões do BQP ou do Banco de Questões de Matemática (BQM), ou através de uma mesclagem de questões dos dois bancos de questões.
+ 
+
+
+                </div>
+                <div class="alert-two-row-two">
+
+                    <div class="alert-one-columns">
+                        <div class="alert-one-columns-one" onclick="document.getElementById('tutorial_epsilon_inicio_04').style.visibility = 'hidden'; document.getElementById('tutorial_epsilon_inicio_05').style.visibility = 'visible'">
+                            <p>Prosseguir</p>
+                        </div>
+                    </div>
+ 
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="alert" id="tutorial_epsilon_inicio_05">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+
+                    <br /><br />
+
+                    <center>
+                    
+                    <svg width="64px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path fill="#286090" d="M5.495 4c-1.375 0-1.375-2 0-2h16.505v-2h-17c-1.657 0-3 1.343-3 3v18c0 1.657 1.343 3 3 3h17v-20h-16.505z" /></svg>
+
+                    </center>
+
+                    <br /><br />
+
+                    Este é o ícone do manual de utilização, ao clicar neste ícone você encontrará informações detalhadas de como usar as funcionalidades desta  plataforma.
+ 
+
+
+                </div>
+                <div class="alert-two-row-two">
+
+                    <div class="alert-one-columns">
+                        <div class="alert-one-columns-one" onclick="document.getElementById('tutorial_epsilon_inicio_05').style.visibility = 'hidden'; document.getElementById('tutorial_epsilon_inicio_06').style.visibility = 'visible'">
+                            <p>Prosseguir</p>
+                        </div>
+                    </div>
+ 
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <div class="alert" id="tutorial_epsilon_inicio_06">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+                <br />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="32" viewBox="0 0 24 26"><path  fill="#2c2c2c" d="M16.5 14.492c0 .828-.56 1.5-1.25 1.5s-1.25-.671-1.25-1.5.56-1.5 1.25-1.5 1.25.672 1.25 1.5zm-7.75-1.5c-.69 0-1.25.672-1.25 1.5s.56 1.5 1.25 1.5 1.25-.672 1.25-1.5-.56-1.5-1.25-1.5zm3.25 8.354c2.235 0 3-2.354 3-2.354h-6s.847 2.354 3 2.354zm12-6.041c0 1.765-.985 3.991-3.139 4.906-2.348 3.731-5.484 5.781-8.861 5.781-3.377 0-6.513-2.05-8.862-5.781-2.153-.915-3.138-3.141-3.138-4.906 0-1.472.387-2.937 1.682-3.636-.377-2.311-.117-6.176 4.193-7.593 1.031-1.99 3.125-4.084 6.125-4.084s5.094 2.094 6.125 4.083c4.31 1.418 4.57 5.282 4.193 7.594 1.295.699 1.682 2.164 1.682 3.636zm-2.176-1.252c-4.687-.258-6.833-4.66-7.241-7.394-1.167 6.333-9 1.792-9.896 9.052-.886-.467-1.715-1.308-2.215-2.159-.996.997-.54 4.154 1.661 4.899.224.076.413.228.535.43 1.991 3.296 4.595 5.111 7.332 5.111s5.34-1.815 7.331-5.111c.122-.202.312-.354.535-.43 1.771-.599 2.517-2.769 1.958-4.398z"/></svg><br />
+
+                  Parabéns, você chegou ao fim deste tutorial! Agora você já está um pouco mais familiarizado com este ambiente. Estarei sempre aqui para lhe ajudar quando for preciso.<br /><br />
+                  Deseja repetir este tutorial? 
+
+
+
+                </div>
+                <div class="alert-two-row-two">
+
+                    <!--div class="alert-one-columns">
+                        <div class="alert-one-columns-one" >
+                            <p>Ok</p>
+                        </div>
+                    </div-->
+
+                    <div class="alert-two-columns">
+                        <div class="alert-two-columns-one" onclick="document.getElementById('tutorial_epsilon_inicio_06').style.visibility = 'hidden';localStorage.setItem('tutorial_epsilon_inicio', '1');">
+                            <p>Não</p>
+                        </div>
+                      <div class="alert-two-columns-two" onclick="document.getElementById('tutorial_epsilon_inicio_06').style.visibility = 'hidden'; document.getElementById('tutorial_epsilon_inicio_02').style.visibility = 'visible'">
+                          <p>Sim</p>
+                      </div>
+                    </div>
+                    <p>Ok</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+{% endblock alert_u %}

@@ -1,0 +1,704 @@
+{% extends 'templates/base.html' %}
+{% block is_not_authenticated %}
+
+<meta http-equiv="refresh" content="0; URL="{% url 'usuario_sair' %}"/>
+{% endblock is_not_authenticated %} 
+{% block is_authenticated_alfa %}
+<meta http-equiv="refresh" content="0; URL="{% url 'usuario_alfa_inicio' %}"/>
+{% endblock is_authenticated_alfa %}
+{% block is_authenticated_beta %}
+<meta http-equiv="refresh" content="0; URL="{% url 'usuario_beta_inicio' %}"/>
+{% endblock is_authenticated_beta %}
+{% block is_authenticated_gama %}
+<meta http-equiv="refresh" content="0; URL="{% url 'usuario_gama_inicio' %}"/>
+{% endblock is_authenticated_gama %}
+{% block is_authenticated_delta %}
+<meta http-equiv="refresh" content="0; URL="{% url 'usuario_delta_inicio' %}"/>
+{% endblock is_authenticated_delta %}
+
+
+{% block nav_epsilon %}
+    <div class="nav-three-row">
+
+      <div class="nav-three-row-one">
+    
+      </div>
+     
+      <div class="nav-three-row-two">
+        <svg onclick = "location.href = '../' "  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3.222 18.917c5.666-5.905-.629-10.828-5.011-7.706l1.789 1.789h-6v-6l1.832 1.832c7.846-6.07 16.212 4.479 7.39 10.085z" />
+        </svg>
+      </div>
+
+      <div class="nav-three-row-three">
+ 
+      </div>
+
+    </div>
+{% endblock nav_epsilon %}
+
+
+{% block main_epsilon %}
+<script type="text/javascript">
+  document.getElementById('info').innerHTML = '<h2 style="white-space: nowrap">DASHBOARD > MANUAL</h2>';
+</script>
+
+<div style="max-width: 80vw!important; margin-left: 4vw">
+
+<p class="paragraph">
+  <span>
+  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="32" viewBox="0 0 24 26"><path  fill="#2c2c2c" d="M16.5 14.492c0 .828-.56 1.5-1.25 1.5s-1.25-.671-1.25-1.5.56-1.5 1.25-1.5 1.25.672 1.25 1.5zm-7.75-1.5c-.69 0-1.25.672-1.25 1.5s.56 1.5 1.25 1.5 1.25-.672 1.25-1.5-.56-1.5-1.25-1.5zm3.25 8.354c2.235 0 3-2.354 3-2.354h-6s.847 2.354 3 2.354zm12-6.041c0 1.765-.985 3.991-3.139 4.906-2.348 3.731-5.484 5.781-8.861 5.781-3.377 0-6.513-2.05-8.862-5.781-2.153-.915-3.138-3.141-3.138-4.906 0-1.472.387-2.937 1.682-3.636-.377-2.311-.117-6.176 4.193-7.593 1.031-1.99 3.125-4.084 6.125-4.084s5.094 2.094 6.125 4.083c4.31 1.418 4.57 5.282 4.193 7.594 1.295.699 1.682 2.164 1.682 3.636zm-2.176-1.252c-4.687-.258-6.833-4.66-7.241-7.394-1.167 6.333-9 1.792-9.896 9.052-.886-.467-1.715-1.308-2.215-2.159-.996.997-.54 4.154 1.661 4.899.224.076.413.228.535.43 1.991 3.296 4.595 5.111 7.332 5.111s5.34-1.815 7.331-5.111c.122-.202.312-.354.535-.43 1.771-.599 2.517-2.769 1.958-4.398z"/></svg>&nbsp;&nbsp;&nbsp;Olá, sou Sibele, sua assistente virtual. <br /><br />
+  Bem vindo(a) ao Manual de Utilização do Banco de Questões de Matemática (BQM), aqui você encontrará informações que lhe permitirão entender a maneira em que esta plataforma funciona.
+  </span>
+</p>
+
+
+<style>
+table {
+  border-collapse: collapse;
+  width: auto;
+
+}
+
+td, th {
+  border: 1px solid #48484c;
+  text-align: left;
+  padding: 0.25cm;
+}
+
+
+</style>
+
+  
+
+
+<p class="paragraph"><span style="font-size: 18pt"><b>Guia de edição</b></span></p>
+<hr>
+ 
+<p class="paragraph">
+A edição das questões é como a edição de qualquer texto, o que diferencia o uso do editor desta plataforma são os recursos adicionais de formação de texto que ela permite; ele foi otimizado para tornar o processo de escrever fórmulas matemáticas mais simples. Admito que o editor não parece muito bonito e para alguns pode ser estranho usá-lo no início, mas garanto que, quando você começar a praticar, o processo se torna simples e agradável. Pretendemos deixar o nosso editor o mais intuitivo possível, para isso, procuramos desenvolver mecanismos que o ajudem no processo de editoração, no entanto, algumas melhorias podem demorar alguns meses para serem implementadas, entretanto, com o crescimento desta plataforma e com a ajuda de mais colaboradores, acreditamos que as melhorias serão disponibilizadas em intervalos de tempo cada vez mais curtos.
+</p>
+
+<p class="paragraph">
+O editor desta plataforma é sensível à linguagem de programação Tex (https://pt.wikipedia.org/wiki/TeX)  e a linguagem de marcação HTML (https://pt.wikipedia.org/wiki/HTML), ou seja, é possivel combinar os recursos do Tex com os recursos do HTML no processo de escrita das questões. Pode parecer complicado, mas não se preocupe, estou aqui para lhe mostrar que não é um bicho de sete cabeças utilizar os recursos do HTML e Tex quando se estiver escrevendo as questões. Irei me ater aqui em recursos básicos que serão usados com mais frequências por vocês, quando estiverem escrevendo as questões. Para utilização de recursos mais avançados, recomendo que busquem materiais especializados que irão aprofundar mais sobre a utilização destas linguagens. 
+</p>
+
+<p class="paragraph"><span style="font-size: 14pt"><b>Comandos em Tex</b></span></p>
+
+<p class="paragraph">
+Há duas formas de se inserir um comando em Tex no editor desta plataforma, a primeira, é inseri-los desta forma: <code> \( comando \) </code>. Ou seja, quando o nosso editor se deparar com o comando <code> \( </code> ele irar entender que dali em diante, o texto escrito estará na linguagem Tex, e quando ele se deparar com <code> \) </code> ele irá entender que ali se encerra o comando em Tex. Utilizando esta simbologia, o editor irá entender que se trata de um comando em Tex e que ele deverá exibir o resultado deste comando na mesma linha em que ele foi inserido. Calma, pode parecer confuso, mas vamos analisar um exemplo para entender melhor.
+</p>
+
+<p class="paragraph">
+Exemplo:
+</p>
+<p class="paragraph-padding-left">
+<code> A função quadrática é uma função \( f : \mathbb{R} \mapsto \mathbb{R} \), definida como \( f(x) = ax^2 + bx + c \), com a, b e c números reais e \( a \ne 0 \).</code>
+</p>
+<p class="paragraph">
+Ao interpretar este texto, o editor irá produzir como resultado:
+</p>
+<p class="paragraph-padding-left">
+A função quadrática é uma função \( f : \mathbb{R} \mapsto \mathbb{R} \), definida como \( f(x) = ax^2 + bx + c \), com a, b e c números reais e \( a \ne 0 \).
+</p>
+
+<p class="paragraph">
+Perceba que o comando em Tex é convertido para uma notação matemática com um aspecto visual mais agradável, asim como que este comando foi interpretado na mesma linha em que ele foi declarado. Ou seja, sempre que desejar inserir um comando escrito em Tex para que ele seja interpretado na mesma linha em que foi declarado, basta colocá-lo dentro de <code> \( comando \) </code>
+</p>
+
+<p class="paragraph">
+A segunda forma de se declarar um comando em Tex destro do editor desta plataforma  é usá-lo dentro das tags <code> \[ comando \] </code>, perceba que há uma semelhança ao comando apresentado acima, entretanto, o resultado que o editor irá  retornar será diferente; quando os comandos são declarados entre <code> \[ comando \] </code>, o editor irá entender que trata-se em um comando em Tex, e que ele deve exibir o resultado uma linha abaixo da qual o comando foi declarada. Para que facilite a compreensão, e que você possa analisar a diferença entre este comando e o anterior, observe o resultado do exemplo a seguir. 
+</p>
+
+<p class="paragraph">
+Exemplo:
+</p>
+<p class="paragraph-padding-left">
+<code> A função quadrática é uma função \[ f : \mathbb{R} \mapsto \mathbb{R} \], definida como \[ f(x) = ax^2 + bx + c \], com a, b e c números reais e \[ a \ne 0 \].</code>
+</p>
+<p class="paragraph">
+Ao interpretar este texto, o editor irá produzir como resultado:
+</p>
+<p class="paragraph-padding-left">
+A função quadrática é uma função \[ f : \mathbb{R} \mapsto \mathbb{R} \], definida como \[ f(x) = ax^2 + bx + c \], com a, b e c números reais e \[ a \ne 0 \].
+</p>
+<p class="paragraph">
+Perceba que o resultado é semelhante ao apresentado anteriormente, quando consideramos o aspecto visual, porém, a forma em que o editor irá dispor os resultados é diferente; ele irá pular uma linha para exibir o resultado do comando apresentado. A escolha de um comando ou outro é subjetiva, ou seja, sinta-se livre para escolher uma ou a outra. Recomendamos que escolha a opção que melhor dispor de um resultado final, para que o enunciado, resolução ou observações possuam um aspecto visual agradável. Para mais exemplos de comandos, consulte a seção Fórmulas em Tex essenciais.
+</p>
+
+<p class="paragraph"><span style="font-size: 14pt"><b>Comandos em HTML</b></span></p>
+
+<p class="paragraph">
+Existem uma variedade de comandos em HTML, cada um com uma finalidade bem definida, não é meu objetivo lhe falar todas as propriedades desta linguagem, mas somente o básico para que possa utilizar nesta plataforma. Os comandos que iremos explorar são os oriundos das tags  i, b, u, br, ul, e ol. Não se  assuste, pode parecer complicado mas garanto, é mais simples do que você imagina!
+</p>
+
+<p class="paragraph">
+  Quando se deseja colocar alguma palavra em itálico, utilizamos a tag i do HTML, e a declaramos assim: <code> &lt;i&gt; texto escrito em itálico &lt;/i&gt;</code>, e como resultado, o editor exibirá: <i> texto escrito em itálico</i>.
+</p>
+
+<p class="paragraph">
+  Quando se deseja colocar alguma palavra em negrito, utilizamos a tag b do HTML, e a declaramos assim: <code> &lt;b&gt; texto escrito em negrito  &lt;/b&gt;</code>, e como resultado, o editor exibirá: <b> texto escrito em negrito</b>.
+</p>
+
+<p class="paragraph">
+Quando se deseja sublinhar alguma palavra, utilizamos a tag u do HTML, e a declaramos assim: <code> &lt;u&gt; texto sublinhado &lt;/u&gt;</code>, e como resultado, o editor exibirá: <u> texto sublinhado</u>.
+</p>
+
+<p class="paragraph">
+Quando se deseja criar uma quebra de linha no texto, utilizamos a tag br do HTML, e a declaramos assim: <code>este é um exemplo de &lt;br /&gt; quebra de linha</code>, e como resultado, o editor exibirá: <br /> este é um exemplo de <br /> quebra de linha.
+</p>
+
+<p class="paragraph">
+Quando se deseja criar uma lista desordenada, ou lista não numerada, utilizamos a tag ul do HTML, e a declaramos assim:
+<pre style="max-width: 30vw!important;">
+&lt;ul&gt;
+  &lt;li&gt;São Paulo&lt;\li&gt;
+  &lt;li&gt;Rio de Janeiro&lt;\li&gt;
+  &lt;li&gt;Mato Grosso&lt;\li&gt;
+&lt;/ul&gt;
+</pre>, e como resultado, o editor exibirá:
+<ul style="padding-left: 1cm">
+  <li>São Paulo
+  <li>Rio de Janeiro
+  <li>Mato Grosso
+</ul>.
+</p>
+
+<p class="paragraph">
+Quando se deseja criar uma lista ordenada, ou lista numerada, utilizamos a tag ol do HTML, e a declaramos assim:
+<pre style="max-width: 30vw!important;">
+&lt;ol&gt;
+  &lt;li&gt;São Paulo&lt;\li&gt;
+  &lt;li&gt;Rio de Janeiro&lt;\li&gt;
+  &lt;li&gt;Mato Grosso&lt;\li&gt;
+&lt;/ol&gt;
+</pre>, e como resultado, o editor exibirá:
+<ol style="padding-left: 1cm">
+  <li>São Paulo
+  <li>Rio de Janeiro
+  <li>Mato Grosso
+</ol>.
+</p>
+
+<p class="paragraph"><span style="font-size: 18pt"><b>Fórmulas em Tex essenciais</b></span></p>
+<hr>
+<p class="paragraph">
+ Trago aqui alguns exemplos de comandos em Tex essenciais para lhe auxiliar no processo de escrita das questões, lembre-se que estes comandos devem estar entre <code>\( \) </code> ou  <code>\[ \] </code> para funcionar. O intuito aqui é que tenhas um material de referência, para que não seja necessário decorar todos os comandos. Quando precisar inserir um somatório, ou uma matriz, por exemplo, basta consultar esta seção e ver o exemplo da maneira em que se deve declarar o comando, assim como, observar o resultado que tal comando irá produzir para decidir se atende a sua necessidade. 
+</p>
+
+<p class="paragraph">Sumário</p>
+
+<ol style="padding-left: 1cm">
+    <li>
+        <a href="#caracteres_especiais"><span >Caracteres especiais</span></a>
+    </li>
+    <li>
+        <a href="#subscritos_superescritos"><span>Subscritos, superescritos</span></a>
+    </li>
+    <li>
+        <a href="#fracoes_matrizes_chavetas"><span>Frações, matrizes, chavetas</span></a>
+    </li>
+    <li>
+        <a href="#derivadas_diferenciais_e_integrais"><span>Derivadas, Diferenciais e integrais</span></a>
+    </li>
+    <li>
+        <a href="#fontes"><span>Fontes</span></a>
+    </li>
+    <li>
+        <a href="#parenteses"><span>Parênteses</span></a>
+    </li>
+    <li>
+        <a href="#espacos"><span>Espaços</span></a>
+    </li>
+ 
+ 
+</ol>
+
+
+
+<p class="paragraph">Caracteres especiais</p>
+ 
+<tr />
+<table id="caracteres_especiais">
+  <tr>
+    <th>Grupo</th>
+    <th>Sintaxe</th>
+    <th>Como é exibido</th>
+  </tr>
+  <tr>
+    <td>Funções</td>
+    <td>\cos x + \ln y +\operatorname{sgn}\, z</td>
+    <td>\( \cos x + \ln y +\operatorname{sgn}\, z \)</td>
+  </tr>
+  <tr>
+    <td>Aritmética modular</td>
+    <td>s_k \equiv 0 \pmod{m}</td>
+    <td>\( s_k \equiv 0 \pmod{m} \)</td>
+  </tr>
+  <tr>
+    <td>Função piso</td>
+    <td>\lfloor x \rfloor</td>
+    <td>\( \lfloor x \rfloor \)</td>
+  </tr>
+  <tr>
+    <td>Função teto</td>
+    <td>\lceil x \rceil</td>
+    <td>\( \lceil x \rceil \)</td>
+  </tr>
+  <tr>
+    <td>Derivação</td>
+    <td>\nabla \partial dx \dot x \ddot y</td>
+    <td>\( \nabla \partial dx \dot x \ddot y \)</td>
+  </tr>
+  <tr>
+    <td>Conjuntos</td>
+    <td>\forall x\not\in\varnothing\subseteq A\cap B\cup \exists \{x,y\} \setminus \times C \nsubseteq \sqsubseteq \nsupseteq \preceq \succeq</td>
+    <td>\( \forall x\not\in\varnothing\subseteq A\cap B\cup \exists \{x,y\} \setminus \times C \nsubseteq \sqsubseteq \nsupseteq \preceq \succeq \)</td>
+  </tr>
+  <tr>
+    <td>Lógica</td>
+    <td>p \land \bar{q} \to p\lor \lnot q</td>
+    <td> \( p \land \bar{q} \to p\lor \lnot q \)</td>
+  </tr>
+  <tr>
+    <td>Raízes</td>
+    <td> \sqrt{2}\approx 1{,}4 <br /> \sqrt[n]{x}</td>
+    <td> \( \sqrt{2}\approx 1{,}4 \) <br /> \( \sqrt[n]{x} \)</td>
+  </tr>
+  <tr>
+    <td>Separador decimal</td>
+    <td> 1/8 = 0{,}125</td>
+    <td> \(  1/8 = 0{,}125 \)</td>
+  </tr>
+  <tr>
+    <td>Operadores relacionais</td>
+    <td> \sim \simeq \cong \le \ge \equiv \not\equiv \approx \ne </td>
+    <td> \(  \sim \simeq \cong \le \ge \equiv \not\equiv \approx \ne \)</td>
+  </tr>
+  <tr>
+    <td>Geometria</td>
+    <td> \Diamond \; \Box \; \triangle \; \angle \; \perp \; \mid \; \nmid \; \ \; 45^\circ </td>
+    <td> \(  \Diamond \; \Box \; \triangle \; \angle \; \perp \; \mid \; \nmid \; \ \; 45^\circ \)</td>
+  </tr>
+  <tr>
+    <td>Setas</td>
+    <td> \leftarrow \rightarrow \leftrightarrow \longleftarrow \longrightarrow \mapsto \longmapsto \nearrow \searrow \swarrow \nwarrow \uparrow \downarrow \updownarrow \rightleftharpoons \leftrightharpoons <br /> \Leftarrow \Rightarrow \Leftrightarrow \Longleftarrow \Longrightarrow \Longleftrightarrow \Uparrow \Downarrow \Updownarrow </td>
+    <td> \( \leftarrow \rightarrow \leftrightarrow \longleftarrow \longrightarrow \mapsto \longmapsto \nearrow \searrow \swarrow \nwarrow \uparrow \downarrow \updownarrow \rightleftharpoons \leftrightharpoons \) <br /> \( \Leftarrow \Rightarrow \Leftrightarrow \Longleftarrow \Longrightarrow \Longleftrightarrow \Uparrow \Downarrow \Updownarrow \)</td>
+  </tr>
+
+  <tr>
+    <td>Especial</td>
+    <td> \oplus \otimes \pm \mp \hbar \dagger \ddagger \star \circ \cdot \times \div </td>
+    <td> \( \oplus \otimes \pm \mp \hbar \dagger \ddagger \star \circ \cdot \times \div \bullet \infty  \)</td>
+  </tr>
+</table>
+
+<p class="paragraph">Subscritos, superescritos</p>
+ 
+<table id="subscritos_superescritos">
+  <tr>
+    <th>Grupo</th>
+    <th>Sintaxe</th>
+    <th>Como é exibido</th>
+  </tr>
+  <tr>
+    <td>Superscrito</td>
+    <td>a^2 </td>
+    <td>\( a^2 \)</td>
+  </tr>
+  <tr>
+    <td>Subescrito</td>
+    <td> a_2 </td>
+    <td>\(  a_2 \)</td>
+  </tr>
+  <tr>
+    <td>Agrupando</td>
+    <td> a^{2+2} <br /> a_{i,j}</td>
+    <td>\(  a^{2+2} \) <br /> \(  a_{i,j} \)</td>
+  </tr>
+  <tr>
+    <td>Combinando super e subescrito</td>
+    <td>  x_2^3 </td>
+    <td>\(  x_2^3 \)</td>
+  </tr>
+  <tr>
+    <td>Derivadas</td>
+    <td> x'</td>
+    <td>\( x' \)</td>
+  </tr>
+  <tr>
+    <td>Sublinhados, sobrelinhas, vetores</td>
+    <td> \hat a \ \bar b \ \vec c \ \overrightarrow{a b} \ \overleftarrow{c d} \ \widehat{d e f} \ \overline{g h i} \ \underline{j k l}</td>
+    <td>\( \hat a \ \bar b \ \vec c \ \overrightarrow{a b} \ \overleftarrow{c d} \ \widehat{d e f} \ \overline{g h i} \ \underline{j k l} \)</td>
+  </tr>
+  <tr>
+    <td>Overbraces</td>
+    <td>  \overbrace{ 1+2+\cdots+100 }  </td>
+    <td>\(  \overbrace{ 1+2+\cdots+100 } \)</td>
+  </tr>
+  <tr>
+    <td>Underbraces</td>
+    <td>   \underbrace{ a+b+\cdots+z }  </td>
+    <td>\( \underbrace{ a+b+\cdots+z }    \)</td>
+  </tr>
+  <tr>
+    <td>Somatório</td>
+    <td> \sum_{k=1}^{N} k^2</td>
+    <td>\( \sum_{k=1}^{N} k^2 \)</td>
+  </tr>
+ 
+  <tr>
+    <td>Productório</td>
+    <td> \prod_{i=1}^{N} x_{i}</td>
+    <td>\( \prod_{i=1}^{N} x_{i}  \)</td>
+  </tr>
+  <tr>
+    <td>Limites</td>
+    <td> \lim_{n \to \infty}x_n </td>
+    <td>\( \lim_{n \to \infty}x_n  \)</td>
+  </tr>
+  <tr>
+    <td>Escrita embaixo de outra em geral</td>
+    <td> \underset{b\in B}{\cup} A_b </td>
+    <td>\( \underset{b\in B}{\cup} A_b  \)</td>
+  </tr>
+  <tr>
+    <td>Escrita em cima de outra em geral</td>
+    <td> \overset{b\to B}{\cup} A_b </td>
+    <td>\( \overset{b\to B}{\cup} A_b  \)</td>
+  </tr>
+  <tr>
+    <td>Integrais</td>
+    <td>\int_{-N}^{N} e^x\, dx </td>
+    <td>\( \int_{-N}^{N} e^x\, dx \)</td>
+  </tr>
+  <tr>
+    <td>Integrais lineares</td>
+    <td> \oint_{C} x^3\, dx + 4y^2\, dy </td>
+    <td>\( \oint_{C} x^3\, dx + 4y^2\, dy  \)</td>
+  </tr>
+  <tr>
+    <td>Integrais múltiplas</td>
+    <td> \iiint_V \mu(u,v,w) \,du\,dv\,dw </td>
+    <td>\( \iiint_V \mu(u,v,w) \,du\,dv\,dw  \)</td>
+  </tr>
+</table>
+
+
+<p class="paragraph">Frações, matrizes, chavetas</p>
+ 
+<table id="fracoes_matrizes_chavetas">
+  <tr>
+    <th>Grupo</th>
+    <th>Sintaxe</th>
+    <th>Como é exibido</th>
+  </tr>
+  <tr>
+    <td>Frações</td>
+    <td> \frac{2}{4} or {2 \over 4} </td>
+    <td>\( \frac{2}{4} or {2 \over 4}  \)</td>
+  </tr>
+  <tr>
+    <td>Coeficientes binomiais</td>
+    <td>  {n \choose k} </td>
+    <td>\(  {n \choose k}  \)</td>
+  </tr>
+  <tr>
+    <td>Matrizes</td>
+    <td>
+<pre style="max-width: 30vw!important;">
+\begin{pmatrix} 
+  x &amp; y \\ 
+  z &amp; v \\
+\end{pmatrix}
+</pre>
+<br />
+<pre style="max-width: 30vw!important;">
+\begin{bmatrix} 
+  0 & \cdots & 0 \\ 
+  \vdots & \ddots & \vdots \\ 
+  0 & \cdots & 0 \\
+\end{bmatrix}
+</pre>
+<br />
+<pre style="max-width: 30vw!important;">
+\begin{Bmatrix} 
+  x & y \\ 
+  z & v \\
+\end{Bmatrix}
+</pre>
+<br />
+<pre style="max-width: 30vw!important;">
+\begin{vmatrix} 
+  x & y \\ 
+  z & v \\
+\end{vmatrix}
+</pre>
+<br />
+<pre style="max-width: 30vw!important;">
+\begin{Vmatrix}
+  x & y \\ 
+  z & v \\
+\end{Vmatrix}
+</pre>
+<br />
+<pre style="max-width: 30vw!important;">
+\begin{matrix} 
+  x & y \\ 
+  z & v \\
+\end{matrix}
+</pre>
+<br />
+<pre style="max-width: 30vw!important;">
+\begin{matrix}
+1 & 3 & 225^3 \\
+\sqrt{1} & 0 & 5 \\
+a & b & \frac{x}{x^2-1} \\
+\end{matrix}
+</pre>
+  </td>
+    <td>
+      \( \begin{pmatrix} x &amp; y \\ z &amp; v \\ \end{pmatrix} \) 
+      <br /><br /><br />
+      \( \begin{bmatrix} 0 & \cdots & 0 \\ \vdots & \ddots & \vdots \\ 0 & \cdots & 0 \\ \end{bmatrix} \)
+      <br /><br /><br />
+      \( \begin{Bmatrix} x & y \\ z & v \\ \end{Bmatrix} \)
+      <br /><br /><br />
+      \( \begin{vmatrix} x & y \\ z & v \\ \end{vmatrix} \)
+      <br /><br /><br />
+      \( \begin{Vmatrix} x & y \\ z & v \\ \end{Vmatrix} \)
+      <br /><br /><br />
+      \( \begin{matrix} x & y \\ z & v \\ \end{matrix} \)
+      <br /><br /><br />
+      \( \begin{matrix} 1 & 3 & 225^3 \\ \sqrt{1} & 0 & 5 \\ a & b & \frac{x}{x^2-1} \\ \end{matrix} \)
+ 
+    </td>
+  </tr>
+  <tr>
+    <td>Distinção maiúscula/minúscula</td>
+    <td>
+<pre style="max-width: 30vw!important;">
+f(n) = \left \{ 
+\begin{matrix} 
+n/2, & \mbox{se }n\mbox{ é par} \\
+3n+1, & \mbox{se }n\mbox{ é ímpar} 
+\end{matrix} 
+\right.
+</pre>
+    </td>
+    <td>\( f(n) = \left \{ \begin{matrix} n/2, & \mbox{se }n\mbox{ é par} \\ 3n+1, & \mbox{se }n\mbox{ é ímpar} \end{matrix} \right. \)</td>
+  </tr>
+  <tr>
+    <td>Equações em mais de uma linha</td>
+    <td><pre style="max-width: 30vw!important;">\begin{matrix}f(n+1)&=& (n+1)^2 \\ \ &<br />=& n^2 + 2n + 1\end{matrix} </pre></td>
+    <td>\(  \begin{matrix}f(n+1)&=& (n+1)^2 \\ \ &<br />=& n^2 + 2n + 1\end{matrix} \)</td>
+  </tr>
+</table>
+
+
+<p class="paragraph">Derivadas, Diferenciais e integrais</p>
+ 
+<table id="derivadas_diferenciais_e_integrais">
+  <tr>
+    <th>Grupo</th>
+    <th>Sintaxe</th>
+    <th>Como é exibido</th>
+  </tr>
+  <tr>
+    <td>Derivadas</td>
+    <td> \prime, \backprime, f^\prime, f', f", f^{(3)}, \dot y, \ddot y {\displaystyle \prime ,\backprime ,f^{\prime },f',f'',f^{(3)}\!,{\dot {y}},{\ddot {y}}} </td>
+    <td>\( \prime, \backprime, f^\prime, f', f", f^{(3)}, \dot y, \ddot y {\displaystyle \prime ,\backprime ,f^{\prime },f',f'',f^{(3)}\!,{\dot {y}},{\ddot {y}}} \)</td>
+  </tr>
+
+</table>
+
+
+<p class="paragraph">Fontes</p>
+ 
+<table id="fontes">
+  <tr>
+    <th>Grupo</th>
+    <th>Sintaxe</th>
+    <th>Como é exibido</th>
+  </tr>
+  <tr>
+    <td>Alfabeto grego minúsculo</td>
+    <td> \alpha \beta \gamma \delta \epsilon \varepsilon \zeta \eta \theta \vartheta \iota \kappa \lambda \mu \nu \xi \omicron \pi \varpi \rho \varrho \sigma \varsigma \tau \upsilon \phi \varphi \chi \psi \omega </td>
+    <td>\( \alpha \beta \gamma \delta \epsilon \varepsilon \zeta \eta \theta \vartheta \iota \kappa \lambda \mu \nu \xi \omicron \pi \varpi \rho \varrho \sigma \varsigma \tau \upsilon \phi \varphi \chi \psi \omega \)</td>
+  </tr>
+  <tr>
+    <td>Alfabeto grego maiúsculo</td>
+    <td>\Gamma \Delta \Theta \Lambda \Xi \Pi    \Sigma \Upsilon \Phi \Psi \Omega </td>
+    <td>\(  \Gamma \Delta \Theta \Lambda \Xi \Pi    \Sigma \Upsilon \Phi \Psi \Omega \)</td>
+  </tr>
+  <tr>
+    <td>Negrito forte</td>
+    <td> x\in\mathbb{N}\subset\mathbb{Z}\subset \mathbb{R}\subset\mathbb{C}  </td>
+    <td>\(  x\in\mathbb{N}\subset\mathbb{Z}\subset \mathbb{R}\subset\mathbb{C} \)</td>
+  </tr>
+  <tr>
+    <td>Negrito (vectores)</td>
+    <td> \mathbf{x} \cdot \mathbf{y} = 0 </td>
+    <td>\( \mathbf{x} \cdot \mathbf{y} = 0 \)</td>
+  </tr>
+  <tr>
+    <td>Negrito (grego)</td>
+    <td> \boldsymbol{\alpha}+\boldsymbol{\beta}+\boldsymbol{\gamma} </td>
+    <td>\( \boldsymbol{\alpha}+\boldsymbol{\beta}+\boldsymbol{\gamma} \)</td>
+  </tr>
+  <tr>
+    <td>Fonte Fraktur</td>
+    <td> \mathfrak{a} \mathfrak{B} </td>
+    <td>\( \mathfrak{a} \mathfrak{B} \)</td>
+  </tr>
+  <tr>
+    <td>Script</td>
+    <td>    \mathcal{ABC}</td>
+    <td>\(  \mathcal{ABC} \)</td>
+  </tr>
+  <tr>
+    <td>Hebraico</td>
+    <td>  \aleph \beth \gimel \daleth</td>
+    <td>\(  \aleph \beth \gimel \daleth \)</td>
+  </tr>
+  <tr>
+    <td>letras não-inclinadas</td>
+    <td>  \mbox{abc} </td>
+    <td>\(  \mbox{abc} \)</td>
+  </tr>
+</table>
+
+<p class="paragraph">Parênteses</p>
+ 
+<table id="parenteses">
+  <tr>
+    <th>Grupo</th>
+    <th>Sintaxe</th>
+    <th>Como é exibido</th>
+  </tr>
+  <tr>
+    <td>Erros</td>
+    <td>  ( \frac{1}{2} )</td>
+    <td>\( ( \frac{1}{2} ) \)</td>
+  </tr>
+  <tr>
+    <td>Melhor assim</td>
+    <td>  \left ( \frac{1}{2} \right )</td>
+    <td>\( \left ( \frac{1}{2} \right ) \)</td>
+  </tr>
+  <tr>
+    <td>Assim também</td>
+    <td> \left ( \dfrac{1}{2} \right )  </td>
+    <td>\(  \left ( \dfrac{1}{2} \right ) \)</td>
+  </tr>
+  <tr>
+    <td>Ou assim, com vários tamanhos à sua escolha</td>
+    <td>  \big( \Big( \bigg( \Bigg(</td>
+    <td>\(  \big( \Big( \bigg( \Bigg(  \)</td>
+  </tr>
+  <tr>
+    <td>Também vale para os colchetes e chaves</td>
+    <td> \big\{ \Big\{ \bigg\{ \Bigg\{ \big] \Big] \bigg] \Bigg] </td>
+    <td>\( \big\{ \Big\{ \bigg\{ \Bigg\{ \big] \Big] \bigg] \Bigg] \)</td>
+  </tr>
+
+</table>
+ <p class="paragraph">
+   Você pode usar diversos delimitadores em conjunto com \left e \right:
+ </p>
+<table>
+  <tr>
+    <th>Grupo</th>
+    <th>Sintaxe</th>
+    <th>Como é exibido</th>
+  </tr>
+  <tr>
+    <td> Parênteses </td>
+    <td> \left ( A \right ) </td>
+    <td>\( \left ( A \right )  \)</td>
+  </tr>
+  <tr>
+    <td> Colchetes </td>
+    <td> \left [ A \right ] </td>
+    <td>\( \left [ A \right ]  \)</td>
+  </tr>
+  <tr>
+    <td> Chaves </td>
+    <td>  \left \{ A \right \} </td>
+    <td>\( \left \{ A \right \}   \)</td>
+  </tr>
+  <tr>
+    <td> Boca de jacaré </td>
+    <td>  \left \langle A \right \rangle </td>
+    <td>\(  \left \langle A \right \rangle  \)</td>
+  </tr>
+  <tr>
+    <td> Barras e barras duplas </td>
+    <td> \mid A \mid \text{e} \left \| B \right \|</td>
+    <td>\( \mid A \mid \text{e} \left \| B \right \|  \)</td>
+  </tr>
+  <tr>
+    <td> Os delimitadores podem ser misturados, contanto que \left e \right estejam equilibrados</td>
+    <td> \left [ 0,1 \right ) \left \langle \psi \right | </td>
+    <td>\(  \left [ 0,1 \right ) \left \langle \psi \right |   \)</td>
+  </tr>
+  <tr>
+    <td> Use \left. e \right. se você deseja esconder um delimitador </td>
+    <td> \left . \frac{A}{B} \right \} \to X </td>
+    <td>\( \left . \frac{A}{B} \right \} \to X  \)</td>
+  </tr>
+</table>
+
+<p class="paragraph">Espaços</p>
+ 
+<table id="espacos">
+  <tr>
+    <th>Grupo</th>
+    <th>Sintaxe</th>
+    <th>Como é exibido</th>
+  </tr>
+  <tr>
+    <td> Espaço duplo de um quadrado  </td>
+    <td> a \qquad b </td>
+    <td>\( a \qquad b  \)</td>
+  </tr>
+  <tr>
+    <td> Espaço simples de um quadrado </td>
+    <td>  a \quad b</td>
+    <td>\( a \quad b   \)</td>
+  </tr>
+  <tr>
+    <td> Espaço de texto </td>
+    <td> a\ b  </td>
+    <td>\(   a\ b \)</td>
+  </tr>
+  <tr>
+    <td> Espaço largo </td>
+    <td>    a\;b </td>
+    <td>\(    a\;b  \)</td>
+  </tr>
+  <tr>
+    <td> Espaço médio </td>
+    <td> a\>b </td>
+    <td>\(  a\>b \)</td>
+  </tr>
+  <tr>
+    <td>  Espaço pequeno </td>
+    <td>    a\,b </td>
+    <td>\(  a\,b   \)</td>
+  </tr>
+  <tr>
+    <td> Evitar espaço  </td>
+    <td>  ab</td>
+    <td>\( ab   \)</td>
+  </tr>
+  <tr>
+    <td> Espaço "negativo"  </td>
+    <td>    a\!b </td>
+    <td>\(  a\!b   \)</td>
+  </tr>
+ 
+</table>
+</div>
+{% endblock main_epsilon %}
+

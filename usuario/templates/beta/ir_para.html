@@ -1,0 +1,112 @@
+{% extends 'templates/base.html' %}
+
+{% block is_not_authenticated %}
+ <meta http-equiv="refresh" content="0; URL='../usuario/sair/'"/>
+{% endblock is_not_authenticated %}
+
+{% block is_authenticated_alfa %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/alfa/'"/>
+{% endblock is_authenticated_alfa %}
+
+{% block is_authenticated_gama %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/gama/'"/>
+{% endblock is_authenticated_gama %}
+
+{% block is_authenticated_delta %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/delta/'"/>
+{% endblock is_authenticated_delta %}
+
+{% block is_authenticated_epsilon %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/epsilon/'"/>
+{% endblock is_authenticated_epsilon %}
+ 
+ 
+{% block nav_beta %}
+<div class="nav-three-row">
+
+  <div class="nav-three-row-one">
+
+  </div>
+
+  <div class="nav-three-row-two">
+    <svg onclick = "location.href = '../'"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3.222 18.917c5.666-5.905-.629-10.828-5.011-7.706l1.789 1.789h-6v-6l1.832 1.832c7.846-6.07 16.212 4.479 7.39 10.085z" />
+    </svg>
+  </div>
+
+  <div class="nav-three-row-three">
+
+  </div>
+
+</div>
+{% endblock nav_beta %}
+
+
+
+{% block main_beta %}
+
+<script type="text/javascript">
+  document.getElementById('info').innerHTML = '<h2 style="white-space: nowrap">DASHBOARD > REDE</h2>';
+</script>
+
+<div class="main-three-row">
+  <div class="main-three-row-one">
+ 
+    <div class="main-three-columns">
+      <div class="main-three-columns-one">
+      </div>
+      <div class="main-three-columns-two">
+      </div>
+      <div class="main-three-columns-three">
+      </div>
+    </div>
+  </div>
+  <div class="main-three-row-two">
+    <div class="main-three-columns">
+      <div class="main-three-columns-one">
+        <center>
+          <a href="{% url 'usuario_beta_cadastrar_usuario_gama' %}" rel="noopener">
+
+          &nbsp;&nbsp;&nbsp;<svg style="width: 64px"xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor"  d="M624 208h-64v-64c0-8.8-7.2-16-16-16h-32c-8.8 0-16 7.2-16 16v64h-64c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h64v64c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-64h64c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16zm-400 48c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"/></svg>
+
+ 
+          <br /><br />
+            <h4 style="text-align: center;" >Adicionar usuario</h4>
+          </a>
+        </center>
+      </div>
+      <div class="main-three-columns-two">
+ 
+      </div>
+      <div class="main-three-columns-three">
+        <center>
+          <a href="{% url 'usuario_beta_listar_usuario_gama' %}" rel="noopener">
+        <svg svg style="width: 64px"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512">  <path  fill="currentColor" d="M 76.800781 224 C 105.039062 224 128 195.300781 128 160 C 128 124.699219 105.039062 96 76.800781 96 C 48.558594 96 25.601562 124.699219 25.601562 160 C 25.601562 195.300781 48.558594 224 76.800781 224 Z M 435.199219 224 C 463.441406 224 486.398438 195.300781 486.398438 160 C 486.398438 124.699219 463.441406 96 435.199219 96 C 406.960938 96 384 124.699219 384 160 C 384 195.300781 406.960938 224 435.199219 224 Z M 460.800781 256 L 409.601562 256 C 395.519531 256 382.800781 263.101562 373.519531 274.601562 C 405.761719 296.699219 428.640625 336.601562 433.601562 384 L 486.398438 384 C 500.558594 384 512 369.699219 512 352 L 512 320 C 512 284.699219 489.039062 256 460.800781 256 Z M 256 256 C 305.519531 256 345.601562 205.898438 345.601562 144 C 345.601562 82.101562 305.519531 32 256 32 C 206.480469 32 166.398438 82.101562 166.398438 144 C 166.398438 205.898438 206.480469 256 256 256 Z M 317.441406 288 L 310.800781 288 C 294.160156 298 275.679688 304 256 304 C 236.320312 304 217.921875 298 201.199219 288 L 194.558594 288 C 143.679688 288 102.398438 339.601562 102.398438 403.199219 L 102.398438 432 C 102.398438 458.5 119.601562 480 140.800781 480 L 371.199219 480 C 392.398438 480 409.601562 458.5 409.601562 432 L 409.601562 403.199219 C 409.601562 339.601562 368.320312 288 317.441406 288 Z M 138.480469 274.601562 C 129.199219 263.101562 116.480469 256 102.398438 256 L 51.199219 256 C 22.960938 256 0 284.699219 0 320 L 0 352 C 0 369.699219 11.441406 384 25.601562 384 L 78.320312 384 C 83.359375 336.601562 106.238281 296.699219 138.480469 274.601562 Z M 138.480469 274.601562 "/>
+ 
+          <br /><br />
+            <h4 style="text-align: center;">Listar usuarios</h4>
+          </a>
+        </center>
+      </div>
+    </div>
+  </div>
+  <div class="main-three-row-three">
+    <div class="main-three-columns">
+      <div class="main-three-columns-one">
+      </div>
+      <div class="main-three-columns-two">
+      </div>
+      <div class="main-three-columns-three">
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock main_beta %}
+
+
+
+
+
+
+

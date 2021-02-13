@@ -1,0 +1,155 @@
+{% extends 'templates/base.html' %}
+
+{% block is_not_authenticated %}
+ <meta http-equiv="refresh" content="0; URL='../usuario/sair/'"/>
+{% endblock is_not_authenticated %}
+
+{% block is_authenticated_alfa %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/alfa/'"/>
+{% endblock is_authenticated_alfa %}
+
+{% block is_authenticated_gama %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/gama/'"/>
+{% endblock is_authenticated_gama %}
+
+{% block is_authenticated_delta %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/delta/'"/>
+{% endblock is_authenticated_delta %}
+
+{% block is_authenticated_epsilon %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/epsilon/'"/>
+{% endblock is_authenticated_epsilon %}
+
+{% block nav_beta %}
+<div class="nav-three-row">
+
+  <div class="nav-three-row-one">
+
+  </div>
+
+  <div class="nav-three-row-two">
+    <svg onclick = "location.href = '../../listar/etapa/'"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3.222 18.917c5.666-5.905-.629-10.828-5.011-7.706l1.789 1.789h-6v-6l1.832 1.832c7.846-6.07 16.212 4.479 7.39 10.085z" />
+    </svg>
+  </div>
+
+  <div class="nav-three-row-three">
+
+  </div>
+
+</div>
+{% endblock nav_beta %}
+
+{% block main_beta %}
+ 
+<div class="main-auto-row-auto">
+
+  <div class="forms">
+
+  <p style="margin-bottom: 0cm; color: #A30000" id="error"></p>
+  <br />
+  <p>ETAPA (NOME)</p>
+  <input  type="text"  id="etapa_nome"  >
+  <br>
+  </div>
+
+  <center>
+    <button  type="button" class="button" style="width: auto;" onclick="cadastrar()">CADASTRAR</button>
+      
+  </center>
+
+</div>
+
+ 
+<script type="text/javascript">
+  document.getElementById('info').innerHTML = '<h2 style="white-space: nowrap">DASHBOARD > CADASTRAR > ETAPA</h2>';
+
+const token = BQ.Storage.Get({key:'token'});
+const id = BQ.Storage.Get({key:'id'});
+
+
+function cadastrar() {
+
+ 
+  var etapa_nome = document.getElementById('etapa_nome');
+ 
+  var error = document.getElementById('error');
+
+
+  if (etapa_nome.value == "") {
+    etapa_nome.style.border = "0.01cm solid #A30000";
+    error.innerHTML = 'Por favor, insira uma etapa válida';
+    return false;
+  } else {
+    etapa_nome.style.border = "0.01cm solid #ccc";
+    error.innerHTML = '';
+  }
+ 
+  const token = BQ.Storage.Get({key:'token'});
+  const id = BQ.Storage.Get({key:'id'});
+
+  BQ.Api.Post({
+      route:'etapa/',
+      headers: {
+            'Access-Control-Allow-Origin': window.location.href,
+            'Authorization': 'Token ' + token,
+      },
+      
+      data: {
+ 
+        'etapa_nome':etapa_nome.value,
+      },
+
+      success:function(rtn) {
+          var json = JSON.parse(rtn);
+
+          document.getElementById('alert_01').style.visibility = 'visible';
+          document.getElementById('alert_01').style.display = 'block'; 
+      },
+
+      error:function(rtn) {
+          var json = JSON.parse(rtn);
+
+          if (json.email) {
+              email.style.border = "0.01cm solid #A30000";
+              error.innerHTML = json.email[0];
+              return false;
+          }
+      }
+  });
+
+}
+
+
+</script>
+{% endblock main_beta %}
+
+
+
+{% block alert_u %}
+
+
+    <div class="alert" id="alert_01" style="visibility: hidden ;display: none;">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+                  
+                <br /><br /><br /><br />
+                 
+
+               Dados cadastrados com sucesso<br /><br />
+
+                </div>
+                <div class="alert-two-row-two">
+
+                    <div class="alert-one-columns">
+                        <div class="alert-one-columns-one" onclick="document.getElementById('alert_01').style.visibility = 'hidden'">
+                            <p>FECHAR</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock alert_u %}

@@ -1,0 +1,57 @@
+{% extends 'templates/base.html' %}
+
+{% block is_not_authenticated %}
+ <meta http-equiv="refresh" content="0; URL='../usuario/sair/'"/>
+{% endblock is_not_authenticated %}
+
+{% block is_authenticated_alfa %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/alfa/'"/>
+{% endblock is_authenticated_alfa %}
+
+{% block is_authenticated_gama %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/gama/'"/>
+{% endblock is_authenticated_gama %}
+
+{% block is_authenticated_delta %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/delta/'"/>
+{% endblock is_authenticated_delta %}
+
+{% block is_authenticated_epsilon %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/epsilon/'"/>
+{% endblock is_authenticated_epsilon %}
+
+
+{% block nav_beta %}
+    <div class="nav-three-row">
+
+      <div class="nav-three-row-one">
+    
+      </div>
+     
+      <div class="nav-three-row-two">
+        <svg onclick = "location.href = '../' "  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3.222 18.917c5.666-5.905-.629-10.828-5.011-7.706l1.789 1.789h-6v-6l1.832 1.832c7.846-6.07 16.212 4.479 7.39 10.085z" />
+        </svg>
+      </div>
+
+      <div class="nav-three-row-three">
+ 
+      </div>
+
+    </div>
+{% endblock nav_beta %}
+
+
+{% block main_beta %}
+<script type="text/javascript">
+  document.getElementById('info').innerHTML = '<h2 style="white-space: nowrap">DASHBOARD > MANUAL</h2>';
+</script>
+ 
+ 
+<p class="paragraph">
+  <span>
+Olá usuário, bem vindo ao Manual de Utilização do Banco de Questões de Matemática (BQM), aqui você encontrará informações que lhe permitirão entender a maneira em que esta plataforma funciona.
+  </span>
+</p>
+
+{% endblock main_beta %}

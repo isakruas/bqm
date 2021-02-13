@@ -1,0 +1,307 @@
+{% extends 'templates/base.html' %}
+{% block is_not_authenticated %}
+<meta http-equiv="refresh" content="0; URL='../usuario/sair/'"/>
+{% endblock is_not_authenticated %}
+{% block is_authenticated_beta %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/beta/'"/>
+{% endblock is_authenticated_beta %}
+{% block is_authenticated_gama %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/gama/'"/>
+{% endblock is_authenticated_gama %}
+{% block is_authenticated_delta %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/delta/'"/>
+{% endblock is_authenticated_delta %}
+{% block is_authenticated_epsilon %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/epsilon/'"/>
+{% endblock is_authenticated_epsilon %}
+
+
+{% block main_alfa %}
+<script type="text/javascript">
+  document.getElementById('info').innerHTML = '<h2 style="white-space: nowrap">DASHBOARD > REDE > EDITAR > USUÁRIO > BETA</h2>';
+</script>
+<div class="main-auto-row-auto">
+
+  <div class="forms">
+
+  <p style="margin-bottom: 0cm; color: #A30000" id="error"></p>
+  <br />
+
+  <p>NOME</p>
+  <input  type="text"  id="nome" required>
+  <br>
+  <p>SOBRENOME</p>
+  <input  type="text"  id="sobrenome"  >
+  <br>
+
+  <p>EMAIL</p>
+  <input  type="email" id="email" required>
+  <br>
+
+  <p>ESCOLARIDADE</p>
+  <select  id="escolaridade">
+ 
+  </select>
+  <br>
+  <p>SENHA</p>
+  <input  type="password" id="password1" >
+  <br>
+  <p>REPITA A SENHA</p>
+  <input  type="password" id="password2"  >
+  <br>
+  </div>
+
+<center>
+  <button  type="button" class="button" style="width: auto;" onclick="salvar()">SALVAR</button>
+    
+</center>
+
+</div>
+ 
+<script type="text/javascript">
+
+const token = BQ.Storage.Get({key:'token'});
+const id = BQ.Storage.Get({key:'id'});
+
+
+function voltar() {
+
+ 
+  location.href = '../../../detalhes/usuario/beta/';
+ 
+
+
+}
+
+
+function carregar(){
+
+  var usuario_detalhes = BQ.Storage.Get({key:'usuario_detalhes'});
+
+ 
+
+    BQ.Api.Get({
+        route:'usuario/',
+        headers: {
+            'Access-Control-Allow-Origin': window.location.href,
+            'Authorization': 'Token ' + token,
+        },
+        id:usuario_detalhes,
+        success:function(rtn) {
+            var json = JSON.parse(rtn);
+ 
+
+            var html = '<option value="">- - - - - - - - -</option>';
+
+            var option = [
+                "Fundamental - Incompleto",
+                "Fundamental - Completo",
+                "Médio - Incompleto",
+                "Médio - Completo",
+                "Superior - Incompleto",
+                "Superior - Completo",
+                "Pós-graduação (Lato senso) - Incompleto",
+                "Pós-graduação (Lato senso) - Completo",
+                "Pós-graduação (Strictosensu, nível mestrado) - Incompleto",
+                "Pós-graduação (Strictosensu, nível mestrado) - Completo",
+                "Pós-graduação (Strictosensu, nível doutor) - Incompleto",
+                "Pós-graduação (Strictosensu, nível doutor) - Completo"
+            ];
+
+
+            for (var i = 0; i < option.length; i++) {
+
+              if (option[i] == json.escolaridade) {
+                 html = html + '<option value="'+option[i]+'" selected>'+option[i]+'</option>';
+              } else {
+                html = html + '<option value="'+option[i]+'">'+option[i]+'</option>';
+              }
+
+            }
+
+
+            document.getElementById('nome').value = json.nome;
+            document.getElementById('sobrenome').value = json.sobrenome;
+            document.getElementById('email').value = json.email;
+            document.getElementById('escolaridade').innerHTML = html;
+            
+
+
+        }
+    });
+
+}
+ 
+
+
+function salvar() {
+
+  var email = document.getElementById('email');
+  var nome = document.getElementById('nome');
+  var sobrenome = document.getElementById('sobrenome');
+  var escolaridade = document.getElementById('escolaridade');
+  var password1 = document.getElementById('password1');
+  var password2 = document.getElementById('password2');
+  var error = document.getElementById('error');
+
+
+  if (email.value == "") {
+    email.style.border = "0.01cm solid #A30000";
+    error.innerHTML = 'Por favor, insira um email válido';
+    return false;
+  } else {
+    email.style.border = "0.01cm solid #ccc";
+    error.innerHTML = '';
+  }
+
+  if (nome.value == "") {
+    nome.style.border = "0.01cm solid #A30000";
+    error.innerHTML = 'Por favor, insira um nome válido';
+    return false;
+  } else {
+    nome.style.border = "0.01cm solid #ccc";
+    error.innerHTML = '';
+  }
+
+  if (sobrenome.value == "") {
+    sobrenome.style.border = "0.01cm solid #A30000";
+    error.innerHTML = 'Por favor, insira um sobrenome válido';
+    return false;
+  } else {
+    sobrenome.style.border = "0.01cm solid #ccc";
+    error.innerHTML = '';
+  }
+
+  if (escolaridade.value == "") {
+    escolaridade.style.border = "0.01cm solid #A30000";
+    error.innerHTML = 'Por favor, selecione uma escolaridade';
+    return false;
+  } else {
+    escolaridade.style.border = "0.01cm solid #ccc";
+    error.innerHTML = '';
+  }
+
+  if (password1.value !== password2.value) {
+    password1.style.border = "0.01cm solid #A30000";
+    password2.style.border = "0.01cm solid #A30000";
+    error.innerHTML = 'As senhas não correspondem';
+    return false;
+  } else {
+
+    if (password1.value.length < 8 ) {
+      password1.style.border = "0.01cm solid #A30000";
+      password2.style.border = "0.01cm solid #A30000";
+      error.innerHTML = 'A senha deve ter mais de 8 caracteres';
+      return false;
+    } else {
+      password1.style.border = "0.01cm solid #ccc";
+      password2.style.border = "0.01cm solid #ccc";
+      error.innerHTML = '';
+    }
+  }
+
+  const token = BQ.Storage.Get({key:'token'});
+  const id = BQ.Storage.Get({key:'id'});
+
+  BQ.Api.Patch({
+      route:'usuario/',
+      headers: {
+            'Access-Control-Allow-Origin': window.location.href,
+            'Authorization': 'Token ' + token,
+      },
+
+      id:BQ.Storage.Get({key:'usuario_detalhes'}),
+
+      data: {
+        'email':email.value,
+        'nome':nome.value,
+        'sobrenome':sobrenome.value,
+        'escolaridade':escolaridade.value,
+        'password':password1.value,
+        'nivel_de_acesso':'beta'
+
+      },
+
+      success:function(rtn) {
+          var json = JSON.parse(rtn);
+
+          document.getElementById('alert_01').style.visibility = 'visible';
+          document.getElementById('alert_01').style.display = 'block';
+      },
+
+      error:function(rtn) {
+          var json = JSON.parse(rtn);
+
+          if (json.email) {
+              email.style.border = "0.01cm solid #A30000";
+              error.innerHTML = json.email[0];
+              return false;
+          }
+      }
+  });
+
+}
+
+
+document.addEventListener('readystatechange', event => {
+if (event.target.readyState === 'complete') {
+
+    carregar();
+
+}});
+
+</script>  
+
+
+{% endblock main_alfa %}
+
+
+
+{% block nav_alfa %}
+<div class="nav-three-row">
+
+  <div class="nav-three-row-one">
+
+  </div>
+
+  <div class="nav-three-row-two">
+    <svg onclick = "voltar()"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3.222 18.917c5.666-5.905-.629-10.828-5.011-7.706l1.789 1.789h-6v-6l1.832 1.832c7.846-6.07 16.212 4.479 7.39 10.085z" />
+    </svg>
+  </div>
+
+  <div class="nav-three-row-three">
+
+  </div>
+
+</div>
+{% endblock nav_alfa %}
+
+
+{% block alert_u %}
+
+
+    <div class="alert" id="alert_01" style="visibility: hidden ;display: none;">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+                  
+                <br /><br /><br /><br />
+                 
+
+               Dados atualizados com sucesso<br /><br />
+
+                </div>
+                <div class="alert-two-row-two">
+
+                    <div class="alert-one-columns">
+                        <div class="alert-one-columns-one" onclick="document.getElementById('alert_01').style.visibility = 'hidden'">
+                            <p>FECHAR</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock alert_u %}

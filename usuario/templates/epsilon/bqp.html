@@ -1,0 +1,125 @@
+{% extends 'templates/base.html' %}
+{% block is_not_authenticated %}
+
+<meta http-equiv="refresh" content="0; URL="{% url 'usuario_sair' %}"/>
+{% endblock is_not_authenticated %} 
+{% block is_authenticated_alfa %}
+<meta http-equiv="refresh" content="0; URL="{% url 'usuario_alfa_inicio' %}"/>
+{% endblock is_authenticated_alfa %}
+{% block is_authenticated_beta %}
+<meta http-equiv="refresh" content="0; URL="{% url 'usuario_beta_inicio' %}"/>
+{% endblock is_authenticated_beta %}
+{% block is_authenticated_gama %}
+<meta http-equiv="refresh" content="0; URL="{% url 'usuario_gama_inicio' %}"/>
+{% endblock is_authenticated_gama %}
+{% block is_authenticated_delta %}
+<meta http-equiv="refresh" content="0; URL="{% url 'usuario_delta_inicio' %}"/>
+{% endblock is_authenticated_delta %}
+
+{% block nav_epsilon %}
+
+    <div class="nav-three-row">
+
+      <div class="nav-three-row-one">
+    
+      </div>
+     
+      <div class="nav-three-row-two">
+        <svg onclick = "location.href = '../'"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3.222 18.917c5.666-5.905-.629-10.828-5.011-7.706l1.789 1.789h-6v-6l1.832 1.832c7.846-6.07 16.212 4.479 7.39 10.085z" />
+        </svg>
+      </div>
+
+      <div class="nav-three-row-three">
+ 
+      </div>
+
+    </div>
+
+{% endblock nav_epsilon %}
+
+
+{% block main_epsilon %}
+
+<script type="text/javascript">
+  document.getElementById('info').innerHTML = '<h2 style="white-space: nowrap">BANCO DE QUESTÕES PRIVADO (BQP)</h2>';
+</script>
+
+<div class="main-three-row">
+  <div class="main-three-row-one">
+    <div class="main-three-columns">
+      <div class="main-three-columns-one">
+      </div>
+      <div class="main-three-columns-two">
+      </div>
+      <div class="main-three-columns-three">
+      </div>
+    </div>
+  </div>
+  <div class="main-three-row-two">
+    <div class="main-three-columns">
+      <div class="main-three-columns-one">
+        <center>
+          <a href="{% url 'usuario_epsilon_bqp_cadastrar_questao' %}" rel="noopener">
+
+          <svg style="width: 64px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M0 405.3V448c0 35.3 86 64 192 64s192-28.7 192-64v-42.7C342.7 434.4 267.2 448 192 448S41.3 434.4 0 405.3zM320 128c106 0 192-28.7 192-64S426 0 320 0 128 28.7 128 64s86 64 192 64zM0 300.4V352c0 35.3 86 64 192 64s192-28.7 192-64v-51.6c-41.3 34-116.9 51.6-192 51.6S41.3 334.4 0 300.4zm416 11c57.3-11.1 96-31.7 96-55.4v-42.7c-23.2 16.4-57.3 27.6-96 34.5v63.6zM192 160C86 160 0 195.8 0 240s86 80 192 80 192-35.8 192-80-86-80-192-80zm219.3 56.3c60-10.8 100.7-32 100.7-56.3v-42.7c-35.5 25.1-96.5 38.6-160.7 41.8 29.5 14.3 51.2 33.5 60 57.2z"/></svg>
+
+ 
+          <br /><br />
+            <h4 style="text-align: center;" >Adicionar questão</h4>
+          </a>
+        </center>
+      </div>
+      <div class="main-three-columns-two">
+ 
+      </div>
+      <div class="main-three-columns-three">
+        <center>
+          <a href="{% url 'usuario_epsilon_bqp_listar_questao' %}" rel="noopener">
+ 
+          <svg style="width: 64px"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path  fill="currentColor" d="M336 64h-80c0-35.3-28.7-64-64-64s-64 28.7-64 64H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48zM96 424c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24zm0-96c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24zm0-96c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24zm96-192c13.3 0 24 10.7 24 24s-10.7 24-24 24-24-10.7-24-24 10.7-24 24-24zm128 368c0 4.4-3.6 8-8 8H168c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16zm0-96c0 4.4-3.6 8-8 8H168c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16zm0-96c0 4.4-3.6 8-8 8H168c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v16z"/></svg>
+ 
+          <br /><br />
+            <h4 style="text-align: center;">Listar questões </h4>
+          </a>
+        </center>
+      </div>
+    </div>
+  </div>
+  <div class="main-three-row-three">
+    <div class="main-three-columns">
+      <div class="main-three-columns-one">
+      </div>
+      <div class="main-three-columns-two">
+      </div>
+      <div class="main-three-columns-three">
+      </div>
+    </div>
+  </div>
+</div>
+ 
+{% endblock main_epsilon %}
+
+
+{% block alert_u %}
+
+<div class="alert" id="alert_01">
+    <div class="alert-box">
+        <div class="alert-two-row">
+            <div class="alert-two-row-one" style="text-align:justify;">
+               Infelizmente não encontramos em nosso banco de dados nenhuma correspondências para a classificação de questão que selecionou, tente verificar novamente ou realize este mesmo filtro em um momento futuro.
+            </div>
+            <div class="alert-two-row-two">
+
+                <div class="alert-one-columns">
+                    <div class="alert-one-columns-one" onclick="document.getElementById('alert_01').style.visibility = 'hidden'" >
+                        <p>Ok</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock alert_u %}

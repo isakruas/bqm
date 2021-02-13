@@ -1,0 +1,74 @@
+{
+  "name": "Banco de Questões de Matemática",
+  "short_name": "BQ.MAT.BR",
+  "description": "BQ.MAT.BR é uma plataforma gratuita que tem o objetivo de facilitar a elaboração de atividades avaliativas de matemática. É um banco com mais de 500 questões organizadas conforme eixo temático, objeto de conhecimento, ciclo de ensino e nível de dificuldade. Aproveite!",
+  "lang": "pt-BR",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#0b2639",
+  "background_color": "#f5f5f5",
+  "icons": [
+    {
+      "src": "media/maskable_icon_x48.png",
+      "sizes": "48x48",
+      "type": "image/png",
+      "purpose":"maskable"
+    },
+    {
+      "src": "media/maskable_icon_x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose":"maskable"
+    },
+    {
+      "src": "media/maskable_icon_x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose":"maskable"
+    },
+    {
+      "src": "media/maskable_icon_x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose":"maskable"
+    },
+    {
+      "src": "media/maskable_icon_x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose":"maskable"
+    },
+    {
+      "src": "media/maskable_icon_x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose":"maskable"
+    },
+    {
+      "src": "media/maskable_icon_x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose":"maskable"
+    },
+    {
+      "src": "media/maskable_icon_x256.png",
+      "sizes": "256x256",
+      "type": "image/png",
+      "purpose":"maskable"
+    },
+    {
+      "src": "media/maskable_icon_x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose":"maskable"
+    },
+    {
+      "src": "media/maskable_icon_x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose":"maskable"
+    }
+  ]
+}

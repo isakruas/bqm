@@ -1,0 +1,22 @@
+{
+	"questao": [
+	    {
+		"1": [
+			{% for el in usuario %}
+			    {% if el.status == 1 %}
+					"{{el.id}}", 
+			    {% endif %}
+			{% endfor %}
+			"null"
+	    ],
+		"2": [
+			{% for el in usuario %}
+			    {% if el.status == 2 %}
+					"{{el.id}}", 
+			    {% endif %}
+			{% endfor %}
+			"null"
+	      ]
+	    }
+    ]
+}

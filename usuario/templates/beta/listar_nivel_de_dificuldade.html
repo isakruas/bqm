@@ -1,0 +1,587 @@
+{% extends 'templates/base.html' %}
+
+{% block is_not_authenticated %}
+ <meta http-equiv="refresh" content="0; URL='../usuario/sair/'"/>
+{% endblock is_not_authenticated %}
+
+{% block is_authenticated_alfa %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/alfa/'"/>
+{% endblock is_authenticated_alfa %}
+
+{% block is_authenticated_gama %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/gama/'"/>
+{% endblock is_authenticated_gama %}
+
+{% block is_authenticated_delta %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/delta/'"/>
+{% endblock is_authenticated_delta %}
+
+{% block is_authenticated_epsilon %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/epsilon/'"/>
+{% endblock is_authenticated_epsilon %}
+
+{% block head_u %}
+
+<script type="text/javascript">
+
+const token = BQ.Storage.Get({
+  key: 'token'
+});
+
+const id = BQ.Storage.Get({
+  key: 'id'
+});
+ 
+function next() {
+
+  var next = BQ.Storage.Get({
+    key: 'next'
+  });
+
+  BQ.Storage.Set({
+    key: 'tmp',
+    value: ' '
+  });
+
+  if (next !== null) {
+
+    document.getElementById('el').innerHTML = '<div class="main-auto-row-auto">' +
+      '<div class="profile-footer-ul">' +
+      '<div class="main-row-columns profile-footer-li" >' +
+      '<div class="main-row-columns-one" style="overflow-x: auto; padding: 1cm; max-width: 93vw">' +
+      '<p style="text-align: justify; max-width: 93vw; height: 100%;">' +
+      'CARREGANDO . . .' +
+      '</p>' +
+      '</div>' +
+      '</div>' +
+      '</div>' +
+      '</div>';
+
+
+    BQ.Api.Get({
+
+      url: next,
+
+      headers: {
+        'Access-Control-Allow-Origin': window.location.href,
+        'Authorization': 'Token ' + token,
+      },
+
+
+      success: function(rtn) {
+
+        if (!JSON.parse(rtn)) {
+          return false;
+        }
+
+        var obj = JSON.parse(rtn);
+
+        if (obj.count === 0) {
+
+          BQ.Storage.Set({
+            key: 'tmp',
+            value: null
+          });
+
+          location.href = '../../';
+
+        } else {
+
+          BQ.Storage.Set({
+            key: 'next',
+            value: obj.next
+          });
+
+          BQ.Storage.Set({
+            key: 'previous',
+            value: obj.previous
+          });
+
+          var page = parseInt(BQ.Storage.Get({
+            key: 'page'
+          }), 10);
+
+          page = (page + 1);
+
+          BQ.Storage.Set({
+            key: 'page',
+            value: page
+          });
+
+          var total_de_paginas = 0;
+
+
+          if (obj.count % 10 == 0) {
+            total_de_paginas = parseInt(Math.round(obj.count / 10));
+          } else {
+            total_de_paginas = parseInt(Math.round(obj.count / 10)) + 1;
+          }
+
+          document.getElementById('info').innerHTML = '<h2 class="info">DASHBOARD > LISTAR > NÍVEL DE DIFICULDADE > PÁGINA ' + page + ' de ' + total_de_paginas + '</h2>';
+
+          if (obj.next == null) {
+
+            for (var i = 0; i < obj.results.length; i++) {
+
+              var tmp = BQ.Storage.Get({
+                key: 'tmp'
+              });
+
+              el = obj.results[i];
+
+              tmp = tmp + '<div class="main-auto-row-auto"> <div class="profile-footer-ul"> <div class="main-three-columns profile-footer-li"> <div class="main-three-columns-one" style="height: 1cm;"><p style="position: relative; width: auto; top: 30%; text-align: center;">'+ el.nivel_de_dificuldade_nome +'</p></div> <div class="main-three-columns-two" style="min-width: 1cm; border-left: 0.05cm solid #002907;"><p style="position: relative; width: auto; top: 30%; text-align: center;">'+ el.nivel_de_dificuldade +'</p></div> <div class="main-three-columns-three" style="min-width: 1cm; border-left: 0.05cm solid #002907;"> <svg onclick="editar('+el.nivel_de_dificuldade+')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"> <path fill="currentColor" d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z" /> </svg> </div> </div> </div> </div>';
+
+              BQ.Storage.Set({
+                key: 'tmp',
+                value: tmp
+              });
+
+            }
+
+            var tmp = BQ.Storage.Get({
+              key: 'tmp'
+            });
+
+            document.getElementById('el').innerHTML = tmp +
+
+              '<div class="main-auto-row-auto">' +
+              '<center>' +
+              '<button class="button" onclick="previous();">PÁGINA ANTERIOR</button>' +
+              '</center>' +
+              '</div>' +
+              '</div>';
+
+          } else {
+
+            for (var i = 0; i < obj.results.length; i++) {
+
+              var tmp = BQ.Storage.Get({
+                key: 'tmp'
+              });
+
+              el = obj.results[i];
+
+              tmp = tmp + '<div class="main-auto-row-auto"> <div class="profile-footer-ul"> <div class="main-three-columns profile-footer-li"> <div class="main-three-columns-one" style="height: 1cm;"><p style="position: relative; width: auto; top: 30%; text-align: center;">'+ el.nivel_de_dificuldade_nome +'</p></div> <div class="main-three-columns-two" style="min-width: 1cm; border-left: 0.05cm solid #002907;"><p style="position: relative; width: auto; top: 30%; text-align: center;">'+ el.nivel_de_dificuldade +'</p></div> <div class="main-three-columns-three" style="min-width: 1cm; border-left: 0.05cm solid #002907;"> <svg onclick="editar('+el.nivel_de_dificuldade+')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"> <path fill="currentColor" d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z" /> </svg> </div> </div> </div> </div>';
+
+              BQ.Storage.Set({
+                key: 'tmp',
+                value: tmp
+              });
+
+            }
+
+            var tmp = BQ.Storage.Get({
+              key: 'tmp'
+            });
+
+            document.getElementById('el').innerHTML = tmp +
+
+              '<div class="main-auto-row-auto">' +
+              '<center>' +
+              '<button class="button" onclick="previous();">PÁGINA ANTERIOR</button>' +
+              '<button class="button" onclick="next();">PRÓXIMA PÁGINA</button>' +
+              '</center>' +
+              '</div>' +
+              '</div>';
+          }
+        }
+      }
+    });
+
+  } else {
+    console.log('NÂO é possivel carregar uma nova pagina')
+  }
+}
+
+
+function previous() {
+
+  var previous = BQ.Storage.Get({
+    key: 'previous'
+  });
+
+  BQ.Storage.Set({
+    key: 'tmp',
+    value: ' '
+  });
+
+  if (previous !== null) {
+
+    document.getElementById('el').innerHTML = '<div class="main-auto-row-auto">' +
+      '<div class="profile-footer-ul">' +
+      '<div class="main-row-columns profile-footer-li" >' +
+      '<div class="main-row-columns-one" style="overflow-x: auto; padding: 1cm; max-width: 93vw">' +
+      '<p style="text-align: justify; max-width: 93vw; height: 100%;">' +
+      'CARREGANDO . . .' +
+      '</p>' +
+      '</div>' +
+      '</div>' +
+      '</div>' +
+      '</div>';
+
+
+    BQ.Api.Get({
+
+      url: previous,
+
+      headers: {
+        'Access-Control-Allow-Origin': window.location.href,
+        'Authorization': 'Token ' + token,
+      },
+
+
+      success: function(rtn) {
+
+        if (!JSON.parse(rtn)) {
+          return false;
+        }
+
+        var obj = JSON.parse(rtn);
+
+        if (obj.count === 0) {
+
+          BQ.Storage.Set({
+            key: 'tmp',
+            value: null
+          });
+
+          location.href = '../../';
+
+        } else {
+
+          BQ.Storage.Set({
+            key: 'next',
+            value: obj.next
+          });
+
+          BQ.Storage.Set({
+            key: 'previous',
+            value: obj.previous
+          });
+
+          var page = parseInt(BQ.Storage.Get({
+            key: 'page'
+          }), 10);
+
+          page = (page - 1);
+
+          BQ.Storage.Set({
+            key: 'page',
+            value: page
+          });
+
+          var total_de_paginas = 0;
+
+          if (obj.count % 10 == 0) {
+            total_de_paginas = parseInt(Math.round(obj.count / 10));
+          } else {
+            total_de_paginas = parseInt(Math.round(obj.count / 10)) + 1;
+          }
+
+          document.getElementById('info').innerHTML = '<h2 class="info">DASHBOARD > LISTAR > NÍVEL DE DIFICULDADE > PÁGINA ' + page + ' de ' + total_de_paginas + '</h2>';
+
+          if (obj.previous == null) {
+
+            for (var i = 0; i < obj.results.length; i++) {
+
+              var tmp = BQ.Storage.Get({
+                key: 'tmp'
+              });
+
+              el = obj.results[i];
+
+              tmp = tmp + '<div class="main-auto-row-auto"> <div class="profile-footer-ul"> <div class="main-three-columns profile-footer-li"> <div class="main-three-columns-one" style="height: 1cm;"><p style="position: relative; width: auto; top: 30%; text-align: center;">'+ el.nivel_de_dificuldade_nome +'</p></div> <div class="main-three-columns-two" style="min-width: 1cm; border-left: 0.05cm solid #002907;"><p style="position: relative; width: auto; top: 30%; text-align: center;">'+ el.nivel_de_dificuldade +'</p></div> <div class="main-three-columns-three" style="min-width: 1cm; border-left: 0.05cm solid #002907;"> <svg onclick="editar('+el.nivel_de_dificuldade+')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"> <path fill="currentColor" d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z" /> </svg> </div> </div> </div> </div>';
+
+              BQ.Storage.Set({
+                key: 'tmp',
+                value: tmp
+              });
+
+            }
+
+            var tmp = BQ.Storage.Get({
+              key: 'tmp'
+            });
+
+            document.getElementById('el').innerHTML = tmp +
+
+              '<div class="main-auto-row-auto">' +
+              '<center>' +
+              '<button class="button" onclick="next();">PRÓXIMA PÁGINA</button>' +
+              '</center>' +
+              '</div>' +
+              '</div>';
+
+          } else {
+
+            for (var i = 0; i < obj.results.length; i++) {
+
+              var tmp = BQ.Storage.Get({
+                key: 'tmp'
+              });
+
+              el = obj.results[i];
+
+              tmp = tmp + '<div class="main-auto-row-auto"> <div class="profile-footer-ul"> <div class="main-three-columns profile-footer-li"> <div class="main-three-columns-one" style="height: 1cm;"><p style="position: relative; width: auto; top: 30%; text-align: center;">'+ el.nivel_de_dificuldade_nome +'</p></div> <div class="main-three-columns-two" style="min-width: 1cm; border-left: 0.05cm solid #002907;"><p style="position: relative; width: auto; top: 30%; text-align: center;">'+ el.nivel_de_dificuldade +'</p></div> <div class="main-three-columns-three" style="min-width: 1cm; border-left: 0.05cm solid #002907;"> <svg onclick="editar('+el.nivel_de_dificuldade+')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"> <path fill="currentColor" d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z" /> </svg> </div> </div> </div> </div>';
+
+
+              BQ.Storage.Set({
+                key: 'tmp',
+                value: tmp
+              });
+
+            }
+
+            var tmp = BQ.Storage.Get({
+              key: 'tmp'
+            });
+
+            document.getElementById('el').innerHTML = tmp +
+
+
+              '<div class="main-auto-row-auto">' +
+              '<center>' +
+              '<button class="button" onclick="previous();">PÁGINA ANTERIOR</button>' +
+              '<button class="button" onclick="next();">PRÓXIMA PÁGINA</button>' +
+              '</center>' +
+              '</div>' +
+              '</div>';
+          }
+        }
+      }
+    });
+
+  } else {
+    console.log('NÂO é possivel carregar uma nova pagina')
+  }
+}
+
+function carregar() {
+
+    BQ.Storage.Set({
+        key: 'tmp',
+        value: ' '
+    });
+
+    var next = BQ.Storage.Get({
+      key: 'next'
+    });
+
+    var previous = BQ.Storage.Get({
+      key: 'previous'
+    });
+
+    BQ.Api.Get({
+
+      route: 'niveldedificuldade/',
+
+      headers: {
+        'Access-Control-Allow-Origin': window.location.href,
+        'Authorization': 'Token ' + token,
+      },
+
+      success: function(rtn) {
+
+        if (!JSON.parse(rtn)) {
+          return false;
+        }
+
+        var obj = JSON.parse(rtn);
+ 
+        if (obj.count === 0) {
+
+          BQ.Storage.Set({
+            key: 'tmp',
+            value: null
+          });
+
+          location.href = '../../';
+
+        } else {
+
+          BQ.Storage.Set({
+            key: 'next',
+            value: obj.next
+          });
+
+          BQ.Storage.Set({
+            key: 'previous',
+            value: obj.previous
+          });
+
+          if (obj.next == null) {
+
+            for (var i = 0; i < obj.results.length; i++) {
+
+              var tmp = BQ.Storage.Get({
+                key: 'tmp'
+              });
+
+              el = obj.results[i];
+
+
+              tmp = tmp + '<div class="main-auto-row-auto"> <div class="profile-footer-ul"> <div class="main-three-columns profile-footer-li"> <div class="main-three-columns-one" style="height: 1cm;"><p style="position: relative; width: auto; top: 30%; text-align: center;">'+ el.nivel_de_dificuldade_nome +'</p></div> <div class="main-three-columns-two" style="min-width: 1cm; border-left: 0.05cm solid #002907;"><p style="position: relative; width: auto; top: 30%; text-align: center;">'+ el.nivel_de_dificuldade +'</p></div> <div class="main-three-columns-three" style="min-width: 1cm; border-left: 0.05cm solid #002907;"> <svg onclick="editar('+el.nivel_de_dificuldade+')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"> <path fill="currentColor" d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z" /> </svg> </div> </div> </div> </div>';
+
+
+              BQ.Storage.Set({
+                key: 'tmp',
+                value: tmp
+              });
+
+            }
+
+            var tmp = BQ.Storage.Get({
+              key: 'tmp'
+            });
+
+            document.getElementById('el').innerHTML = tmp;
+
+          } else {
+
+
+            var total_de_paginas = 0;
+
+            if (obj.count % 10 == 0) {
+              total_de_paginas = parseInt(Math.round(obj.count / 10));
+            } else {
+              total_de_paginas = parseInt(Math.round(obj.count / 10)) + 1;
+            }
+
+            BQ.Storage.Set({
+              key: 'page',
+              value: 1
+            });
+
+
+            document.getElementById('info').innerHTML = '<h2 class="info">DASHBOARD > LISTAR > NÍVEL DE DIFICULDADE > PÁGINA 1 de ' + total_de_paginas + '</h2>';
+
+
+            for (var i = 0; i < obj.results.length; i++) {
+
+              var tmp = BQ.Storage.Get({
+                key: 'tmp'
+              });
+
+              el = obj.results[i];
+
+              tmp = tmp + '<div class="main-auto-row-auto"> <div class="profile-footer-ul"> <div class="main-three-columns profile-footer-li"> <div class="main-three-columns-one" style="height: 1cm;"><p style="position: relative; width: auto; top: 30%; text-align: center;">'+ el.nivel_de_dificuldade_nome +'</p></div> <div class="main-three-columns-two" style="min-width: 1cm; border-left: 0.05cm solid #002907;"><p style="position: relative; width: auto; top: 30%; text-align: center;">'+ el.nivel_de_dificuldade +'</p></div> <div class="main-three-columns-three" style="min-width: 1cm; border-left: 0.05cm solid #002907;"> <svg onclick="editar('+el.nivel_de_dificuldade+')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"> <path fill="currentColor" d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z" /> </svg> </div> </div> </div> </div>';
+ 
+
+              BQ.Storage.Set({
+                key: 'tmp',
+                value: tmp
+              });
+
+            }
+
+            var tmp = BQ.Storage.Get({
+              key: 'tmp'
+            });
+
+            document.getElementById('el').innerHTML = tmp +
+
+
+              '<div class="main-auto-row-auto">' +
+              '<center>' +
+              '<button class="button" onclick="next();">PRÓXIMA PÁGINA</button>' +
+              '</center>' +
+              '</div>' +
+              '</div>';
+
+          }
+        }
+      }
+    });
+}
+
+function editar(eid) {
+  
+  BQ.Storage.Set({key:'nivel_de_dificuldade', value:eid})
+  
+  location.href = '../../editar/nivel_de_dificuldade/';
+}
+
+
+document.addEventListener('readystatechange', event => {
+  if (event.target.readyState === 'complete') {
+
+    carregar();
+
+  }
+});
+
+</script>
+{% endblock head_u %}
+
+
+{% block nav_beta %}
+
+    <div class="nav-one-row">
+     
+      <div class="nav-one-row-one">
+        <svg  onclick = "location.href = '../../'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+           <path fill="currentColor" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3.222 18.917c5.666-5.905-.629-10.828-5.011-7.706l1.789 1.789h-6v-6l1.832 1.832c7.846-6.07 16.212 4.479 7.39 10.085z" />
+        </svg>
+      </div> 
+
+    </div>
+
+{% endblock nav_beta %}
+
+{% block main_beta %}
+
+<script type="text/javascript">
+ 
+document.getElementById('info').innerHTML = '<h2 class="info">DASHBOARD > LISTAR > NÍVEL DE DIFICULDADE </h2>';
+
+</script>
+ 
+
+<div class="main-auto-row-auto">
+        <div class="profile-footer-ul">
+
+            <div class="main-three-columns profile-footer-li">
+
+                <div class="main-three-columns-one" style="height: 1cm">
+                    <p style="position: relative ; width: auto; top: 30%; text-align: center;  font-weight: bold;">
+                        NÍVEL DE DIFICULDADE (NOME)
+                    </p>
+                </div>
+
+
+                <div class="main-three-columns-two" style="min-width: 1cm; border-left: 0.05cm solid #002907;">
+                    <p style="position: relative ; width: auto; top: 30%; text-align: center; font-weight: bold;">
+                        NÍVEL DE DIFICULDADE (ID)
+                    </p>
+                </div>
+
+                <div class="main-three-columns-three" style="min-width: 1cm; border-left: 0.05cm solid #002907;">
+                    <p style="position: relative ; width: auto; top: 30%; text-align: center; font-weight: bold;">
+                        EDITAR  
+                    </p>
+                </div>
+
+            </div>
+        </div>
+</div>
+
+<div id="el">
+
+    <div class="main-auto-row-auto">
+        <div class="profile-footer-ul">
+            <div class="main-row-columns profile-footer-li" >
+                <div class="main-row-columns-one" style="overflow-x: auto; padding: 1cm; max-width: 93vw">
+
+                    <p style="text-align: justify; max-width: 93vw; height: 100%;">
+                        CARREGANDO . . .
+                    </p>
+                
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+ 
+{% endblock main_beta %}

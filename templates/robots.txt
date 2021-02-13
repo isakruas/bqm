@@ -1,0 +1,3 @@
+User-Agent: *
+Allow: /
+Sitemap: https://bq.mat.br/sitemap.xml

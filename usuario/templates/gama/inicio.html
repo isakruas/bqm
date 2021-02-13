@@ -1,0 +1,282 @@
+{% extends 'templates/base.html' %}
+{% block is_not_authenticated %}
+<meta http-equiv="refresh" content="0; URL='../usuario/sair/'"/>
+{% endblock is_not_authenticated %}
+{% block is_authenticated_alfa %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/alfa/'"/>
+{% endblock is_authenticated_alfa %}
+{% block is_authenticated_beta %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/beta/'"/>
+{% endblock is_authenticated_beta %}
+{% block is_authenticated_delta %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/delta/'"/>
+{% endblock is_authenticated_delta %}
+{% block is_authenticated_epsilon %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/epsilon/'"/>
+{% endblock is_authenticated_epsilon %}
+ 
+{% block nav_gama %}
+        <div class="nav-three-row">
+            <div class="nav-three-row-one">
+                <svg onclick = "location.href = '{% url 'usuario_gama_configuracao' %}'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path  fill="currentColor" d="M512.1 191l-8.2 14.3c-3 5.3-9.4 7.5-15.1 5.4-11.8-4.4-22.6-10.7-32.1-18.6-4.6-3.8-5.8-10.5-2.8-15.7l8.2-14.3c-6.9-8-12.3-17.3-15.9-27.4h-16.5c-6 0-11.2-4.3-12.2-10.3-2-12-2.1-24.6 0-37.1 1-6 6.2-10.4 12.2-10.4h16.5c3.6-10.1 9-19.4 15.9-27.4l-8.2-14.3c-3-5.2-1.9-11.9 2.8-15.7 9.5-7.9 20.4-14.2 32.1-18.6 5.7-2.1 12.1.1 15.1 5.4l8.2 14.3c10.5-1.9 21.2-1.9 31.7 0L552 6.3c3-5.3 9.4-7.5 15.1-5.4 11.8 4.4 22.6 10.7 32.1 18.6 4.6 3.8 5.8 10.5 2.8 15.7l-8.2 14.3c6.9 8 12.3 17.3 15.9 27.4h16.5c6 0 11.2 4.3 12.2 10.3 2 12 2.1 24.6 0 37.1-1 6-6.2 10.4-12.2 10.4h-16.5c-3.6 10.1-9 19.4-15.9 27.4l8.2 14.3c3 5.2 1.9 11.9-2.8 15.7-9.5 7.9-20.4 14.2-32.1 18.6-5.7 2.1-12.1-.1-15.1-5.4l-8.2-14.3c-10.4 1.9-21.2 1.9-31.7 0zm-10.5-58.8c38.5 29.6 82.4-14.3 52.8-52.8-38.5-29.7-82.4 14.3-52.8 52.8zM386.3 286.1l33.7 16.8c10.1 5.8 14.5 18.1 10.5 29.1-8.9 24.2-26.4 46.4-42.6 65.8-7.4 8.9-20.2 11.1-30.3 5.3l-29.1-16.8c-16 13.7-34.6 24.6-54.9 31.7v33.6c0 11.6-8.3 21.6-19.7 23.6-24.6 4.2-50.4 4.4-75.9 0-11.5-2-20-11.9-20-23.6V418c-20.3-7.2-38.9-18-54.9-31.7L74 403c-10 5.8-22.9 3.6-30.3-5.3-16.2-19.4-33.3-41.6-42.2-65.7-4-10.9.4-23.2 10.5-29.1l33.3-16.8c-3.9-20.9-3.9-42.4 0-63.4L12 205.8c-10.1-5.8-14.6-18.1-10.5-29 8.9-24.2 26-46.4 42.2-65.8 7.4-8.9 20.2-11.1 30.3-5.3l29.1 16.8c16-13.7 34.6-24.6 54.9-31.7V57.1c0-11.5 8.2-21.5 19.6-23.5 24.6-4.2 50.5-4.4 76-.1 11.5 2 20 11.9 20 23.6v33.6c20.3 7.2 38.9 18 54.9 31.7l29.1-16.8c10-5.8 22.9-3.6 30.3 5.3 16.2 19.4 33.2 41.6 42.1 65.8 4 10.9.1 23.2-10 29.1l-33.7 16.8c3.9 21 3.9 42.5 0 63.5zm-117.6 21.1c59.2-77-28.7-164.9-105.7-105.7-59.2 77 28.7 164.9 105.7 105.7zm243.4 182.7l-8.2 14.3c-3 5.3-9.4 7.5-15.1 5.4-11.8-4.4-22.6-10.7-32.1-18.6-4.6-3.8-5.8-10.5-2.8-15.7l8.2-14.3c-6.9-8-12.3-17.3-15.9-27.4h-16.5c-6 0-11.2-4.3-12.2-10.3-2-12-2.1-24.6 0-37.1 1-6 6.2-10.4 12.2-10.4h16.5c3.6-10.1 9-19.4 15.9-27.4l-8.2-14.3c-3-5.2-1.9-11.9 2.8-15.7 9.5-7.9 20.4-14.2 32.1-18.6 5.7-2.1 12.1.1 15.1 5.4l8.2 14.3c10.5-1.9 21.2-1.9 31.7 0l8.2-14.3c3-5.3 9.4-7.5 15.1-5.4 11.8 4.4 22.6 10.7 32.1 18.6 4.6 3.8 5.8 10.5 2.8 15.7l-8.2 14.3c6.9 8 12.3 17.3 15.9 27.4h16.5c6 0 11.2 4.3 12.2 10.3 2 12 2.1 24.6 0 37.1-1 6-6.2 10.4-12.2 10.4h-16.5c-3.6 10.1-9 19.4-15.9 27.4l8.2 14.3c3 5.2 1.9 11.9-2.8 15.7-9.5 7.9-20.4 14.2-32.1 18.6-5.7 2.1-12.1-.1-15.1-5.4l-8.2-14.3c-10.4 1.9-21.2 1.9-31.7 0zM501.6 431c38.5 29.6 82.4-14.3 52.8-52.8-38.5-29.6-82.4 14.3-52.8 52.8z"/></svg>
+            </div>
+            <div class="nav-three-row-two">
+  
+                <svg onclick = "location.href = '{% url 'usuario_gama_ir_para' %}'"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path  fill="currentColor"  d="M640 264v-16c0-8.84-7.16-16-16-16H344v-40h72c17.67 0 32-14.33 32-32V32c0-17.67-14.33-32-32-32H224c-17.67 0-32 14.33-32 32v128c0 17.67 14.33 32 32 32h72v40H16c-8.84 0-16 7.16-16 16v16c0 8.84 7.16 16 16 16h104v40H64c-17.67 0-32 14.33-32 32v128c0 17.67 14.33 32 32 32h160c17.67 0 32-14.33 32-32V352c0-17.67-14.33-32-32-32h-56v-40h304v40h-56c-17.67 0-32 14.33-32 32v128c0 17.67 14.33 32 32 32h160c17.67 0 32-14.33 32-32V352c0-17.67-14.33-32-32-32h-56v-40h104c8.84 0 16-7.16 16-16zM256 128V64h128v64H256zm-64 320H96v-64h96v64zm352 0h-96v-64h96v64z"/></svg>
+
+
+            </div>
+            <div class="nav-three-row-three">
+                <svg onclick = "location.href = '{% url 'usuario_gama_manual' %}'" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M5.495 4c-1.375 0-1.375-2 0-2h16.505v-2h-17c-1.657 0-3 1.343-3 3v18c0 1.657 1.343 3 3 3h17v-20h-16.505z" />
+                </svg>
+            </div>
+        
+        </div>
+{% endblock nav_gama %}
+
+
+{% block main_gama %}
+<script type="text/javascript">
+
+BQ.Storage.Remove({key:'uids'}); 
+
+function view (token, id){
+
+    var contagem_questao_status_1 = 0;
+    var contagem_questao_status_2 = 0;
+
+  BQ.Api.Get({
+
+      route:'usuario/filiacao/',
+      headers: {
+            'Access-Control-Allow-Origin': window.location.href,
+            'Authorization': 'Token ' + token,
+      },
+
+      data: {
+        'superior':id
+      },
+
+      success:function(rtn){
+
+        var json = JSON.parse(rtn);
+
+        if(json.count === 0) {
+               
+        } else {
+          for (var i = json.results.length - 1; i >= 0; i--) {
+            BQ.Api.Get({
+              route:'usuario/',
+              id:json.results[i].inferior,
+              success:function(rtn){
+                var json = JSON.parse(rtn);
+
+                add_uids(json.id);
+
+                BQ.Api.Get({
+                    route:'questao/',
+                    headers: {
+                        'Access-Control-Allow-Origin': window.location.href,
+                        'Authorization': 'Token ' + token,
+                    },
+                    data:{
+
+                        'cadastro_pelo_usuario':json.id,
+                        'status':2
+
+                    },
+
+                    success:function(rtn) {
+                        var json = JSON.parse(rtn);
+
+                        contagem_questao_status_2 = contagem_questao_status_2 + parseInt(json.count)
+
+                        console.log(contagem_questao_status_2)
+
+
+                        document.getElementById('contagem_questao_status_2').innerHTML = contagem_questao_status_2;
+                        
+
+                        document.getElementById('contagem_questoes').innerHTML = (contagem_questao_status_1 + contagem_questao_status_2);
+                    }
+                });
+
+
+                BQ.Api.Get({
+                    route:'questao/',
+                    headers: {
+                        'Access-Control-Allow-Origin': window.location.href,
+                        'Authorization': 'Token ' + token,
+                    },
+                    data:{
+
+                        'cadastro_pelo_usuario':json.id,
+                        'status':1
+
+                    },
+                    success:function(rtn) {
+                        var json = JSON.parse(rtn);
+
+                        
+                        contagem_questao_status_1 = contagem_questao_status_1 + parseInt(json.count);
+
+                        document.getElementById('contagem_questao_status_1').innerHTML = contagem_questao_status_1;
+
+                        document.getElementById('contagem_questoes').innerHTML = (contagem_questao_status_1 + contagem_questao_status_2);
+                    }
+                });
+
+              }
+            });
+
+          }
+        }
+      }
+  });
+
+}
+
+
+function add_uids(uid){
+
+  console.log('add_uids('+uid+')');
+
+    if (BQ.Storage.Get({key:'uids'}) == null) {
+
+        var uids = [];
+
+        if (!uids.includes(uid)) {
+            uids.push(uid);                                       
+        }
+
+        BQ.Storage.Set({key:'uids',value:uids});
+
+    } else {
+
+        var uids = [];
+        var i = BQ.Storage.Get({key:'uids'}).split(",");
+        for (var j = 0; j < i.length; j++) {
+            if (!uids.includes(i[j])) {
+                uids.push(i[j]);                                       
+            }
+        }
+
+        if (!uids.includes(uid)) {
+            uids.push(uid);                                       
+        }
+
+        BQ.Storage.Set({key:'uids',value:uids});
+    }
+}
+
+document.addEventListener('readystatechange', event => {
+if (event.target.readyState === 'complete') {
+
+    BQ.Api.Get({
+        route:'token/getorcreate/',
+        success:function(rtn) {
+            var json = JSON.parse(rtn);
+
+            if (json.token) {
+
+
+
+                BQ.Storage.Set({
+                    key:'token', 
+                    value:json.token
+                });
+
+                BQ.Storage.Set({
+                    key:'id', 
+                    value:json.id
+                }); 
+                
+                /*
+                BQ.Api.CreateStorageAll({
+                    token:json.token,
+                    success:function(rtn){
+                        console.log(rtn);
+                    }
+                });
+                */
+
+                view(json.token, json.id);
+
+            }  
+        }
+    });
+
+}});
+
+ 
+function revisar(){
+    location.href = 'revisar/questao/';
+}
+
+function listar(){
+
+    location.href = 'listar/questao/';
+
+}
+
+
+
+</script>
+
+<script type="text/javascript">
+  document.getElementById('info').innerHTML = '<h2 style="white-space: nowrap">DASHBOARD</h2>';
+</script>
+
+<div class="main-two-columns" style="white-space: nowrap;" >
+    <div class="main-two-columns-one">
+        <div class="main-two-row" >
+            <div class="main-two-row-one"  >
+                <div style="position: relative;top: 5vh; width: 100%; height: 100%;left: 5vw; margin-right: 10%; ">
+                    <p style="font-size: 12vw;" id="contagem_questoes">
+                        00000
+                    </p>
+                    <p style="font-size: 2vw">
+                        questões cadastradas
+                    </p>
+                </div>
+            </div>
+            <div class="main-two-row-two" >
+               
+            </div>
+        </div>
+    </div>
+    <div class="main-two-columns-two" style=" white-space: nowrap;">
+        <div class="main-two-row" style="position: relative; width: 100%; height: 100%;">
+            <div class="main-two-row-one" style="background: #d9d9d9">
+                <div style="position: relative;top:0vh; left: 5vw; width: 100%; height: 100%; ">
+                    <p style="font-size: 5vw" id="contagem_questao_status_1">
+                        00000
+                    </p>
+                    <p style="font-size: 1.1vw">
+                        questões em processo de revisão
+                    </p>
+                    <br />
+                    <button class="button" onclick="revisar()"> REVISAR</button>
+                </div>
+            </div>
+            <div class="main-two-row-two" >
+                <div style="position: relative;top:0vh; left: 5vw; width: 100%; height: 100%; ">
+                    <p style="font-size: 5vw" id="contagem_questao_status_2">
+                        00000 
+                    </p>
+                    <p style="font-size: 1.1vw">
+                        questões revisadas
+                    </p>
+                    <br />
+                    <button class="button" onclick="listar()"> LISTAR</button>
+                </div>
+            </div>
+         
+        </div>
+    </div>
+</div>
+
+ 
+
+{% endblock main_gama %}

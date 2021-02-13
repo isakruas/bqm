@@ -1,0 +1,576 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+<script type="text/javascript">
+
+
+
+document.addEventListener('readystatechange', 
+	event => {if (event.target.readyState === 'interactive') {
+
+		if (window.location.hostname == 'localhost' || window.location.hostname == '127.0.0.1') {
+		  var URL = 'http://localhost:8000';
+		} else {
+			if (window.location.hostname == '192.168.0.100') {
+				var URL = 'http://192.168.0.100:8000';
+			} else {
+				var URL = 'https://bq.mat.br';
+			}
+		  
+		}
+ 
+		var script = document.createElement('script');
+		script.src = URL + '/static/js/api.js';
+		document.getElementsByTagName('head')[0].appendChild(script);
+}});
+
+
+document.addEventListener('readystatechange', 
+	event => {if (event.target.readyState === 'complete') {
+
+	/*
+		status = 2, imprimir e salvar
+		status = 3, imprimir e não salvar
+	*/
+
+	const qids = BQ.Storage.Get({key:'qids'});
+
+	const status = BQ.Storage.Get({key:'imprimir'});
+
+	var imprimir_avaliacao = BQ.Storage.Get({key:'imprimir_avaliacao'});
+
+	if (imprimir_avaliacao !== null) {
+
+		console.log('imprimir uma selecao já salvar')
+
+		carregar(4);
+
+	} else {
+
+	    if (status !== null) {
+	   		console.log('é possivel imprimir a selecao de questoes')
+
+	   		if (qids !== null) {
+	   			console.log('há questoes para imprimir')
+
+	   			imprimir();
+
+
+	   		} else {
+	   			console.log('não há questoes para imprimir')
+	   		}
+
+	    } else {
+	    	console.log('não é possivel imprimir a selecao de questoes')
+	    }
+
+	}
+
+
+}});
+
+
+var inner;
+
+function end() {
+  inner = setTimeout(function(){
+	var pergunta = BQ.Storage.Get({key:'pergunta'});
+	var resposta = BQ.Storage.Get({key:'resposta'});
+
+  	document.getElementById('pergunta').innerHTML = pergunta;
+  	document.getElementById('resposta').innerHTML = resposta;
+
+  	clearTimeout(inner);
+  }, 3000);
+}
+
+
+function imprimir () {
+
+	console.log('imprimindo questoes')
+
+
+
+    BQ.Storage.Set({key:'pergunta', value:' '});
+    BQ.Storage.Set({key:'resposta', value:' '});
+
+
+	/*
+		status = 2, imprimir e salvar
+		status = 3, imprimir e não salvar
+
+	*/
+
+		const status = BQ.Storage.Get({key:'imprimir'});
+
+		const token = BQ.Storage.Get({key:'token'});
+		const id = BQ.Storage.Get({key:'id'});
+
+	 	if (status == 2) {
+
+			today = new Date();
+
+			h = today.getHours();
+
+			m = today.getMinutes();
+
+			s = today.getSeconds();
+
+			var nome = 'Avaliação '+h+':'+m+':'+s;
+
+			document.getElementById('pergunta').innerHTML = '<p>Salvando seleção de questões . . . </p>';
+	 		console.log('salvando lista de questoes');
+
+	 		BQ.Api.Post({
+				route:'imprimir/',
+
+				data:{
+					'cadastro_pelo_usuario':id,
+					'nome':nome,
+					'qids':BQ.Storage.Get({key:'qids'})
+				},
+
+				headers: {
+				  'Access-Control-Allow-Origin': window.location.href,
+				  'Authorization': 'Token ' + token,
+				},
+				
+				success:function(rtn){
+					carregar(2);
+				}
+
+	 		});
+
+
+
+	 	} else { if (status == 3) {
+
+	 		console.log('CARREGANDO  lista de questoes, sem salvar')
+
+	 		carregar(3);
+
+	 	} }
+	
+
+}
+
+
+function carregar (status) {
+ 
+	const token = BQ.Storage.Get({key:'token'});
+
+	if (status == 4) {
+
+
+		console.log('buscando selecao')
+
+		BQ.Api.Get({
+			route:'imprimir/',
+			headers: {
+			  'Access-Control-Allow-Origin': window.location.href,
+			  'Authorization': 'Token ' + token,
+			},
+			id:BQ.Storage.Get({key:'imprimir_avaliacao'}),
+			success:function(rtn){
+
+				if (!JSON.parse(rtn)) {
+	              return false;
+	            }
+
+	            console.log(rtn);
+	            
+	            var obj1 = JSON.parse(rtn);
+
+	            var i = obj1.qids.split(',');
+
+			    BQ.Storage.Set({key:'pergunta', value:' '});
+			    BQ.Storage.Set({key:'resposta', value:' '});
+
+			    var pergunta = BQ.Storage.Get({key:'pergunta'});
+			    var resposta = BQ.Storage.Get({key:'resposta'});
+			 	var numero = 1;
+
+				pergunta = '<br /><br /><br /><center><svg width="1.5cm" class="ocultar" onclick = "voltar()"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#286090" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3.222 18.917c5.666-5.905-.629-10.828-5.011-7.706l1.789 1.789h-6v-6l1.832 1.832c7.846-6.07 16.212 4.479 7.39 10.085z" /></svg>'+
+				'</span><svg style="width:1.5cm; padding-left:1.5cm" class="ocultar"  onclick = "window.print();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#286090"  d="M448 192V77.25c0-8.49-3.37-16.62-9.37-22.63L393.37 9.37c-6-6-14.14-9.37-22.63-9.37H96C78.33 0 64 14.33 64 32v160c-35.35 0-64 28.65-64 64v112c0 8.84 7.16 16 16 16h48v96c0 17.67 14.33 32 32 32h320c17.67 0 32-14.33 32-32v-96h48c8.84 0 16-7.16 16-16V256c0-35.35-28.65-64-64-64zm-64 256H128v-96h256v96zm0-224H128V64h192v48c0 8.84 7.16 16 16 16h48v96zm48 72c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24z"/></svg></center>'+
+
+
+			 	 	'<p class="ocultar">Avaliação nome: <b>'+obj1.nome+'</b></p>'+
+			 
+					'<h4 class="ocultar">PERGUNTAS:</h4>';
+
+				resposta = '<h4 class="ocultar">RESPOSTAS:</h4>';
+
+			    for (var j = 0; j < i.length;) {
+
+			        BQ.Api.Get({
+
+			          route:'questao/',
+
+			          id:i[j],
+
+			          headers: {
+			              'Access-Control-Allow-Origin': window.location.href,
+			              'Authorization': 'Token ' + token,
+			          },
+
+			          success:function(rtn){
+
+			            if (!JSON.parse(rtn)) {
+			              return false;
+			            }
+			            
+			            var obj1 = JSON.parse(rtn);
+ 
+
+                         if (obj1.imagem !== 0){
+                            
+
+                            pergunta = pergunta + '<center><div id="upload_'+obj1.imagem+'"></div></center>';
+
+                            var upload = [];
+
+                         
+                            if (!upload.includes(obj1.imagem)) {
+
+                                upload.push(obj1.imagem);
+
+                                BQ.Storage.Set({key:'src',value:upload});
+
+                            }
+                              
+                        }
+
+			            pergunta = pergunta +
+
+
+
+
+						'<div>'+
+						   '<p>'+
+						    	'Pergunta '+numero+') '+ obj1.pergunta +
+						    '</p>';
+
+
+					    pergunta = pergunta +
+
+						'</div>';
+
+						BQ.Storage.Set({key:'pergunta', value:pergunta});
+
+
+			            resposta = resposta +
+						'<div>'+
+						   '<p>'+
+						    	'Resposta '+numero+') '+ obj1.resposta +
+						    '</p>'+
+						'</div>';
+
+						BQ.Storage.Set({key:'resposta', value:resposta});
+
+
+						numero = numero + 1;
+
+			          }
+
+			        });
+
+			        j++;
+			    }
+			 
+				end();
+
+
+			}
+		});
+
+
+
+	} else {
+
+	  	const qids = BQ.Storage.Get({key:'qids'});
+
+	    var i = qids.split(',');
+
+	    BQ.Storage.Set({key:'pergunta', value:' '});
+	    BQ.Storage.Set({key:'resposta', value:' '});
+
+	    var pergunta = BQ.Storage.Get({key:'pergunta'});
+	    var resposta = BQ.Storage.Get({key:'resposta'});
+	 	var numero = 1;
+
+		pergunta = '<br /><br /><br /><center><svg width="1.5cm" class="ocultar" onclick = "voltar()"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#286090" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3.222 18.917c5.666-5.905-.629-10.828-5.011-7.706l1.789 1.789h-6v-6l1.832 1.832c7.846-6.07 16.212 4.479 7.39 10.085z" /></svg>'+
+		'</span><svg style="width:1.5cm; padding-left:1.5cm" class="ocultar"  onclick = "window.print();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#286090"  d="M448 192V77.25c0-8.49-3.37-16.62-9.37-22.63L393.37 9.37c-6-6-14.14-9.37-22.63-9.37H96C78.33 0 64 14.33 64 32v160c-35.35 0-64 28.65-64 64v112c0 8.84 7.16 16 16 16h48v96c0 17.67 14.33 32 32 32h320c17.67 0 32-14.33 32-32v-96h48c8.84 0 16-7.16 16-16V256c0-35.35-28.65-64-64-64zm-64 256H128v-96h256v96zm0-224H128V64h192v48c0 8.84 7.16 16 16 16h48v96zm48 72c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24z"/></svg></center>';
+
+
+	 	if (status == 2) {
+	 		pergunta = pergunta + '<p class="ocultar"> Esta seleção de questões foi salva</p>';
+	 	} else { if (status == 3) {
+	 		pergunta = pergunta + '<p class="ocultar"> Esta seleção de questões não foi salva</p>';
+
+	 	}}
+
+		pergunta = pergunta +
+	 
+		'<h4 class="ocultar">PERGUNTAS:</h4>';
+
+		resposta = '<h4 class="ocultar">RESPOSTAS:</h4>';
+
+	    for (var j = 0; j < i.length;) {
+
+	        BQ.Api.Get({
+
+	          route:'questao/',
+
+	          id:i[j],
+
+	          headers: {
+	              'Access-Control-Allow-Origin': window.location.href,
+	              'Authorization': 'Token ' + token,
+	          },
+
+	          success:function(rtn){
+
+	            if (!JSON.parse(rtn)) {
+	              return false;
+	            }
+	            
+ 					var obj1 = JSON.parse(rtn);
+
+                        if (obj1.imagem !== 0){
+                            
+
+                            pergunta = pergunta + '<center><div id="upload_'+obj1.imagem+'"></div></center>';
+
+                            var upload = [];
+                         
+                            if (!upload.includes(obj1.imagem)) {
+
+                                upload.push(obj1.imagem);
+
+                                BQ.Storage.Set({key:'src',value:upload});
+
+                            }
+                              
+                        }
+ 
+	            pergunta = pergunta +
+
+				'<div>'+
+				   '<p>'+
+				    	'Pergunta '+numero+') '+ obj1.pergunta +
+				    '</p>';
+
+
+			    pergunta = pergunta +
+
+				'</div>';
+
+				BQ.Storage.Set({key:'pergunta', value:pergunta});
+
+
+	            resposta = resposta +
+				'<div>'+
+				   '<p>'+
+				    	'Resposta '+numero+') '+ obj1.resposta +
+				    '</p>'+
+				'</div>';
+
+				BQ.Storage.Set({key:'resposta', value:resposta});
+
+
+				numero = numero + 1;
+
+	          }
+
+	        });
+
+	        j++;
+	    }
+	 
+		end();
+	}
+}
+
+
+
+function voltar(){
+
+	if (BQ.Storage.Get({key:'imprimir_avaliacao'}) !== null) {
+
+		location.href = '../../';
+
+		BQ.Storage.Set({key:'imprimir_avaliacao', value:null});
+
+	} else {
+
+		location.href = '../../gerar/avaliacao/';
+
+	}
+}
+
+ 
+
+	</script>
+
+<style type="text/css">
+* {
+	margin: 0cm;
+	padding: 0cm;
+}
+
+body {
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-style: normal;
+    font-size: 14pt;
+    background: url({% static 'img/grid.png' %} ) repeat-x;
+    background-attachment: fixed;
+}
+
+page {
+	background: white;
+	display: block;
+	margin: 0 auto;
+	margin-bottom: 0.5cm;
+	box-shadow: 0cm -0.5cm 0.5cm #2c2c2c;
+	height: auto;
+	color: #48484c;
+}
+
+page[size="A4"] {  
+	width: 21cm;
+	height:auto;  /*/(5*29.7) cm; */
+}
+
+svg:hover {
+    cursor: pointer;
+}
+
+@media print {
+
+	.pergunta, .resposta {
+		page-break-before: always;
+		text-align: justify;
+		font-size: 14pt;
+		font-family: "Times New Roman", Times, serif;
+	}
+
+	.ocultar {
+	    display: none;
+	}
+}
+
+img, div {
+
+	margin-top: -1cm;
+}
+
+img {
+
+	width: 7cm;
+}
+
+p, h4 {
+
+	text-align: justify;
+	max-width: 93vw;
+	position: relative;
+	height: 100%;
+	padding: 1.5cm
+}
+
+
+ 
+</style>
+
+</head>
+		<body >
+			<page size="A4"> 
+				 
+
+
+				<div class="pergunta" id="pergunta">
+ 					<p>
+ 						CARREGANDO  . . .
+ 					</p>
+				</div>
+
+
+
+				<div class="resposta" id="resposta">
+	 	 
+				</div>
+			</page>
+		</body>
+</html>
+ 
+<script type="text/javascript">
+
+
+function verificar_src_load(id, obj){
+
+	const token = BQ.Storage.Get({key:'token'});
+
+    BQ.Api.Get({
+        route:'upload/',
+        headers: {
+              'Access-Control-Allow-Origin': window.location.href,
+              'Authorization': 'Token ' + token,
+        },
+        id:id,
+
+        success:function(rtn){
+            var obj1 = JSON.parse(rtn)
+
+            document.querySelector(obj).innerHTML = '<br /><br /><img src="'+obj1.upload+'" alt=""><br /> ';
+
+        }
+    });
+}
+
+
+function verificar_src() {
+
+
+	const src = BQ.Storage.Get({key:'src'});
+
+   if (src !== null ) {
+        var obj = [];
+
+        var i = BQ.Storage.Get({key:'src'}).split(",");
+
+        for (var j = 0; j < i.length; j++) {
+            if (!obj.includes(i[j])) {
+                obj.push(i[j]);
+
+                var id = '#upload_'+i[j];
+
+                if (document.querySelector(id)) {
+
+                	if (document.querySelector(id).innerHTML == '') {
+
+	                    verificar_src_load(i[j], id);
+                	}
+                    
+                }        
+            }
+        }
+   }
+
+}
+
+
+document.addEventListener('readystatechange', event => {
+
+if (event.target.readyState === 'complete') {
+    
+    setInterval(function(){
+        verificar_src();
+
+    }, 1000);
+
+}});
+
+</script>

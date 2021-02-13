@@ -1,0 +1,1412 @@
+{% extends 'templates/base.html' %}
+{% block is_not_authenticated %}
+<meta http-equiv="refresh" content="0; URL='../usuario/sair/'"/>
+{% endblock is_not_authenticated %}
+{% block is_authenticated_alfa %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/alfa/'"/>
+{% endblock is_authenticated_alfa %}
+{% block is_authenticated_beta %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/beta/'"/>
+{% endblock is_authenticated_beta %}
+{% block is_authenticated_delta %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/delta/'"/>
+{% endblock is_authenticated_delta %}
+{% block is_authenticated_epsilon %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/epsilon/'"/>
+{% endblock is_authenticated_epsilon %}
+
+
+{% block head_u %}
+
+<script type="text/javascript">
+
+const token = BQ.Storage.Get({
+  key: 'token'
+});
+const id = BQ.Storage.Get({
+  key: 'uid'
+});
+const status = BQ.Storage.Get({
+  key: 'status'
+});
+
+BQ.Storage.Set({
+  key: 'src',
+  value: ''
+})
+
+function voltar() {
+
+  BQ.Storage.Set({
+    key: 'status',
+    value: null
+  });
+  BQ.Storage.Set({
+    key: 'tmp',
+    value: null
+  });
+  BQ.Storage.Set({
+    key: 'qids',
+    value: ''
+  });
+  BQ.Storage.Set({
+    key: 'next',
+    value: null
+  });
+  BQ.Storage.Set({
+    key: 'previous',
+    value: null
+  });
+  location.href = '../';
+
+}
+
+
+function next() {
+
+  console.log('foi chamada uma nova pagina ');
+
+  var next = BQ.Storage.Get({
+    key: 'next'
+  });
+  BQ.Storage.Set({
+    key: 'tmp',
+    value: ' '
+  });
+
+  if (next !== null) {
+
+    console.log('é possivel carregar uma nova pagina')
+
+    document.getElementById('el').innerHTML = '<div class="main-auto-row-auto">' +
+      '<div class="profile-footer-ul">' +
+      '<div class="main-row-columns profile-footer-li" >' +
+      '<div class="main-row-columns-one" style="overflow-x: auto; padding: 1cm; max-width: 93vw">' +
+      '<p style="text-align: justify; max-width: 93vw; height: 100%;">' +
+      'CARREGANDO . . .' +
+      '</p>' +
+      '</div>' +
+      '</div>' +
+      '</div>' +
+      '</div>';
+
+
+    BQ.Api.Get({
+
+      url: next,
+
+      headers: {
+        'Access-Control-Allow-Origin': window.location.href,
+        'Authorization': 'Token ' + token,
+      },
+
+
+      success: function(rtn) {
+
+        if (!JSON.parse(rtn)) {
+          return false;
+        }
+
+        var obj = JSON.parse(rtn);
+
+        if (obj.count === 0) {
+
+          console.log('NÂO foi encontrado questoes com este filtro');
+
+          BQ.Storage.Set({
+            key: 'status',
+            value: null
+          });
+          BQ.Storage.Set({
+            key: 'qids',
+            value: null
+          });
+          BQ.Storage.Set({
+            key: 'tmp',
+            value: null
+          });
+          location.href = '../../';
+
+        } else {
+
+          console.log('foi encontrado questoes com este filtro');
+
+          BQ.Storage.Set({
+            key: 'next',
+            value: obj.next
+          });
+          BQ.Storage.Set({
+            key: 'previous',
+            value: obj.previous
+          });
+
+          var page = parseInt(BQ.Storage.Get({
+            key: 'page'
+          }), 10);
+
+          page = (page + 1);
+
+          BQ.Storage.Set({
+            key: 'page',
+            value: page
+          });
+
+          var total_de_paginas = 0;
+
+
+          if (obj.count % 10 == 0) {
+            total_de_paginas = parseInt(Math.round(obj.count / 10));
+          } else {
+            total_de_paginas = parseInt(Math.round(obj.count / 10)) + 1;
+          }
+
+          document.getElementById('info').innerHTML = '<h2 class="info">DASHBOARD > LISTAR > QUESTÃO > PÁGINA ' + page + ' de ' + total_de_paginas + '</h2>';
+
+          if (obj.next == null) {
+
+            console.log('NÂO existe mais paginas apos esta')
+
+            for (var i = 0; i < obj.results.length; i++) {
+
+              var tmp = BQ.Storage.Get({
+                key: 'tmp'
+              });
+
+              el = obj.results[i];
+
+
+              tmp = tmp + '<div class="main-auto-row-auto">' +
+                '<div class="profile-footer-ul">' +
+                '<div class="main-row-columns profile-footer-li" >' +
+                '<div class="main-row-columns-one" style="overflow-x: auto; padding: 1cm; max-width: 93vw">';
+
+
+              if (el.imagem !== 0) {
+
+
+                tmp = tmp + '<center><div id="upload_' + el.imagem + '"></div></center>';
+
+
+                var upload = [];
+
+
+
+                if (!upload.includes(el.imagem)) {
+
+                  upload.push(el.imagem);
+
+                  BQ.Storage.Set({
+                    key: 'src',
+                    value: upload
+                  });
+
+                }
+
+              }
+
+
+              tmp = tmp + '<h3>Pergunta:</h3>' +
+                '<br />' +
+                '<p style="text-align: justify; max-width: 93vw; height: 100%;">' +
+                el.pergunta +
+                '</p>' +
+                '<br />' +
+                '<h3>Resposta:</h3>' +
+                '<br />' +
+                '<p style="text-align: justify; max-width: 93vw; height: 100%;">' +
+                el.resposta +
+                '</p>' +
+
+                '</div>' +
+                '<div class="main-two-columns-two">';
+
+              if (status == 1) {
+                tmp = tmp + '<br />' +
+                  '<input type="checkbox" onchange="if (this.checked) {add_qids(this.value);} else {rmv_qids(this.value);}"  name="questao_' +
+                  el.id +
+                  '" id="questao_' +
+                  el.id +
+                  '" value="' +
+                  el.id +
+                  '">' +
+                  '<label for="questao_' +
+                  el.id +
+                  '">SELECIONAR QUESTÃO</label>' +
+                  '<br /> <br />';
+              }
+
+              tmp = tmp + '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+
+              BQ.Storage.Set({
+                key: 'tmp',
+                value: tmp
+              });
+
+            }
+
+            var tmp = BQ.Storage.Get({
+              key: 'tmp'
+            });
+
+            document.getElementById('el').innerHTML = tmp +
+
+              '<div class="main-auto-row-auto">' +
+              '<center>' +
+              '<button class="button" onclick="previous();">PÁGINA ANTERIOR</button>' +
+              '</center>' +
+              '</div>' +
+              '</div>';
+
+          } else {
+
+            console.log('existe mais paginas apos esta')
+
+            for (var i = 0; i < obj.results.length; i++) {
+
+              var tmp = BQ.Storage.Get({
+                key: 'tmp'
+              });
+
+              el = obj.results[i];
+
+
+              tmp = tmp + '<div class="main-auto-row-auto">' +
+                '<div class="profile-footer-ul">' +
+                '<div class="main-row-columns profile-footer-li" >' +
+                '<div class="main-row-columns-one" style="overflow-x: auto; padding: 1cm; max-width: 93vw">';
+
+
+              if (el.imagem !== 0) {
+
+
+                tmp = tmp + '<center><div id="upload_' + el.imagem + '"></div></center>';
+
+                var upload = [];
+
+                if (!upload.includes(el.imagem)) {
+
+                  upload.push(el.imagem);
+
+                  BQ.Storage.Set({
+                    key: 'src',
+                    value: upload
+                  });
+
+                }
+
+              }
+
+
+              tmp = tmp + '<h3>Pergunta:</h3>' +
+                '<br />' +
+                '<p style="text-align: justify; max-width: 93vw; height: 100%;">' +
+                el.pergunta +
+                '</p>' +
+                '<br />' +
+                '<h3>Resposta:</h3>' +
+                '<br />' +
+                '<p style="text-align: justify; max-width: 93vw; height: 100%;">' +
+                el.resposta +
+                '</p>' +
+
+                '</div>' +
+                '<div class="main-two-columns-two">';
+
+              if (status == 1) {
+                tmp = tmp + '<br />' +
+                  '<input type="checkbox" onchange="if (this.checked) {add_qids(this.value);} else {rmv_qids(this.value);}"  name="questao_' +
+                  el.id +
+                  '" id="questao_' +
+                  el.id +
+                  '" value="' +
+                  el.id +
+                  '">' +
+                  '<label for="questao_' +
+                  el.id +
+                  '">SELECIONAR QUESTÃO</label>' +
+                  '<br /> <br />';
+              }
+
+              tmp = tmp + '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+
+              BQ.Storage.Set({
+                key: 'tmp',
+                value: tmp
+              });
+
+            }
+
+            var tmp = BQ.Storage.Get({
+              key: 'tmp'
+            });
+
+            document.getElementById('el').innerHTML = tmp +
+
+
+              '<div class="main-auto-row-auto">' +
+              '<center>' +
+              '<button class="button" onclick="previous();">PÁGINA ANTERIOR</button>' +
+              '<button class="button" onclick="next();">PRÓXIMA PÁGINA</button>' +
+              '</center>' +
+              '</div>' +
+              '</div>';
+          }
+        }
+      }
+    });
+
+  } else {
+    console.log('NÂO é possivel carregar uma nova pagina')
+  }
+}
+
+
+function previous() {
+
+  console.log('foi chamada uma nova pagina ');
+
+  var previous = BQ.Storage.Get({
+    key: 'previous'
+  });
+
+  BQ.Storage.Set({
+    key: 'tmp',
+    value: ' '
+  });
+
+  if (previous !== null) {
+
+    console.log('é possivel carregar uma nova pagina')
+
+    document.getElementById('el').innerHTML = '<div class="main-auto-row-auto">' +
+      '<div class="profile-footer-ul">' +
+      '<div class="main-row-columns profile-footer-li" >' +
+      '<div class="main-row-columns-one" style="overflow-x: auto; padding: 1cm; max-width: 93vw">' +
+      '<p style="text-align: justify; max-width: 93vw; height: 100%;">' +
+      'CARREGANDO . . .' +
+      '</p>' +
+      '</div>' +
+      '</div>' +
+      '</div>' +
+      '</div>';
+
+
+    BQ.Api.Get({
+
+      url: previous,
+
+      headers: {
+        'Access-Control-Allow-Origin': window.location.href,
+        'Authorization': 'Token ' + token,
+      },
+
+
+      success: function(rtn) {
+
+        if (!JSON.parse(rtn)) {
+          return false;
+        }
+
+        var obj = JSON.parse(rtn);
+
+        if (obj.count === 0) {
+
+          console.log('NÂO foi encontrado questoes com este filtro');
+
+          BQ.Storage.Set({
+            key: 'status',
+            value: null
+          });
+          BQ.Storage.Set({
+            key: 'qids',
+            value: null
+          });
+          BQ.Storage.Set({
+            key: 'tmp',
+            value: null
+          });
+          location.href = '../../';
+
+        } else {
+
+          console.log('foi encontrado questoes com este filtro');
+
+          BQ.Storage.Set({
+            key: 'next',
+            value: obj.next
+          });
+          BQ.Storage.Set({
+            key: 'previous',
+            value: obj.previous
+          });
+
+
+          var page = parseInt(BQ.Storage.Get({
+            key: 'page'
+          }), 10);
+
+          page = (page - 1);
+
+          BQ.Storage.Set({
+            key: 'page',
+            value: page
+          });
+
+          var total_de_paginas = 0;
+
+          if (obj.count % 10 == 0) {
+            total_de_paginas = parseInt(Math.round(obj.count / 10));
+          } else {
+            total_de_paginas = parseInt(Math.round(obj.count / 10)) + 1;
+          }
+
+          document.getElementById('info').innerHTML = '<h2 class="info">DASHBOARD > LISTAR > QUESTÃO > PÁGINA ' + page + ' de ' + total_de_paginas + '</h2>';
+
+          if (obj.previous == null) {
+
+            console.log('NÂO existe mais paginas antes desta');
+
+            for (var i = 0; i < obj.results.length; i++) {
+
+              var tmp = BQ.Storage.Get({
+                key: 'tmp'
+              });
+
+              el = obj.results[i];
+
+
+              tmp = tmp + '<div class="main-auto-row-auto">' +
+                '<div class="profile-footer-ul">' +
+                '<div class="main-row-columns profile-footer-li" >' +
+                '<div class="main-row-columns-one" style="overflow-x: auto; padding: 1cm; max-width: 93vw">';
+
+
+              if (el.imagem !== 0) {
+
+
+                tmp = tmp + '<center><div id="upload_' + el.imagem + '"></div></center>';
+
+                var upload = [];
+
+                if (!upload.includes(el.imagem)) {
+
+                  upload.push(el.imagem);
+
+                  BQ.Storage.Set({
+                    key: 'src',
+                    value: upload
+                  });
+
+                }
+
+              }
+
+
+              tmp = tmp + '<h3>Pergunta:</h3>' +
+                '<br />' +
+                '<p style="text-align: justify; max-width: 93vw; height: 100%;">' +
+                el.pergunta +
+                '</p>' +
+                '<br />' +
+                '<h3>Resposta:</h3>' +
+                '<br />' +
+                '<p style="text-align: justify; max-width: 93vw; height: 100%;">' +
+                el.resposta +
+                '</p>' +
+
+                '</div>' +
+                '<div class="main-two-columns-two">';
+
+              if (status == 1) {
+                tmp = tmp + '<br />' +
+                  '<input type="checkbox" onchange="if (this.checked) {add_qids(this.value);} else {rmv_qids(this.value);}"  name="questao_' +
+                  el.id +
+                  '" id="questao_' +
+                  el.id +
+                  '" value="' +
+                  el.id +
+                  '">' +
+                  '<label for="questao_' +
+                  el.id +
+                  '">SELECIONAR QUESTÃO</label>' +
+                  '<br /> <br />';
+              }
+
+              tmp = tmp + '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+
+              BQ.Storage.Set({
+                key: 'tmp',
+                value: tmp
+              });
+
+            }
+
+            var tmp = BQ.Storage.Get({
+              key: 'tmp'
+            });
+
+            document.getElementById('el').innerHTML = tmp +
+
+              '<div class="main-auto-row-auto">' +
+              '<center>' +
+              '<button class="button" onclick="next();">PRÓXIMA PÁGINA</button>' +
+              '</center>' +
+              '</div>' +
+              '</div>';
+
+          } else {
+
+            console.log('existe mais paginas antes desta')
+
+            for (var i = 0; i < obj.results.length; i++) {
+
+              var tmp = BQ.Storage.Get({
+                key: 'tmp'
+              });
+
+              el = obj.results[i];
+
+
+              tmp = tmp + '<div class="main-auto-row-auto">' +
+                '<div class="profile-footer-ul">' +
+                '<div class="main-row-columns profile-footer-li" >' +
+                '<div class="main-row-columns-one" style="overflow-x: auto; padding: 1cm; max-width: 93vw">';
+
+
+              if (el.imagem !== 0) {
+
+
+                tmp = tmp + '<center><div id="upload_' + el.imagem + '"></div></center>';
+
+                var upload = [];
+
+                if (!upload.includes(el.imagem)) {
+
+                  upload.push(el.imagem);
+
+                  BQ.Storage.Set({
+                    key: 'src',
+                    value: upload
+                  });
+
+                }
+
+              }
+
+
+              tmp = tmp + '<h3>Pergunta:</h3>' +
+                '<br />' +
+                '<p style="text-align: justify; max-width: 93vw; height: 100%;">' +
+                el.pergunta +
+                '</p>' +
+                '<br />' +
+                '<h3>Resposta:</h3>' +
+                '<br />' +
+                '<p style="text-align: justify; max-width: 93vw; height: 100%;">' +
+                el.resposta +
+                '</p>' +
+
+                '</div>' +
+                '<div class="main-two-columns-two">';
+
+              if (status == 1) {
+                tmp = tmp + '<br />' +
+                  '<input type="checkbox" onchange="if (this.checked) {add_qids(this.value);} else {rmv_qids(this.value);}"  name="questao_' +
+                  el.id +
+                  '" id="questao_' +
+                  el.id +
+                  '" value="' +
+                  el.id +
+                  '">' +
+                  '<label for="questao_' +
+                  el.id +
+                  '">SELECIONAR QUESTÃO</label>' +
+                  '<br /> <br />';
+              }
+
+              tmp = tmp + '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+
+              BQ.Storage.Set({
+                key: 'tmp',
+                value: tmp
+              });
+
+            }
+
+            var tmp = BQ.Storage.Get({
+              key: 'tmp'
+            });
+
+            document.getElementById('el').innerHTML = tmp +
+
+
+              '<div class="main-auto-row-auto">' +
+              '<center>' +
+              '<button class="button" onclick="previous();">PÁGINA ANTERIOR</button>' +
+              '<button class="button" onclick="next();">PRÓXIMA PÁGINA</button>' +
+              '</center>' +
+              '</div>' +
+              '</div>';
+          }
+        }
+      }
+    });
+
+  } else {
+    console.log('NÂO é possivel carregar uma nova pagina')
+  }
+}
+
+function carregar() {
+
+  BQ.Storage.Set({
+    key: 'tmp',
+    value: ' '
+  });
+
+  if (status !== null) {
+
+    var next = BQ.Storage.Get({
+      key: 'next'
+    });
+    var previous = BQ.Storage.Get({
+      key: 'previous'
+    });
+
+    console.log(next);
+    console.log(previous);
+
+    console.log('é a primeira vez na pagina')
+
+    BQ.Api.Get({
+
+      route: 'questao/',
+
+      data: {
+        'status': status,
+        'cadastro_pelo_usuario': id,
+      },
+
+      headers: {
+        'Access-Control-Allow-Origin': window.location.href,
+        'Authorization': 'Token ' + token,
+      },
+
+
+      success: function(rtn) {
+
+        if (!JSON.parse(rtn)) {
+          return false;
+        }
+
+        var obj = JSON.parse(rtn);
+
+        if (obj.count === 0) {
+
+          BQ.Storage.Set({
+            key: 'status',
+            value: null
+          });
+          BQ.Storage.Set({
+            key: 'tmp',
+            value: null
+          });
+          location.href = '../../';
+
+        } else {
+
+          console.log('foi encontrado questoes com este filtro');
+
+          BQ.Storage.Set({
+            key: 'next',
+            value: obj.next
+          });
+          BQ.Storage.Set({
+            key: 'previous',
+            value: obj.previous
+          });
+
+
+          if (obj.next == null) {
+
+            console.log('a busca tem uma unica pagina')
+
+            for (var i = 0; i < obj.results.length; i++) {
+
+              var tmp = BQ.Storage.Get({
+                key: 'tmp'
+              });
+
+              el = obj.results[i];
+
+
+              tmp = tmp + '<div class="main-auto-row-auto">' +
+                '<div class="profile-footer-ul">' +
+                '<div class="main-row-columns profile-footer-li" >' +
+                '<div class="main-row-columns-one" style="overflow-x: auto; padding: 1cm; max-width: 93vw">';
+
+
+
+              if (el.imagem !== 0) {
+
+
+
+
+                tmp = tmp + '<center><div id="upload_' + el.imagem + '"></div></center>';
+
+                var upload = [];
+
+                if (!upload.includes(el.imagem)) {
+
+                  upload.push(el.imagem);
+
+                  BQ.Storage.Set({
+                    key: 'src',
+                    value: upload
+                  });
+
+                }
+
+              }
+
+
+              tmp = tmp + '<h3>Pergunta:</h3>' +
+                '<br />' +
+                '<p style="text-align: justify; max-width: 93vw; height: 100%;">' +
+                el.pergunta +
+                '</p>' +
+                '<br />' +
+                '<h3>Resposta:</h3>' +
+                '<br />' +
+                '<p style="text-align: justify; max-width: 93vw; height: 100%;">' +
+                el.resposta +
+                '</p>' +
+
+                '</div>' +
+                '<div class="main-two-columns-two">';
+
+              if (status == 1) {
+                tmp = tmp + '<br />' +
+                  '<input type="checkbox" onchange="if (this.checked) {add_qids(this.value);} else {rmv_qids(this.value);}"  name="questao_' +
+                  el.id +
+                  '" id="questao_' +
+                  el.id +
+                  '" value="' +
+                  el.id +
+                  '">' +
+                  '<label for="questao_' +
+                  el.id +
+                  '">SELECIONAR QUESTÃO</label>' +
+                  '<br /> <br />';
+              }
+
+              tmp = tmp + '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+
+              BQ.Storage.Set({
+                key: 'tmp',
+                value: tmp
+              });
+
+            }
+
+            var tmp = BQ.Storage.Get({
+              key: 'tmp'
+            });
+
+            document.getElementById('el').innerHTML = tmp;
+
+          } else {
+
+
+            var total_de_paginas = 0;
+
+            if (obj.count % 10 == 0) {
+              total_de_paginas = parseInt(Math.round(obj.count / 10));
+            } else {
+              total_de_paginas = parseInt(Math.round(obj.count / 10)) + 1;
+            }
+
+            console.log('a busca tem mais de uma pagina')
+
+            BQ.Storage.Set({
+              key: 'page',
+              value: 1
+            });
+
+
+            document.getElementById('info').innerHTML = '<h2 class="info">DASHBOARD > LISTAR > QUESTÃO > PÁGINA 1 de ' + total_de_paginas + '</h2>';
+
+
+
+            for (var i = 0; i < obj.results.length; i++) {
+
+              var tmp = BQ.Storage.Get({
+                key: 'tmp'
+              });
+
+              el = obj.results[i];
+
+
+              tmp = tmp + '<div class="main-auto-row-auto">' +
+                '<div class="profile-footer-ul">' +
+                '<div class="main-row-columns profile-footer-li" >' +
+                '<div class="main-row-columns-one" style="overflow-x: auto; padding: 1cm; max-width: 93vw">';
+
+
+
+              if (el.imagem !== 0) {
+
+
+
+                tmp = tmp + '<center><div id="upload_' + el.imagem + '"></div></center>';
+
+                var upload = [];
+
+
+                if (!upload.includes(el.imagem)) {
+
+                  upload.push(el.imagem);
+
+                  BQ.Storage.Set({
+                    key: 'src',
+                    value: upload
+                  });
+
+                }
+
+              }
+
+
+              tmp = tmp + '<h3>Pergunta:</h3>' +
+                '<br />' +
+                '<p style="text-align: justify; max-width: 93vw; height: 100%;">' +
+                el.pergunta +
+                '</p>' +
+                '<br />' +
+                '<h3>Resposta:</h3>' +
+                '<br />' +
+                '<p style="text-align: justify; max-width: 93vw; height: 100%;">' +
+                el.resposta +
+                '</p>' +
+
+                '</div>' +
+                '<div class="main-two-columns-two">';
+
+              if (status == 1) {
+                tmp = tmp + '<br />' +
+                  '<input type="checkbox" onchange="if (this.checked) {add_qids(this.value);} else {rmv_qids(this.value);}"  name="questao_' +
+                  el.id +
+                  '" id="questao_' +
+                  el.id +
+                  '" value="' +
+                  el.id +
+                  '">' +
+                  '<label for="questao_' +
+                  el.id +
+                  '">SELECIONAR QUESTÃO</label>' +
+                  '<br /> <br />';
+              }
+
+              tmp = tmp + '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>';
+
+              BQ.Storage.Set({
+                key: 'tmp',
+                value: tmp
+              });
+
+            }
+
+            var tmp = BQ.Storage.Get({
+              key: 'tmp'
+            });
+
+            document.getElementById('el').innerHTML = tmp +
+
+
+              '<div class="main-auto-row-auto">' +
+              '<center>' +
+              '<button class="button" onclick="next();">PRÓXIMA PÁGINA</button>' +
+              '</center>' +
+              '</div>' +
+              '</div>';
+
+          }
+        }
+      }
+    });
+
+
+  } else {
+    console.log('NÂO é possivel fazer a busca');
+  }
+}
+
+function add_qids(qid) {
+
+  console.log('add_qids(' + qid + ')');
+
+  console.log('adicionando uma questao da selecao');
+
+
+  if (BQ.Storage.Get({
+      key: 'qids'
+    }) == null) {
+
+    BQ.Storage.Set({
+      key: 'qids',
+      value: '[]'
+    });
+
+    var qids = [];
+
+  } else {
+    var qids = [];
+    var i = BQ.Storage.Get({
+      key: 'qids'
+    }).split(",");
+    for (var j = 0; j < i.length; j++) {
+      if (!qids.includes(i[j])) {
+        qids.push(i[j]);
+      }
+    }
+  }
+
+
+  if (qids.length <= 29) {
+
+    if (!qids.includes(qid)) {
+
+      qids.push(qid);
+
+      BQ.Storage.Set({
+        key: 'qids',
+        value: qids
+      });
+
+    }
+  } else {
+    console.log('voce ja selecionou o maximo de questoe');
+
+    var id = '#questao_' + qid;
+
+    if (document.querySelector(id)) {
+
+      document.querySelector(id).checked = false;
+      document.getElementById('add_qids_01').style.visibility = 'visible';
+    }
+  }
+
+}
+
+function rmv_qids(qid) {
+
+  console.log('rmv_qids(' + qid + ')');
+
+  console.log('removendo uma questao da selecao');
+
+  if (BQ.Storage.Get({
+      key: 'qids'
+    }) == null) {
+
+    BQ.Storage.Set({
+      key: 'qids',
+      value: '[]'
+    });
+
+    var qids = [];
+
+  } else {
+
+    var qids = [];
+    var i = BQ.Storage.Get({
+      key: 'qids'
+    }).split(",");
+    for (var j = 0; j < i.length; j++) {
+      if (!qids.includes(i[j])) {
+        qids.push(i[j]);
+      }
+    }
+
+  }
+
+  var el = qids.indexOf(qid);
+  if (el !== -1) {
+    qids.splice(el, 1);
+
+    BQ.Storage.Set({
+      key: 'qids',
+      value: qids
+    });
+  }
+
+}
+
+document.addEventListener('readystatechange', event => {
+  if (event.target.readyState === 'complete') {
+
+    carregar();
+
+  }
+});
+
+</script>
+{% endblock head_u %}
+
+
+{% block nav_gama %}
+
+    <div class="nav-one-row">
+     
+      <div class="nav-one-row-one">
+        <svg  onclick = "voltar();" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+           <path fill="currentColor" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3.222 18.917c5.666-5.905-.629-10.828-5.011-7.706l1.789 1.789h-6v-6l1.832 1.832c7.846-6.07 16.212 4.479 7.39 10.085z" />
+        </svg>
+      </div> 
+
+    </div>
+
+{% endblock nav_gama %}
+
+{% block main_gama %}
+
+<script type="text/javascript">
+ 
+document.getElementById('info').innerHTML = '<h2 class="info">DASHBOARD > LISTAR > QUESTÃO </h2>';
+
+</script>
+ 
+<div class="main-auto-row-auto">
+    <div class="forms" id="options"></div>
+</div>
+
+<br /><br />
+<div id="el">
+
+    <div class="main-auto-row-auto">
+        <div class="profile-footer-ul">
+            <div class="main-row-columns profile-footer-li" >
+                <div class="main-row-columns-one" style="overflow-x: auto; padding: 1cm; max-width: 93vw">
+
+                    <p style="text-align: justify; max-width: 93vw; height: 100%;">
+                        CARREGANDO . . .
+                    </p>
+                
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+ 
+
+ 
+
+<script type="text/javascript">
+
+function exclui_selecao (){
+
+    console.log('excluindo selecao');
+
+    var i = BQ.Storage.Get({key:'qids'}).split(",");
+
+    for (var j = 0; j < i.length; j++) {
+
+        var id = '#questao_'+i[j];
+
+        if (document.querySelector(id)){
+             
+            document.querySelector(id).checked = false
+        }
+    }
+
+    BQ.Storage.Set({key:'qids',value:''});
+
+    document.getElementById('options').innerHTML = '';
+
+}
+
+function verificar_src_load(id, obj){
+     BQ.Api.Get({
+        route:'upload/',
+        headers: {
+              'Access-Control-Allow-Origin': window.location.href,
+              'Authorization': 'Token ' + token,
+        },
+
+        id:id,
+
+        success:function(rtn){
+            var obj1 = JSON.parse(rtn)
+
+            document.querySelector(obj).innerHTML = '<img src="'+obj1.upload+'" alt=""> ';
+
+        }
+    });
+}
+
+
+function verificar_src() {
+ const src = BQ.Storage.Get({key:'src'});
+
+   if (src !== null ) {
+        var obj = [];
+
+        var i = BQ.Storage.Get({key:'src'}).split(",");
+
+        for (var j = 0; j < i.length; j++) {
+            if (!obj.includes(i[j])) {
+                obj.push(i[j]);
+
+                var id = '#upload_'+i[j];
+                verificar_src_load(i[j], id);
+
+                var el = obj.indexOf(i[j]);
+                if ( el !== -1) {
+                    obj.splice(el, 1);
+
+                    BQ.Storage.Set({key:'src',value:obj});
+                } 
+            }
+        }
+   }
+}
+
+
+function excluir_questao (){
+
+    console.log('excluindo selecao');
+
+    var i = BQ.Storage.Get({key:'qids'}).split(",");
+
+    for (var j = 0; j < i.length; j++) {
+
+        var id = '#questao_'+i[j];
+
+        if (document.querySelector(id)){
+ 
+            BQ.Api.Delete({
+
+                 route:'questao/',
+                
+                 id:i[j],
+
+                headers: {
+                    'Access-Control-Allow-Origin': window.location.href,
+                    'Authorization': 'Token ' + token,
+                },
+
+                success:function(rtn){
+
+                    document.getElementById('el').innerHTML = '<div class="main-auto-row-auto">'+
+                        '<div class="profile-footer-ul">'+
+                            '<div class="main-row-columns profile-footer-li" >'+
+                                '<div class="main-row-columns-one" style="overflow-x: auto; padding: 1cm; max-width: 93vw">'+
+                                    '<p style="text-align: justify; max-width: 93vw; height: 100%;">'+
+                                        'CARREGANDO . . .'+
+                                    '</p>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>';
+                   carregar();
+                }
+
+            });
+  
+            document.querySelector(id).checked = false
+        }
+    }
+
+
+    BQ.Storage.Set({key:'qids',value:''});
+
+    document.getElementById('options').innerHTML = '';
+
+}
+
+function editar_questao (id){
+
+    console.log('editando questao');
+
+    var i = BQ.Storage.Get({key:'qids'}).split(",");
+
+    for (var j = 0; j < i.length; j++) {
+
+        var id = i[j];
+        BQ.Storage.Set({key:'editar_questao', value:id});
+
+        location.href = '../../editar/questao/';
+
+ 
+    }
+ 
+
+}
+
+
+
+function verificar_selecao() {
+
+  const qids = BQ.Storage.Get({key:'qids'});
+  const status = BQ.Storage.Get({key:'status'});
+
+  if (status == 1) {
+  if (qids !== null ) {
+
+    var obj = [];
+
+    var i = BQ.Storage.Get({key:'qids'}).split(",");
+
+    for (var j = 0; j < i.length; j++) {
+        if (!obj.includes(i[j])) {
+            obj.push(i[j]);
+
+            var id = '#questao_'+i[j];
+
+            if (document.querySelector(id)){
+                 
+                document.querySelector(id).checked = true
+            }                    
+        }
+    }
+
+      var html = '<p>';
+      if (obj.length>1) {
+         html = html +'Há '+obj.length+' questões selecionadas';
+      } else {
+         html = html +'Há '+obj.length+' questão selecionada';
+      }
+       
+      html = html + '</p>';
+
+        if (obj.length == 1) {
+          html = html + '<br />'+
+
+          '<button class="button" onclick="editar_questao();">EDITAR</button>';
+     
+        }
+
+      html = html + '<br />'+
+
+      '<button class="button" onclick="excluir_questao();">EXCLUIR</button>';
+ 
+
+    document.getElementById('options').innerHTML = html;
+
+  } else {
+    document.getElementById('options').innerHTML = '';
+  }
+  }
+
+
+}
+
+
+document.addEventListener('readystatechange', event => {
+
+if (event.target.readyState === 'complete') {
+    
+    setInterval(function(){
+        verificar_selecao();
+        verificar_src();
+
+    }, 1000);
+
+}});
+ 
+</script>
+
+
+{% endblock main_gama %}
+
+{% block alert_u %}
+
+
+
+
+    <div class="alert" id="add_qids_01">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="text-align:justify;">
+                <br /><br /> <br /><br />
+                Ops :( ...
+                <br />
+                Você só pode selecionar 30 questões para cada lista de avaliação.
+                </div>
+                <div class="alert-two-row-two">
+                   <div class="alert-one-columns">
+                        <div class="alert-one-columns-one" onclick="document.getElementById('add_qids_01').style.visibility = 'hidden';">
+                            <p>OK</p>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="alert" id="imprimir_selecao_01">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="text-align:justify;">
+                <br /><br /> <br /><br />
+                Deseja imprimir esta seleção de questões?
+                </div>
+                <div class="alert-two-row-two">
+                    <div class="alert-two-columns">
+                        <div class="alert-two-columns-one" onclick="document.getElementById('imprimir_selecao_01').style.visibility = 'hidden';">
+                            <p>Cancelar</p>
+                        </div>
+                        <div class="alert-two-columns-two" onclick="document.getElementById('imprimir_selecao_01').style.visibility = 'hidden'; document.getElementById('imprimir_selecao_02').style.visibility = 'visible';">
+                            <p>SIM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert" id="imprimir_selecao_02">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="text-align:justify;">
+                <br /><br /> <br /><br />
+                Deseja salvar esta seleção de questões?
+                </div>
+                <div class="alert-two-row-two">
+                    <div class="alert-two-columns">
+                        <div class="alert-two-columns-one" onclick="document.getElementById('imprimir_selecao_02').style.visibility = 'hidden';imprimir(3)">
+                            <p>NÂO</p>
+                        </div>
+                        <div class="alert-two-columns-two" onclick="document.getElementById('imprimir_selecao_02').style.visibility = 'hidden';imprimir(2);">
+                            <p>SIM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+ 
+{% endblock alert_u %}

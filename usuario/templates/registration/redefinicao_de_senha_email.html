@@ -1,0 +1,23 @@
+{% load i18n %}
+{% autoescape off %}
+	{% blocktrans %}
+		Você está recebendo este e-mail porque solicitou uma redefinição de senha para sua conta de usuário em {{ site_name }}.
+	{% endblocktrans %}
+
+	{% trans "Please go to the following page and choose a new password:" %}
+
+	{% block reset_link %}
+
+	{{ protocol }}://{{ domain }}{% url 'redefinicao_de_senha_confirmacao' uidb64=uid token=token %}
+
+	{% endblock %}
+
+	{% trans 'Your username, in case you’ve forgotten:' %} {{ user.get_username }}
+
+	{% trans "Thanks for using our site!" %}
+
+	{% blocktrans %}
+		Atenciosamente, equipe do {{ site_name }}
+	{% endblocktrans %}
+
+{% endautoescape %}

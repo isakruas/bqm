@@ -1,0 +1,1212 @@
+{% extends 'templates/base.html' %}
+{% block is_not_authenticated %}
+<meta http-equiv="refresh" content="0; URL='../usuario/sair/'"/>
+{% endblock is_not_authenticated %}
+{% block is_authenticated_alfa %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/alfa/'"/>
+{% endblock is_authenticated_alfa %}
+{% block is_authenticated_beta %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/beta/'"/>
+{% endblock is_authenticated_beta %}
+{% block is_authenticated_gama %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/gama/'"/>
+{% endblock is_authenticated_gama %}
+{% block is_authenticated_epsilon %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/epsilon/'"/>
+{% endblock is_authenticated_epsilon %}
+
+
+{% block nav_delta %}
+
+    <div class="nav-three-row">
+
+      <div class="nav-three-row-one">
+    
+      </div>
+     
+      <div class="nav-three-row-two">
+        <svg onclick = "location.href = '../../' "  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3.222 18.917c5.666-5.905-.629-10.828-5.011-7.706l1.789 1.789h-6v-6l1.832 1.832c7.846-6.07 16.212 4.479 7.39 10.085z" />
+        </svg>
+      </div>
+
+      <div class="nav-three-row-three">
+ 
+      </div>
+
+    </div>
+
+{% endblock nav_delta %}
+
+
+{% block head_u %}
+
+<script type="text/javascript">
+
+ 
+const token = BQ.Storage.Get({key:'token'});
+const id = BQ.Storage.Get({key:'id'});
+
+BQ.Storage.Set({key:'imprimir_avaliacao', value:null});
+
+BQ.Storage.Set({key:'etapa', value:''});
+BQ.Storage.Set({key:'ano', value:''});
+BQ.Storage.Set({key:'unidade_tematica', value:''});
+BQ.Storage.Set({key:'objeto_de_conhecimento', value:''});
+BQ.Storage.Set({key:'nivel_de_dificuldade', value:''});
+BQ.Storage.Set({key:'pergunta', value:''});
+BQ.Storage.Set({key:'resposta', value:''});
+BQ.Storage.Set({key:'upload_id', value:''});
+BQ.Storage.Set({key:'upload_upload', value:''});
+
+
+function etapa () {
+
+  BQ.Storage.Set({key:'tmp', value:''});
+
+  BQ.Api.Get({
+
+    route:'etapa/',
+    headers: {
+        'Access-Control-Allow-Origin': window.location.href,
+        'Authorization': 'Token ' + token,
+    },
+    success:function(rtn){
+
+      if (!JSON.parse(rtn)) {
+        return false;
+      }
+      
+      var obj1 = JSON.parse(rtn);
+      
+      if (obj1.next == null) {
+
+        for (var i = 0; i < obj1.results.length; i++) {
+
+          var tmp = BQ.Storage.Get({key:'tmp'});
+
+          el = obj1.results[i];
+
+          if (tmp == null) {
+            tmp = '<option value="" selected>- - - - - - - - -</option>';
+            tmp = tmp + '<option value="'+el.etapa+'">'+el.etapa_nome+'</option>';
+          } else {
+            tmp = tmp + '<option value="'+el.etapa+'">'+el.etapa_nome+'</option>';
+          }
+
+          BQ.Storage.Set({key:'tmp', value:tmp});
+   
+        }
+        
+      } else {
+
+        var j = Math.round(obj1.count/10);
+
+        for (var k = 1; k < (j+1);) {
+
+          BQ.Api.Get({
+            route:'etapa/',
+            headers: {
+                'Access-Control-Allow-Origin': window.location.href,
+                'Authorization': 'Token ' + token,
+            },
+            data:{
+              "page":k
+            },
+
+            success:function(rtn){
+
+              if (!JSON.parse(rtn)) {
+                return false;
+              }
+
+              var obj2 = JSON.parse(rtn);
+              for (var i = 0; i < obj2.results.length; i++) {
+
+                var tmp = BQ.Storage.Get({key:'tmp'});
+
+                el = obj2.results[i];
+
+                if (tmp == null) {
+                  tmp = '<option value="" selected>- - - - - - - - -</option>';
+                  tmp = tmp + '<option value="'+el.etapa+'">'+el.etapa_nome+'</option>';
+                } else {
+                  tmp = tmp + '<option value="'+el.etapa+'">'+el.etapa_nome+'</option>';
+                }
+
+                BQ.Storage.Set({key:'tmp', value:tmp});
+
+              }
+            }
+          });
+
+          k++;
+        }
+      }
+
+      document.getElementById('etapa').innerHTML = BQ.Storage.Get({key:'tmp'});;
+
+    }
+
+  });
+}
+
+function ano (etapa) {
+
+  // resets
+
+  document.getElementById('ano').innerHTML = '';
+  document.getElementById('unidade_tematica').innerHTML = '';
+  document.getElementById('objeto_de_conhecimento').innerHTML = '';
+  document.getElementById('nivel_de_dificuldade').innerHTML = '';
+
+  BQ.Storage.Set({key:'ano', value:''});
+  BQ.Storage.Set({key:'unidade_tematica', value:''});
+  BQ.Storage.Set({key:'objeto_de_conhecimento', value:''});
+  BQ.Storage.Set({key:'nivel_de_dificuldade', value:''});
+
+
+  BQ.Storage.Set({key:'etapa', value:etapa});
+  BQ.Storage.Set({key:'tmp', value:''});
+
+  var etapa = BQ.Storage.Get({key:'etapa'})
+
+  BQ.Api.Get({
+
+    route:'unidadetematica/',
+
+    data:{
+      'etapa':etapa
+    },
+
+    headers: {
+        'Access-Control-Allow-Origin': window.location.href,
+        'Authorization': 'Token ' + token,
+    },
+    success:function(rtn){
+
+      if (!JSON.parse(rtn)) {
+        return false;
+      }
+
+      var end = false;
+      
+      var obj1 = JSON.parse(rtn);
+      
+      if (obj1.next == null) {
+
+        for (var i = 0; i < obj1.results.length; i++) {
+
+          var tmp = BQ.Storage.Get({key:'tmp'});
+
+          el = obj1.results[i];
+
+          if (el.etapa == etapa) {
+
+            if (el.etapa == etapa) {
+
+              if (tmp == null) {
+                tmp = el.ano;
+              } else {
+                tmp = tmp + ',' + el.ano;
+              }               
+              
+            }
+
+          }
+
+          BQ.Storage.Set({key:'tmp', value:tmp});
+   
+        }
+
+        if (BQ.Storage.Get({key:'tmp'}) == null) {
+          return false;
+        }
+
+        var values = BQ.Storage.Get({key:'tmp'}).split(',').sort().filter(function(item, pos, ary) {return !pos || item != ary[pos - 1];});
+
+        var html = '<option value="" selected>- - - - - - - - -</option>';
+
+        for (var i = 0; i < values.length; i++) {
+           
+          html = html + '<option value="'+values[i]+'">'+values[i]+'</option>';
+          
+        }
+
+        document.getElementById('ano').innerHTML = html;
+
+        
+      } else {
+
+
+          var j = Math.round(obj1.count/10);
+
+          var end = j;
+
+          for (var k = 1; k < (j+1);) {
+
+            BQ.Api.Get({
+              route:'unidadetematica/',
+
+              headers: {
+                  'Access-Control-Allow-Origin': window.location.href,
+                  'Authorization': 'Token ' + token,
+              },
+              data:{
+                'page':k,
+                'etapa':etapa
+              },
+
+              success:function(rtn) {
+
+                if (!JSON.parse(rtn)) {
+                  return false;
+                }
+
+                var obj2 = JSON.parse(rtn);
+
+                try {
+                    
+                    for (var i = 0; i < obj2.results.length; i++) {
+
+
+
+                      var tmp = BQ.Storage.Get({key:'tmp'});
+
+                      el = obj2.results[i];
+
+                      if (el.etapa == etapa) {
+
+                        if (tmp == null) {
+                          tmp = el.ano;
+                        } else {
+                          tmp = tmp + ',' + el.ano;
+                        }               
+                        
+                      }
+
+                      BQ.Storage.Set({key:'tmp', value:tmp});
+
+                    }
+                } catch (e) {
+
+                  throw new Error(e);
+
+               } finally {
+
+                  end = end-1;
+
+                  if (end == 0) {
+
+                    if (BQ.Storage.Get({key:'tmp'}) == null) {
+                      return false;
+                    }
+
+                    var values = BQ.Storage.Get({key:'tmp'}).split(',').sort().filter(function(item, pos, ary) {return !pos || item != ary[pos - 1];});
+
+                    var html = '<option value="" selected>- - - - - - - - -</option>';
+
+                    for (var i = 0; i < values.length; i++) {
+                       
+                      html = html + '<option value="'+values[i]+'">'+values[i]+'</option>';
+                      
+                    }
+
+                    document.getElementById('ano').innerHTML = html;
+
+                  }
+
+                }
+
+              }
+
+            });
+
+            k++;
+          }
+ 
+      }
+    }
+  });
+}
+
+function unidade_tematica(ano){
+
+  document.getElementById('unidade_tematica').innerHTML = '';
+  document.getElementById('objeto_de_conhecimento').innerHTML = '';
+  document.getElementById('nivel_de_dificuldade').innerHTML = '';
+
+  BQ.Storage.Set({key:'unidade_tematica', value:''});
+  BQ.Storage.Set({key:'objeto_de_conhecimento', value:''});
+  BQ.Storage.Set({key:'nivel_de_dificuldade', value:''});
+
+  BQ.Storage.Set({key:'ano', value:ano});
+  BQ.Storage.Set({key:'tmp', value:''});
+
+  var etapa = BQ.Storage.Get({key:'etapa'})
+  var ano = BQ.Storage.Get({key:'ano'})
+
+  BQ.Api.Get({
+
+    route:'unidadetematica/',
+
+    data:{
+      'etapa':etapa,
+      'ano':ano
+    },
+
+    headers: {
+        'Access-Control-Allow-Origin': window.location.href,
+        'Authorization': 'Token ' + token,
+    },
+    success:function(rtn){
+
+      if (!JSON.parse(rtn)) {
+        return false;
+      }
+
+      var end = false;
+      
+      var obj1 = JSON.parse(rtn);
+      
+      if (obj1.next == null) {
+
+        for (var i = 0; i < obj1.results.length; i++) {
+
+          var tmp = BQ.Storage.Get({key:'tmp'});
+          var ano = BQ.Storage.Get({key:'ano'});
+          var etapa = BQ.Storage.Get({key:'etapa'});
+
+          el = obj1.results[i];
+
+          if (el.etapa == etapa && el.ano == ano) {
+
+            if (tmp == null) {
+              tmp = '{"id":'+el.unidade_tematica+',"nome":"'+el.unidade_tematica_nome+'"}';
+            } else {
+              tmp = tmp + ';' + '{"id":'+el.unidade_tematica+',"nome":"'+el.unidade_tematica_nome+'"}';
+            }               
+            
+          }
+
+          BQ.Storage.Set({key:'tmp', value:tmp});
+   
+        }
+
+        if (BQ.Storage.Get({key:'tmp'}) == null) {
+          return false;
+        }
+
+        var values = BQ.Storage.Get({key:'tmp'}).split(';');
+
+        var html = '<option value="" selected>- - - - - - - - -</option>';
+
+        for (var i = 0; i < values.length; i++) {
+
+          var obj2 = JSON.parse(values[i]);
+
+          html = html + '<option value="'+obj2.id+'">'+obj2.nome+'</option>';
+
+        }
+        
+        document.getElementById('unidade_tematica').innerHTML = html;
+
+        
+      } else {
+
+
+          var j = Math.round(obj1.count/10);
+
+          var end = j;
+
+          for (var k = 1; k < (j+1);) {
+
+            BQ.Api.Get({
+              route:'unidadetematica/',
+              headers: {
+                  'Access-Control-Allow-Origin': window.location.href,
+                  'Authorization': 'Token ' + token,
+              },
+              data:{
+                'etapa':etapa,
+                'ano':ano,
+                'page':k
+              },
+
+              success:function(rtn) {
+
+                if (!JSON.parse(rtn)) {
+                  return false;
+                }
+
+                var obj2 = JSON.parse(rtn);
+
+                try {
+                    
+                    for (var i = 0; i < obj2.results.length; i++) {
+
+                      var tmp = BQ.Storage.Get({key:'tmp'});
+                      var ano = BQ.Storage.Get({key:'ano'});
+                      var etapa = BQ.Storage.Get({key:'etapa'});
+
+                      el = obj2.results[i];
+
+                      if (el.etapa == etapa && el.ano == ano) {
+
+                        if (tmp == null) {
+                          tmp = '{"id":'+el.unidade_tematica+',"nome":"'+el.unidade_tematica_nome+'"}';
+                        } else {
+                          tmp = tmp + ';' + '{"id":'+el.unidade_tematica+',"nome":"'+el.unidade_tematica_nome+'"}';
+                        }               
+                        
+                      }
+
+                      BQ.Storage.Set({key:'tmp', value:tmp});
+
+                    }
+                } catch (e) {
+
+                  throw new Error(e);
+
+               } finally {
+
+                  end = end-1;
+
+                  if (end == 0) {
+
+                    if (BQ.Storage.Get({key:'tmp'}) == null) {
+                      return false;
+                    }
+
+                    var values = BQ.Storage.Get({key:'tmp'}).split(';');
+
+                    var html = '<option value="" selected>- - - - - - - - -</option>';
+
+                    for (var i = 0; i < values.length; i++) {
+
+                      var obj2 = JSON.parse(values[i]);
+
+                      html = html + '<option value="'+obj2.id+'">'+obj2.nome+'</option>';
+
+                    }
+                    
+                    document.getElementById('unidade_tematica').innerHTML = html;
+
+
+                  }
+
+                }
+
+              }
+
+            });
+
+            k++;
+          }
+ 
+      }
+    }
+  });
+}
+
+function objeto_de_conhecimento (unidade_tematica){
+
+  document.getElementById('objeto_de_conhecimento').innerHTML = '';
+  document.getElementById('nivel_de_dificuldade').innerHTML = '';
+
+  BQ.Storage.Set({key:'objeto_de_conhecimento', value:''});
+  BQ.Storage.Set({key:'nivel_de_dificuldade', value:''});
+
+
+  BQ.Storage.Set({key:'unidade_tematica', value:unidade_tematica});
+  BQ.Storage.Set({key:'tmp', value:''});
+
+  var etapa = BQ.Storage.Get({key:'etapa'})
+  var ano = BQ.Storage.Get({key:'ano'})
+  var unidade_tematica = BQ.Storage.Get({key:'unidade_tematica'})
+
+  BQ.Api.Get({
+    route:'objetodeconhecimento/',
+
+    data:{
+      'etapa':etapa,
+      'ano':ano,
+      'unidade_tematica':unidade_tematica
+    },
+
+    headers: {
+        'Access-Control-Allow-Origin': window.location.href,
+        'Authorization': 'Token ' + token,
+    },
+    success:function(rtn){
+
+      if (!JSON.parse(rtn)) {
+        return false;
+      }
+
+      var end = false;
+      
+      var obj1 = JSON.parse(rtn);
+      
+      if (obj1.next == null) {
+
+        for (var i = 0; i < obj1.results.length; i++) {
+
+          var tmp = BQ.Storage.Get({key:'tmp'});
+          var ano = BQ.Storage.Get({key:'ano'});
+          var etapa = BQ.Storage.Get({key:'etapa'});
+          var unidade_tematica = BQ.Storage.Get({key:'unidade_tematica'});
+
+          el = obj1.results[i];
+
+          if (el.etapa == etapa && el.ano == ano && el.unidade_tematica == unidade_tematica) {
+
+            if (tmp == null) {
+              tmp = '{"id":'+el.objeto_de_conhecimento+',"nome":"'+el.objeto_de_conhecimento_nome+'"}';
+            } else {
+              tmp = tmp + '|@|' + '{"id":'+el.objeto_de_conhecimento+',"nome":"'+el.objeto_de_conhecimento_nome+'"}';
+            }               
+            
+          }
+
+          BQ.Storage.Set({key:'tmp', value:tmp});
+
+   
+        }
+
+        if (BQ.Storage.Get({key:'tmp'}) == null) {
+          return false;
+        }
+
+        var values = BQ.Storage.Get({key:'tmp'}).split('|@|');
+
+        var html = '<option value="" selected>- - - - - - - - -</option>';
+
+        for (var i = 0; i < values.length; i++) {
+
+          var obj2 = JSON.parse(values[i]);
+
+          //console.log(values[i]);
+
+          html = html + '<option value="'+obj2.id+'">'+obj2.nome+'</option>';
+
+        }
+        
+        document.getElementById('objeto_de_conhecimento').innerHTML = html;
+
+        
+      } else {
+
+
+          var j = Math.round(obj1.count/10);
+
+          var end = j;
+
+          for (var k = 1; k < (j+1);) {
+
+            BQ.Api.Get({
+              route:'objetodeconhecimento/',
+              headers: {
+                  'Access-Control-Allow-Origin': window.location.href,
+                  'Authorization': 'Token ' + token,
+              },
+
+              data:{
+                'etapa':etapa,
+                'ano':ano,
+                'unidade_tematica':unidade_tematica,
+                'page':k
+              },
+
+              success:function(rtn) {
+
+                if (!JSON.parse(rtn)) {
+                  return false;
+                }
+
+
+                var obj2 = JSON.parse(rtn);
+
+                try {
+                    
+                    for (var i = 0; i < obj2.results.length; i++) {
+
+                      var tmp = BQ.Storage.Get({key:'tmp'});
+                      var ano = BQ.Storage.Get({key:'ano'});
+                      var etapa = BQ.Storage.Get({key:'etapa'});
+                      var unidade_tematica = BQ.Storage.Get({key:'unidade_tematica'});
+
+                      el = obj2.results[i];
+
+                      if (el.etapa == etapa && el.ano == ano && el.unidade_tematica == unidade_tematica) {
+
+                        if (tmp == null) {
+                          tmp = '{"id":'+el.objeto_de_conhecimento+',"nome":"'+el.objeto_de_conhecimento_nome+'"}';
+                        } else {
+                          tmp = tmp + '|@|' + '{"id":'+el.objeto_de_conhecimento+',"nome":"'+el.objeto_de_conhecimento_nome+'"}';
+                        }               
+                        
+                      }
+
+                      BQ.Storage.Set({key:'tmp', value:tmp});
+
+                    }
+
+                } catch (e) {
+
+                  throw new Error(e);
+
+               } finally {
+
+                  end = end-1;
+
+                  if (end == 0) {
+
+                  if (BQ.Storage.Get({key:'tmp'}) == null) {
+                    return false;
+                  }
+
+                    var values = BQ.Storage.Get({key:'tmp'}).split('|@|');
+
+                    var html = '<option value="" selected>- - - - - - - - -</option>';
+
+                    for (var i = 0; i < values.length; i++) {
+
+                      var obj2 = JSON.parse(values[i]);
+
+                      //console.log(values[i]);
+
+                      html = html + '<option value="'+obj2.id+'">'+obj2.nome+'</option>';
+
+                    }
+                    
+                    document.getElementById('objeto_de_conhecimento').innerHTML = html;
+
+
+                  }
+
+                }
+
+              }
+
+            });
+
+            k++;
+          }
+ 
+      }
+    }
+  });
+}
+
+function nivel_de_dificuldade(objeto_de_conhecimento){
+
+  document.getElementById('nivel_de_dificuldade').innerHTML = '';
+
+  BQ.Storage.Set({key:'nivel_de_dificuldade', value:''});
+
+  BQ.Storage.Set({key:'tmp', value:''});
+  BQ.Storage.Set({key:'objeto_de_conhecimento', value:objeto_de_conhecimento});
+
+  BQ.Api.Get({
+
+    route:'niveldedificuldade/',
+    headers: {
+        'Access-Control-Allow-Origin': window.location.href,
+        'Authorization': 'Token ' + token,
+    },
+    success:function(rtn){
+      
+      if (!JSON.parse(rtn)) {
+        return false;
+      }
+
+      var obj1 = JSON.parse(rtn);
+      
+      if (obj1.next == null) {
+
+        for (var i = 0; i < obj1.results.length; i++) {
+
+          var tmp = BQ.Storage.Get({key:'tmp'});
+
+          el = obj1.results[i];
+
+          if (tmp == null) {
+            tmp = '<option value="" selected>- - - - - - - - -</option>';
+            tmp = tmp + '<option value="'+el.nivel_de_dificuldade+'">'+el.nivel_de_dificuldade_nome+'</option>';
+          } else {
+            tmp = tmp + '<option value="'+el.nivel_de_dificuldade+'">'+el.nivel_de_dificuldade_nome+'</option>';
+          }
+
+          BQ.Storage.Set({key:'tmp', value:tmp});
+   
+        }
+        
+      }
+
+      document.getElementById('nivel_de_dificuldade').innerHTML = BQ.Storage.Get({key:'tmp'});
+
+    }
+
+  });
+}
+
+function questao(nivel_de_dificuldade){
+  BQ.Storage.Set({key:'tmp', value:''});
+  BQ.Storage.Set({key:'nivel_de_dificuldade', value:nivel_de_dificuldade});
+}
+
+function imagem(imagem) {
+  BQ.Storage.Set({key:'imagem', value:imagem});
+}
+
+function pergunta(pergunta) {
+  BQ.Storage.Set({key:'pergunta', value:pergunta});
+}
+
+function resposta(resposta) {
+  BQ.Storage.Set({key:'resposta', value:resposta});
+}
+
+function cadastrar(){
+
+  var etapa                   = BQ.Storage.Get({key:'etapa'});
+  var ano                     = BQ.Storage.Get({key:'ano'});
+  var unidade_tematica        = BQ.Storage.Get({key:'unidade_tematica'});
+  var objeto_de_conhecimento  = BQ.Storage.Get({key:'objeto_de_conhecimento'});
+  var nivel_de_dificuldade    = BQ.Storage.Get({key:'nivel_de_dificuldade'});
+  var cadastro_pelo_usuario   = BQ.Storage.Get({key:'id'});
+  var pergunta                = BQ.Storage.Get({key:'pergunta'});
+  var resposta                = BQ.Storage.Get({key:'resposta'});
+
+  if (BQ.Storage.Get({key:'upload_id'})) {
+    var imagem = parseInt(BQ.Storage.Get({key:'upload_id'}));
+  } else {
+
+    var imagem = 0;
+
+  }
+
+  if (etapa == null) {
+
+    document.getElementById('etapa').style.border = '0.01cm solid #A30000';
+    return false;
+
+  } else {
+
+    document.getElementById('etapa').style.border = '0.01cm solid #ccc'
+  }
+ 
+  if (ano == null) {
+
+    document.getElementById('ano').style.border = '0.01cm solid #A30000';
+    return false;
+
+  } else {
+
+    document.getElementById('ano').style.border = '0.01cm solid #ccc'
+  }
+
+  if (unidade_tematica == null) {
+
+    document.getElementById('unidade_tematica').style.border = '0.01cm solid #A30000';
+    return false;
+
+  } else {
+
+    document.getElementById('unidade_tematica').style.border = '0.01cm solid #ccc'
+  }
+
+
+  if (objeto_de_conhecimento == null) {
+
+    document.getElementById('objeto_de_conhecimento').style.border = '0.01cm solid #A30000';
+    return false;
+
+  } else {
+
+    document.getElementById('objeto_de_conhecimento').style.border = '0.01cm solid #ccc'
+  }
+
+  if (nivel_de_dificuldade == null) {
+
+    document.getElementById('nivel_de_dificuldade').style.border = '0.01cm solid #A30000';
+    return false;
+
+  } else {
+
+    document.getElementById('nivel_de_dificuldade').style.border = '0.01cm solid #ccc'
+  }
+
+  if (pergunta == null) {
+
+    document.getElementById('pergunta').style.border = '0.01cm solid #A30000';
+    return false;
+
+  } else {
+
+    document.getElementById('pergunta').style.border = '0.01cm solid #ccc'
+  }
+
+  if (resposta == null) {
+
+    document.getElementById('resposta').style.border = '0.01cm solid #A30000';
+    return false;
+
+  } else {
+
+    document.getElementById('resposta').style.border = '0.01cm solid #ccc'
+  }
+
+
+
+
+
+
+  BQ.Api.Post({
+
+    route:'questao/',
+
+    headers: {
+      'Access-Control-Allow-Origin': window.location.href,
+      'Authorization': 'Token ' + token,
+    },
+
+    data: {
+        'status'                  :1,
+        'etapa'                   :etapa,
+        'ano'                     :ano,
+        'unidade_tematica'        :unidade_tematica,
+        'objeto_de_conhecimento'  :objeto_de_conhecimento,
+        'nivel_de_dificuldade'    :nivel_de_dificuldade,
+        'cadastro_pelo_usuario'   :cadastro_pelo_usuario,
+        'pergunta'                :pergunta,
+        'resposta'                :resposta,
+        'imagem'                  :imagem
+    },
+
+    success:function(rtn) {
+
+
+      document.getElementById('upload_02_msg').innerHTML = 'Maravilha! Questão registrada com sucesso! Sua questão foi adicionada a fila do processo de revisão.';
+      document.getElementById('upload_02').style.visibility = 'visible';
+
+
+      BQ.Storage.Set({key:'etapa', value:''});
+      BQ.Storage.Set({key:'ano', value:''});
+      BQ.Storage.Set({key:'unidade_tematica', value:''});
+      BQ.Storage.Set({key:'objeto_de_conhecimento', value:''});
+      BQ.Storage.Set({key:'nivel_de_dificuldade', value:''});
+      BQ.Storage.Set({key:'pergunta', value:''});
+      BQ.Storage.Set({key:'resposta', value:''});
+      BQ.Storage.Set({key:'upload_id', value:''});
+      BQ.Storage.Set({key:'upload_upload', value:''});
+
+
+      document.getElementById('ano').innerHTML = '';
+      document.getElementById('unidade_tematica').innerHTML = '';
+      document.getElementById('objeto_de_conhecimento').innerHTML = '';
+      document.getElementById('nivel_de_dificuldade').innerHTML = '';
+
+      document.getElementById('pergunta').value = '';
+      document.getElementById('resposta').value = '';
+
+
+      return true;
+
+    },
+
+    error:function(e){
+
+      document.getElementById('upload_02_msg').innerHTML = 'Ops! Ocorreu um problema ao cadastrar a sua questão em nosso sistema. Sinto muito por isso. Tente fazer o upload novamente; se o problema persistir, tente novamente mais tarde.';
+      document.getElementById('upload_02').style.visibility = 'visible';
+      return true;
+    }
+  });
+
+}
+
+document.addEventListener('readystatechange', event => {
+if (event.target.readyState === 'complete') {
+    setInterval(function(){
+      upload(2);
+      Preview.Update();
+      PreviewAnswer.Update();
+    }, 1000);
+}});
+
+
+BQ.Storage.Set({key:'upload_id', value:''});
+BQ.Storage.Set({key:'upload_upload', value:''});
+
+function upload(status){
+
+  if (status == 0) {
+    console.log('abrindo formulario de upload')
+    document.getElementById('upload_01').style.visibility = 'visible';
+  }
+
+  if (status == 1) {
+    console.log('enviando')
+    document.getElementById('upload_01').style.visibility = 'hidden';
+
+    var form = new FormData();
+
+    if (!document.getElementById('imagem').files[0]) {
+
+      document.getElementById('upload_02_msg').innerHTML = 'Ops! Primeiro você precisa selecionar uma imagem no seu dispositivo e, em seguida, clicar em enviar. Certifique-se de ter executado esta etapa corretamente e tente novamente.';
+      document.getElementById('upload_02').style.visibility = 'visible';
+      return false;
+
+    } 
+
+    if (!document.getElementById('imagem').files[0].type.includes('image')) {
+     
+      document.getElementById('upload_02_msg').innerHTML = 'Ops! O arquivo selecionado não é uma imagem. Só é possível fazer upload de imagens, certifique-se de ter selecionado o arquivo correto e tente novamente.';
+      document.getElementById('upload_02').style.visibility = 'visible';
+
+      return false;
+    }
+
+    BQ.Api.Post({
+
+      route:'upload/',
+
+      headers: {
+        'Access-Control-Allow-Origin': window.location.href,
+        'Authorization': 'Token ' + token,
+      },
+
+      data: {
+        'upload': document.getElementById('imagem').files[0]
+      },
+
+      success:function(rtn) {
+        var obj1 = JSON.parse(rtn);
+        BQ.Storage.Set({key:'upload_id', value:obj1.id});
+        BQ.Storage.Set({key:'upload_upload', value:obj1.upload});
+      },
+
+      error:function(e) {
+
+        document.getElementById('upload_02_msg').innerHTML = 'Ops! Ocorreu um problema ao carregar a sua imagem para o nosso sistema. Sinto muito por isso. Tente fazer o upload novamente; se o problema persistir, tente novamente mais tarde.';
+        document.getElementById('upload_02').style.visibility = 'visible';
+
+      }
+
+    });
+
+  }
+
+  if (status == 2) {
+    if (BQ.Storage.Get({key:'upload_id'}) == null) {
+      document.getElementById('upload_button_01').style.visibility = 'visible';
+      document.getElementById('upload_button_02').style.visibility = 'hidden';
+
+      document.getElementById('upload_button_01').style.display = 'block';
+      document.getElementById('upload_button_02').style.display = 'none';
+    } else {
+      document.getElementById('upload_button_01').style.visibility = 'hidden';
+      document.getElementById('upload_button_02').style.visibility = 'visible';
+
+      document.getElementById('upload_button_01').style.display = 'none';
+      document.getElementById('upload_button_02').style.display = 'block';
+    }
+  }
+
+
+  if (status == 3) {
+
+
+    BQ.Api.Delete({
+      route:'upload/',
+
+      headers: {
+        'Access-Control-Allow-Origin': window.location.href,
+        'Authorization': 'Token ' + token,
+      },
+
+      id: parseInt(BQ.Storage.Get({key:'upload_id'})),
+
+      success:function(){
+        document.getElementById('upload_button_01').style.visibility = 'visible';
+        document.getElementById('upload_button_02').style.visibility = 'hidden';
+
+        document.getElementById('upload_button_01').style.display = 'block';
+        document.getElementById('upload_button_02').style.display = 'none';
+
+        BQ.Storage.Set({key:'upload_id', value:''});
+        BQ.Storage.Set({key:'upload_upload', value:''});
+      }
+    });
+
+ 
+  }
+
+}
+
+
+</script>
+{% endblock head_u %}
+
+
+
+{% block main_delta %}
+ 
+<script type="text/javascript">
+  document.getElementById('info').innerHTML = '<h2 style="white-space: nowrap">DASHBOARD > CADASTRAR > QUESTÃO</h2>';
+</script>
+
+
+<div class="main-one-columns">
+  <div class="main-one-columns-one">
+
+    <div  class="forms">
+
+      <p>ETAPA</p>
+
+      <select id="etapa" name="etapa" onchange="ano(this.value);">
+      </select>
+
+      <br>
+
+      <p>ANO</p>
+
+      <select id="ano" name="ano" onchange="unidade_tematica(this.value);">
+      </select>
+
+      <br>
+
+      <p>UNIDADE TEMÁTICA</p>
+
+      <select id="unidade_tematica" name="unidade_tematica" onchange="objeto_de_conhecimento(this.value);">
+      </select>
+
+      <br>
+
+      <p>OBJETO DE CONHECIMENTO</p>
+
+      <select id="objeto_de_conhecimento" name="objeto_de_conhecimento" onchange="nivel_de_dificuldade(this.value);">
+      </select>
+
+      <br>
+
+      <p>NÍVEL DE DIFICULDADE</p>
+
+      <select  id="nivel_de_dificuldade" name="nivel_de_dificuldade" onchange="questao(this.value);">
+      </select>
+  
+      <br>
+      
+      <p>PERGUNTA</p>
+        
+
+      <textarea id="pergunta" cols="60" rows="10" onkeyup="pergunta(this.value);"></textarea>
+      
+      <br>
+
+    </div>
+
+      <button id="upload_button_01" class="button" onclick="upload(0)">INCLUIR IMAGEM</button>
+      <button id="upload_button_02" class="button" style="visibility: hidden;" onclick="upload(3)">EXCLUIR IMAGEM</button>
+      <!--input type="file" id="imagem"  accept="image/*"  onchange="imagem(this.value)" /-->
+      
+      <div  class="forms">
+      <br>
+
+      <p>PREVIEW PERGUNTA</p>
+      
+      <div id="pergunta_preview" style="visibility:hidden;"></div>
+      <div id="pergunta_buffer" style="border:0.01cm solid #ccc; padding: 0.5cm;"></div>
+      
+      <br>
+      
+      <p>RESPOSTA</p>
+      
+      <textarea  id="resposta" cols="60" rows="10" onkeyup="resposta(this.value);"></textarea>
+      
+      <br>
+      
+      <p>PREVIEW RESPOSTA</p>
+
+      <div id="resposta_preview" style="visibility:hidden;"></div>
+      <div id="resposta_buffer" style="border:0.01cm solid #ccc; padding: 0.5cm;"></div>
+      
+      <br>
+      </div>
+<center>
+  
+
+      <button type="submit" class="button" onclick="cadastrar();">CADASTRAR QUESTÃO</button>
+</center>
+
+
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('readystatechange', event => {
+if (event.target.readyState === 'complete') {
+  etapa();
+  Preview.Init();
+  PreviewAnswer.Init();
+}});
+</script>
+{% endblock main_delta %}
+
+{% block alert_u %}
+
+    <div class="alert" id="upload_01">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+
+                  <br />
+                  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="32" viewBox="0 0 24 26"><path  fill="#2c2c2c" d="M16.5 14.492c0 .828-.56 1.5-1.25 1.5s-1.25-.671-1.25-1.5.56-1.5 1.25-1.5 1.25.672 1.25 1.5zm-7.75-1.5c-.69 0-1.25.672-1.25 1.5s.56 1.5 1.25 1.5 1.25-.672 1.25-1.5-.56-1.5-1.25-1.5zm3.25 8.354c2.235 0 3-2.354 3-2.354h-6s.847 2.354 3 2.354zm12-6.041c0 1.765-.985 3.991-3.139 4.906-2.348 3.731-5.484 5.781-8.861 5.781-3.377 0-6.513-2.05-8.862-5.781-2.153-.915-3.138-3.141-3.138-4.906 0-1.472.387-2.937 1.682-3.636-.377-2.311-.117-6.176 4.193-7.593 1.031-1.99 3.125-4.084 6.125-4.084s5.094 2.094 6.125 4.083c4.31 1.418 4.57 5.282 4.193 7.594 1.295.699 1.682 2.164 1.682 3.636zm-2.176-1.252c-4.687-.258-6.833-4.66-7.241-7.394-1.167 6.333-9 1.792-9.896 9.052-.886-.467-1.715-1.308-2.215-2.159-.996.997-.54 4.154 1.661 4.899.224.076.413.228.535.43 1.991 3.296 4.595 5.111 7.332 5.111s5.34-1.815 7.331-5.111c.122-.202.312-.354.535-.43 1.771-.599 2.517-2.769 1.958-4.398z"/></svg><br />
+                  Olá! Selecione a imagem que deseja adicionar à sua pergunta.
+                <br /><br />
+                 
+                 <div class="forms">
+                    <input class="button" type="file" id="imagem"  accept="image/*" />
+                 </div>
+  
+                </div>
+                <div class="alert-two-row-two">
+                    <div class="alert-two-columns">
+                        <div class="alert-two-columns-one" onclick="document.getElementById('upload_01').style.visibility = 'hidden';">
+                            <p>CANCELAR</p>
+                        </div>
+                        <div class="alert-two-columns-two" onclick="upload(1)">
+                            <p>ENVIAR</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="alert" id="upload_02">
+        <div class="alert-box">
+            <div class="alert-two-row">
+                <div class="alert-two-row-one" style="overflow-y: auto; padding:0.5cm; text-align: justify;">
+                  <br />
+                  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="32" viewBox="0 0 24 26"><path  fill="#2c2c2c" d="M16.5 14.492c0 .828-.56 1.5-1.25 1.5s-1.25-.671-1.25-1.5.56-1.5 1.25-1.5 1.25.672 1.25 1.5zm-7.75-1.5c-.69 0-1.25.672-1.25 1.5s.56 1.5 1.25 1.5 1.25-.672 1.25-1.5-.56-1.5-1.25-1.5zm3.25 8.354c2.235 0 3-2.354 3-2.354h-6s.847 2.354 3 2.354zm12-6.041c0 1.765-.985 3.991-3.139 4.906-2.348 3.731-5.484 5.781-8.861 5.781-3.377 0-6.513-2.05-8.862-5.781-2.153-.915-3.138-3.141-3.138-4.906 0-1.472.387-2.937 1.682-3.636-.377-2.311-.117-6.176 4.193-7.593 1.031-1.99 3.125-4.084 6.125-4.084s5.094 2.094 6.125 4.083c4.31 1.418 4.57 5.282 4.193 7.594 1.295.699 1.682 2.164 1.682 3.636zm-2.176-1.252c-4.687-.258-6.833-4.66-7.241-7.394-1.167 6.333-9 1.792-9.896 9.052-.886-.467-1.715-1.308-2.215-2.159-.996.997-.54 4.154 1.661 4.899.224.076.413.228.535.43 1.991 3.296 4.595 5.111 7.332 5.111s5.34-1.815 7.331-5.111c.122-.202.312-.354.535-.43 1.771-.599 2.517-2.769 1.958-4.398z"/></svg><br />
+                  <div id="upload_02_msg">
+                    
+                  </div>
+                </div>
+                <div class="alert-two-row-two">
+
+                    <div class="alert-one-columns">
+                        <div class="alert-one-columns-one" onclick="document.getElementById('upload_02').style.visibility = 'hidden';">
+                            <p>OK</p>
+                        </div>
+                    </div>
+ 
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock alert_u %}

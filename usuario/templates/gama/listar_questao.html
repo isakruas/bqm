@@ -1,0 +1,156 @@
+{% extends 'templates/base.html' %}
+{% block is_not_authenticated %}
+<meta http-equiv="refresh" content="0; URL='../usuario/sair/'"/>
+{% endblock is_not_authenticated %}
+{% block is_authenticated_alfa %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/alfa/'"/>
+{% endblock is_authenticated_alfa %}
+{% block is_authenticated_beta %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/beta/'"/>
+{% endblock is_authenticated_beta %}
+{% block is_authenticated_delta %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/delta/'"/>
+{% endblock is_authenticated_delta %}
+{% block is_authenticated_epsilon %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/epsilon/'"/>
+{% endblock is_authenticated_epsilon %}
+ 
+
+{% block nav_gama %}
+<div class="nav-three-row">
+
+  <div class="nav-three-row-one">
+
+  </div>
+
+  <div class="nav-three-row-two">
+    <svg onclick = "location.href = '../../'"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3.222 18.917c5.666-5.905-.629-10.828-5.011-7.706l1.789 1.789h-6v-6l1.832 1.832c7.846-6.07 16.212 4.479 7.39 10.085z" />
+    </svg>
+  </div>
+
+  <div class="nav-three-row-three">
+
+  </div>
+
+</div>
+{% endblock nav_gama %}
+
+
+{% block main_gama %}
+<script type="text/javascript">
+
+const token = BQ.Storage.Get({key:'token'});
+const id = BQ.Storage.Get({key:'id'});
+
+
+document.addEventListener('readystatechange', event => {
+  if (event.target.readyState === 'complete') {
+
+
+    var uids = BQ.Storage.Get({
+      key: 'uids'
+    }).split(",");
+
+    (async function() {
+      for await (let uid of uids) {
+        BQ.Api.Get({
+          route: 'questao/',
+          headers: {
+            'Access-Control-Allow-Origin': window.location.href,
+            'Authorization': 'Token ' + token,
+          },
+          data: {
+
+            'cadastro_pelo_usuario': uid,
+            'status': 2
+
+          },
+          success: function(rtn) {
+            var json = JSON.parse(rtn);
+
+            if (json.count == 0) {
+              var el = uids.indexOf(uid);
+              if (el !== -1) {
+                uids.splice(el, 1);
+
+                BQ.Storage.Set({
+                  key: 'uids',
+                  value: uids
+                });
+              }
+            }
+          }
+        });
+      }
+
+    })().then(
+ 
+        
+      setTimeout(function() {
+        carregar()
+      }, 1000)
+
+
+    );
+  }
+});
+
+
+function carregar(){
+
+      var html = '';
+
+      var uids = BQ.Storage.Get({
+        key: 'uids'
+      }).split(",");
+
+      for (var i = 0; i < uids.length; i++) {
+
+
+        html = html + '<div class="profile-footer-ul"> <div class="main-two-columns profile-footer-li"> <div class="main-two-columns-one" style="height: 1cm;"><p style="position: relative; top: 30%; text-align: center;">'+ uids[i] +'</p></div> <div class="main-two-columns-two" onclick="listar('+ uids[i] +')" style="border-left: 0.05cm solid #002907; min-width: 1cm;"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"> <path fill="currentColor" d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z" /> </svg> </div> </div> </div>';
+
+      }
+
+      document.getElementById('el').innerHTML = html;
+
+}
+
+
+function listar (uid){
+  BQ.Storage.Set({key:'uid', value:uid});
+  BQ.Storage.Set({key:'status', value:2});
+  location.href = './'+uid+'/'
+}
+
+</script>
+<script type="text/javascript">
+  document.getElementById('info').innerHTML = '<h2 style="white-space: nowrap">DASHBOARD > LISTAR > QUESTÃO</h2>';
+</script>
+<div class="main-one-columns">
+    <div class="main-one-columns-one">
+ 
+         <div class="main-auto-row-auto">
+          <div class="profile-footer-ul">
+            <div class="main-two-columns profile-footer-li">
+              <div class="main-two-columns-one" style="height: 1cm">
+                <p style="position: relative ; width: auto; top: 30%; text-align: center; font-weight: bold;">IDENTIFICADOR</p>
+              </div>
+              <div class="main-two-columns-two" style="min-width: 1cm; border-left: 0.05cm solid #002907;">
+                <p style="position: relative ; width: auto; top: 30%; text-align: center; font-weight: bold;">
+                LISTAR
+                </p>
+              </div>
+               
+            </div>
+          </div>
+        </div>
+        <!--- Incluir com JS -->
+        <div class="main-auto-row-auto" id="el">
+          <div class="main-auto-row-auto"><div class="profile-footer-ul"><div class="main-row-columns profile-footer-li"><div class="main-row-columns-one" style="overflow-x: auto; padding: 1cm; max-width: 93vw"><p style="text-align: justify; max-width: 93vw; height: 100%;">CARREGANDO . . .</p></div></div></div></div>
+        </div>
+ 
+    </div>
+</div>
+
+{% endblock main_gama %}

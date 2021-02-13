@@ -1,0 +1,72 @@
+{% extends 'templates/base.html' %}
+
+{% block is_authenticated_alfa %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/alfa/'"/>
+{% endblock is_authenticated_alfa %}
+
+{% block is_authenticated_beta %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/beta/'"/>
+{% endblock is_authenticated_beta %}
+
+{% block is_authenticated_gama %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/gama/'"/>
+{% endblock is_authenticated_gama %}
+
+{% block is_authenticated_delta %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/delta/'"/>
+{% endblock is_authenticated_delta %}
+
+{% block is_authenticated_epsilon %}
+<meta http-equiv="refresh" content="0; URL='../../../usuario/epsilon/'"/>
+{% endblock is_authenticated_epsilon %}
+
+
+{% block nav %}
+
+
+    <div class="nav-three-row">
+      <div class="nav-three-row-one">
+        <svg onclick = "location.href = {% url 'sobre' %}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-.001 5.75c.69 0 1.251.56 1.251 1.25s-.561 1.25-1.251 1.25-1.249-.56-1.249-1.25.559-1.25 1.249-1.25zm2.001 12.25h-4v-1c.484-.179 1-.201 1-.735v-4.467c0-.534-.516-.618-1-.797v-1h3v6.265c0 .535.517.558 1 .735v.999z"/></svg>
+      </div>
+      <div class="nav-three-row-two">
+        <svg onclick = "location.href = {% url 'politica_de_privacidade' %}"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path   fill="currentColor"  d="M466.5 83.7l-192-80a48.15 48.15 0 0 0-36.9 0l-192 80C27.7 91.1 16 108.6 16 128c0 198.5 114.5 335.7 221.5 380.3 11.8 4.9 25.1 4.9 36.9 0C360.1 472.6 496 349.3 496 128c0-19.4-11.7-36.9-29.5-44.3zM256.1 446.3l-.1-381 175.9 73.3c-3.3 151.4-82.1 261.1-175.8 307.7z"/></svg>
+      </div>
+      <div class="nav-three-row-three">
+ 
+
+        <svg  onclick = "location.href = {% url 'ir_para' %}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path  fill="currentColor" d="M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0zM571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93z"/></svg>
+
+
+        
+      </div>
+    </div>
+
+{% endblock nav %}
+
+{% block main %}
+<script type="text/javascript">
+  document.getElementById('info').innerHTML = '<h2>PÁGINA INICIAL</h2>';
+</script>
+ 
+  <center>
+    <span>Olá, bem vindo(a)!</span>
+  </center> 
+  <p class="paragraph">
+    <span>
+      
+      BQ.MAT.BR é uma plataforma gratuita que tem o objetivo de facilitar a elaboração de atividades avaliativas de matemática. É um banco com questões organizadas conforme eixo temático, objeto de conhecimento, ciclo de ensino e nível de dificuldade. Aproveite!
+
+    </span>
+  </p>
+  <p class="paragraph">
+    <center>
+      <video controls poster="/media/poster.png">
+        <source src="/media/video.webm" type="video/webm">
+        Seu navegador não suporta a tag de vídeo.
+      </video> 
+    </center>
+</p>
+ <p class="paragraph"></p>
+ 
+{% endblock main %}
+

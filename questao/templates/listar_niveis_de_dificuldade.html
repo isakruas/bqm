@@ -1,0 +1,22 @@
+{
+  "nivel_de_dificuldade": [
+    {
+    "ids": [
+      {% for el in nivel_de_dificuldade %}
+           
+          "{{el.nivel_de_dificuldade}}", 
+          
+      {% endfor %}
+      "null"
+      ],
+    "nms": [
+      {% for el in nivel_de_dificuldade %}
+           
+          "{{el.nivel_de_dificuldade_nome}}", 
+          
+      {% endfor %}
+      "null"
+      ]
+    }
+  ]
+}
