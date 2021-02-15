@@ -157,7 +157,49 @@ class ImprimirViewSet(
     queryset = Imprimir.objects.all()
     serializer_class = ImprimirSerializer
 
+    def list(self, request, *args, **kwargs):
 
+        params = request.query_params
+        params = params.dict()
+
+        filters = ('cadastro_pelo_usuario')
+        permission = ('admin', 'alfa')
+        if 'format' in params:
+            params.pop('format')
+
+        if len(params) >> 0:
+            query = {}
+            for key in params:
+                try:
+                    if key in filters:
+                        if str(request.user.nivel_de_acesso) in permission:
+                            query['cadastro_pelo_usuario'] = int(params['cadastro_pelo_usuario'])
+                        elif 'cadastro_pelo_usuario' in params:
+                            query['cadastro_pelo_usuario'] = int(request.user.id)
+                        #query[key] = int(params[key])
+                except ValueError:
+                    pass
+            queryset = Imprimir.objects.filter(**query)
+            queryset = self.filter_queryset(queryset)
+            page = self.paginate_queryset(queryset)
+
+            if page is not None:
+                serializer = self.get_serializer(page, many=True)
+                return self.get_paginated_response(serializer.data)
+
+            serializer = self.get_serializer(queryset, many=True)
+            return Response(serializer.data)
+
+        queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+        
 #############################################################
 #                          Base                             #
 #############################################################
